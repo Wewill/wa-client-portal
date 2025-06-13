@@ -122,12 +122,6 @@ class Wa_Client_Portal {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wa-client-portal-public.php';
 
-		// Include the template class.
-		// require plugin_dir_path( __FILE__ ) . '/class-wa-client-portal-template.php';
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wa-client-portal-template.php';
-
-		// // Include the authentication class.
-		// require_once plugin_dir_path( dirname( __FILE__ ) )  . 'includes/class-wa-client-portal-auth.php';
 
 		// Include the menu class.
 		require_once plugin_dir_path( dirname( __FILE__ ) )  . 'includes/class-wa-client-portal-menu.php';

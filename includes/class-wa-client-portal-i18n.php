@@ -35,7 +35,7 @@ class Wa_Client_Portal_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'wa-client-portal',
+			'wacpm',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
