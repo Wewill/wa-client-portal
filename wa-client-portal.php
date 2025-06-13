@@ -80,3 +80,5 @@ function run_wa_client_portal() {
 
 }
 run_wa_client_portal();
+
+		require plugin_dir_path( __FILE__ ) . '/includes/class-wa-client-portal-template.php';
