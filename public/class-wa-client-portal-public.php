@@ -100,4 +100,44 @@ class Wa_Client_Portal_Public {
 
 	}
 
+	/**
+	 * Load the required dependencies for front.
+	 *
+	 * Create an instance of the loader which will be used to register the hooks
+	 * with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function load_dependencies() {
+		// Include the menu class.
+		require_once plugin_dir_path( dirname( __FILE__ ) )  . 'public/class-wa-client-portal-menu.php';
+	}
+
+	/**
+	 * Run the required dependencies for front.
+	 *
+	 * Create an instance of the loader which will be used to register the hooks
+	 * with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function run_dependencies() {
+		// After init hooks
+	}
+
+
+	/**
+	 * Init plugin
+	 *
+	 * @since    1.1.0
+	 */
+	public function init_front() {
+		$this->load_dependencies();
+		$this->run_dependencies();
+	}
+
+
+
 }

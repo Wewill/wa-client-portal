@@ -100,4 +100,80 @@ class Wa_Client_Portal_Admin {
 
 	}
 
+	/**
+	 * Load the required dependencies for admin.
+	 *
+	 * Create an instance of the loader which will be used to register the hooks
+	 * with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function load_dependencies() {
+		// Include the menu class.
+		require_once plugin_dir_path( dirname( __FILE__ ) )  . 'admin/class-wa-client-portal-menu.php';
+
+		// Include user custom fields register 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wa-client-portal-user.php';
+
+		// Include user custom role 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wa-client-portal-roles.php';
+	}
+
+	/**
+	 * Run the required dependencies for admin.
+	 *
+	 * Create an instance of the loader which will be used to register the hooks
+	 * with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function run_dependencies() {
+		// After init hooks
+	}
+
+	/**
+	 * Init plugin
+	 *
+	 * @since    1.1.0
+	 */
+	public function init_plugin() {
+		$this->load_dependencies();
+		$this->run_dependencies();
+	}
+
+	/**
+	 * Init admin
+	 *
+	 * @since    1.2.0
+	 */
+	public function init_admin() {
+		//$screen = get_current_screen(); //$screen->id
+		global $pagenow;
+
+		// Check dependencies
+		if ( !is_login() && is_admin() && !in_array( $pagenow, array( 'plugins.php' ) ) && !function_exists('rwmb_meta') ) {
+			wp_die('Error : please install Meta Box plugin.');
+		}
+
+		// if ( !is_login() && is_admin() && !in_array( $pagenow, array( 'plugins.php' ) ) && !function_exists('mb_term_meta_load') ) {
+		// 	wp_die('Error : please install Meta Box Term meta plugin.');
+		// }
+
+		if ( !is_login() && is_admin() && !in_array( $pagenow, array( 'plugins.php' ) ) && !function_exists('mb_settings_page_load') ) {
+			wp_die('Error : please install Meta Box Settings plugin.');
+		}
+
+		// if ( !is_login() && is_admin() && !in_array( $pagenow, array( 'plugins.php' ) ) && !class_exists('MB_Text_Limiter') ) {
+		// 	wp_die('Error : please install Meta Box Text limiter plugin.');
+		// }
+
+		if ( !is_login() && is_admin() && !in_array( $pagenow, array( 'plugins.php' ) ) && !function_exists('mb_user_meta_load') ) {
+			wp_die('Error : please install Meta Box User meta plugin.');
+		}
+
+
+	}
+
 }

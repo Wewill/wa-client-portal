@@ -31,6 +31,13 @@ class Wa_Client_Portal_Activator {
 	 */
 	public static function activate() {
 
+		// Add custom role for clients
+		add_role(
+			'client-portal',
+			__('Client Portal', 'wacp'),
+			get_role('subscriber')->capabilities
+		);
+
 	}
 
 }

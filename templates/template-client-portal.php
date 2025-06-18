@@ -69,6 +69,10 @@ while ( have_posts() ) :
 						'numberposts' => -1,
 					) );
 
+					$current_user = wp_get_current_user();
+					if ( !empty( $current_user->display_name ) ) {
+						echo '<p>' . esc_html__( 'Hello', 'wacpm' ) . ' ' . esc_html( $current_user->display_name ) . '!</p>';
+					}
 					echo '<p class="subline">' . esc_html__( 'Welcome to the client portal!', 'wacpm' ) . '</p>';
 					if ( ! empty( $private_pages ) ) {
 						echo '<ul>';

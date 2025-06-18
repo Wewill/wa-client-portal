@@ -21,7 +21,7 @@
  * Author URI:        https://www.wilhemarnoldy.fr/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       wa-client-portal
+ * Text Domain:       wacp
  * Domain Path:       /languages
  */
 
@@ -66,7 +66,6 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wa-client-portal.php';
 
 // Include template class for custom page templates.
 require plugin_dir_path( __FILE__ ) . '/includes/class-wa-client-portal-template.php';
-
 
 /**
  * Begins execution of the plugin.

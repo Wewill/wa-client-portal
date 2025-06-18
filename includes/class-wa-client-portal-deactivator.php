@@ -31,6 +31,8 @@ class Wa_Client_Portal_Deactivator {
 	 */
 	public static function deactivate() {
 
+		// Remove custom role for clients
+		remove_role('client-portal');
 	}
 
 }
