@@ -77,9 +77,9 @@ class Wa_Rsfp_Export {
         $headers = [
             __('ID', 'wacp'),
             __('Username', 'wacp'),
-            __('First name', 'wacp'),
-            __('Last name', 'wacp'),
-            __('Email', 'wacp'),
+            __('Firstname', 'wacp'),
+            __('Lastname', 'wacp'),
+            __('E-mail', 'wacp'),
 
 			__('Entity', 'wacp'),
 			__('Media', 'wacp'),

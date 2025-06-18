@@ -45,10 +45,10 @@ while ( have_posts() ) :
 					echo '<p><label for="user_email">' . esc_html__( 'Email', 'wacp' ) . '</label><input type="email" name="user_email" id="user_email" class="input" required></p>';
 
 					// Firstname field
-					echo '<p><label for="first_name">' . esc_html__( 'First Name', 'wacp' ) . '</label><input type="text" name="first_name" id="first_name" class="input" required></p>';
+					echo '<p><label for="first_name">' . esc_html__( 'Firstname', 'wacp' ) . '</label><input type="text" name="first_name" id="first_name" class="input" required></p>';
 
 					// Lastname field
-					echo '<p><label for="last_name">' . esc_html__( 'Last Name', 'wacp' ) . '</label><input type="text" name="last_name" id="last_name" class="input" required></p>';
+					echo '<p><label for="last_name">' . esc_html__( 'Lastname', 'wacp' ) . '</label><input type="text" name="last_name" id="last_name" class="input" required></p>';
 
 					// Entity field
 					echo '<p><label for="user_entity">' . esc_html__( 'Entity', 'wacp' ) . '</label><input type="text" name="user_entity" id="user_entity" class="input" required></p>';

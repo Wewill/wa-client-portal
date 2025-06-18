@@ -13,17 +13,17 @@ add_filter( 'rwmb_meta_boxes', function( $meta_boxes ) {
 			[
 				'id'   => $prefix . 'entity',
 				'type' => 'text',
-				'name' => 'Entity',
+				'name' => __( 'Entity', 'wacp' ),
 			],
 			[
 				'id'   => $prefix . 'media',
 				'type' => 'text',
-				'name' => 'Media',
+				'name' => __( 'Media', 'wacp' ),
 			],
 			[
 				'id'   => $prefix . 'phone',
 				'type' => 'text',
-				'name' => 'Phone',
+				'name' => __( 'Phone', 'wacp' ),
 			],
 		],
 	];

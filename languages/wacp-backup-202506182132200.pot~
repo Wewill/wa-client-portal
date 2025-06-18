@@ -1,0 +1,168 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: WA Private Client Portal\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-18 21:27+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.0; wp-6.8.1; php-8.2.14\n"
+"X-Domain: wacp"
+
+#: admin/wa-client-portal-clients-page.php:11
+msgid "#"
+msgstr ""
+
+#: includes/class-wa-client-portal-activator.php:37
+msgid "Client Portal"
+msgstr ""
+
+#: admin/class-wa-client-portal-export.php:88
+msgid "Date"
+msgstr ""
+
+#: admin/wa-client-portal-clients-page.php:17
+msgid "E-mail"
+msgstr ""
+
+#: admin/class-wa-client-portal-export.php:82
+#: templates/template-client-portal.php:45
+msgid "Email"
+msgstr ""
+
+#: admin/wa-client-portal-clients-page.php:14
+#: admin/class-wa-client-portal-export.php:84
+#: templates/template-client-portal.php:54
+msgid "Entity"
+msgstr ""
+
+#: admin/class-wa-client-portal-export.php:45
+msgid "Export"
+msgstr ""
+
+#: admin/class-wa-client-portal-export.php:33
+msgid "export"
+msgstr ""
+
+#: admin/class-wa-client-portal-export.php:22
+#: admin/class-wa-client-portal-export.php:23
+msgid "Export members"
+msgstr ""
+
+#: templates/template-client-portal.php:48
+msgid "First Name"
+msgstr ""
+
+#: admin/class-wa-client-portal-export.php:80
+msgid "First name"
+msgstr ""
+
+#: admin/wa-client-portal-clients-page.php:13
+msgid "Firstname"
+msgstr ""
+
+#: templates/template-client-portal.php:91
+msgid "Hello"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://www.wilhemarnoldy.fr"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.wilhemarnoldy.fr/"
+msgstr ""
+
+#: admin/class-wa-client-portal-export.php:78
+msgid "ID"
+msgstr ""
+
+#: templates/template-client-portal.php:51
+msgid "Last Name"
+msgstr ""
+
+#: admin/class-wa-client-portal-export.php:81
+msgid "Last name"
+msgstr ""
+
+#: admin/wa-client-portal-clients-page.php:12
+msgid "Lastname"
+msgstr ""
+
+#: templates/template-client-portal.php:31
+msgid "Login Required"
+msgstr ""
+
+#: public/class-wa-client-portal-menu.php:74
+#: templates/template-client-portal.php:108
+msgid "Logout"
+msgstr ""
+
+#: templates/template-client-portal.php:34
+msgid "Lost your password?"
+msgstr ""
+
+#: admin/wa-client-portal-clients-page.php:15
+#: admin/class-wa-client-portal-export.php:85
+#: templates/template-client-portal.php:57
+msgid "Media"
+msgstr ""
+
+#: admin/class-wa-client-portal-menu.php:7
+#: admin/class-wa-client-portal-menu.php:8
+#: admin/wa-client-portal-clients-page.php:7
+#: admin/class-wa-client-portal-export.php:33
+msgid "Members"
+msgstr ""
+
+#: templates/template-client-portal.php:104
+msgid "No private pages available."
+msgstr ""
+
+#: admin/wa-client-portal-clients-page.php:16
+#: admin/class-wa-client-portal-export.php:86
+#: templates/template-client-portal.php:60
+msgid "Phone"
+msgstr ""
+
+#: templates/template-client-portal.php:40
+#: templates/template-client-portal.php:63
+msgid "Register"
+msgstr ""
+
+#: templates/template-client-portal.php:66
+msgid "Registration is currently disabled."
+msgstr ""
+
+#: admin/class-wa-client-portal-export.php:79
+msgid "Username"
+msgstr ""
+
+#: admin/class-wa-client-portal-export.php:89
+msgid "Verified"
+msgstr ""
+
+#. Name of the plugin
+msgid "WA Private Client Portal"
+msgstr ""
+
+#: templates/template-client-portal.php:93
+msgid "Welcome to the client portal!"
+msgstr ""
+
+#. Author of the plugin
+msgid "Wilhem Arnoldy"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"WordPress Client Portal Plugin that creates private pages for all users that "
+"only an administrator can edit."
+msgstr ""
