@@ -83,3 +83,43 @@ function run_wa_client_portal() {
 
 }
 run_wa_client_portal();
+
+// Auto-generate username from first and last name on registration when user login is empty 
+add_action('init', function() {
+    if (
+        isset($_POST['user_email'], $_POST['first_name'], $_POST['last_name']) &&
+        isset($_GET['action']) && $_GET['action'] === 'register' &&
+        empty($_POST['user_login'])
+    ) {
+        $first = sanitize_user(strtolower(trim($_POST['first_name'])));
+        $last = sanitize_user(strtolower(trim($_POST['last_name'])));
+        $username = $first . '.' . $last;
+        $base_username = $username;
+        $i = 1;
+        while (username_exists($username)) {
+            $username = $base_username . $i;
+            $i++;
+        }
+        $_POST['user_login'] = $username;
+    }
+});
+
+// Save extra registration fields to user meta
+add_action('user_register', function($user_id) {
+	$prefix = 'wacp-';
+    if (isset($_POST['first_name'])) {
+        update_user_meta($user_id, 'first_name', sanitize_text_field($_POST['first_name']));
+    }
+    if (isset($_POST['last_name'])) {
+        update_user_meta($user_id, 'last_name', sanitize_text_field($_POST['last_name']));
+    }
+    if (isset($_POST['user_entity'])) {
+        update_user_meta($user_id, $prefix.'entity', sanitize_text_field($_POST['user_entity']));
+    }
+    if (isset($_POST['user_media'])) {
+        update_user_meta($user_id, $prefix.'media', sanitize_text_field($_POST['user_media']));
+    }
+    if (isset($_POST['user_phone'])) {
+        update_user_meta($user_id, $prefix.'phone', sanitize_text_field($_POST['user_phone']));
+    }
+});

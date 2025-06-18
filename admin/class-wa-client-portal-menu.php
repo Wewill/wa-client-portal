@@ -4,13 +4,13 @@
  */
 function wa_client_portal_admin_menu() {
 	add_menu_page(
-		__('Clients', 'wacp'),
-		__('Clients', 'wacp'),
+		__('Members', 'wacp'),
+		__('Members', 'wacp'),
 		'list_users',
 		'wa-client-portal-clients',
 		'wa_client_portal_clients_page',
-		'dashicons-groups',
-		6
+		'dashicons-editor-table',
+		71 // 71 place l'item juste après users.php (utilisateurs)
 	);
 }
 add_action('admin_menu', 'wa_client_portal_admin_menu');

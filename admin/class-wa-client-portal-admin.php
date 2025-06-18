@@ -118,6 +118,10 @@ class Wa_Client_Portal_Admin {
 
 		// Include user custom role 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wa-client-portal-roles.php';
+
+		// Include members export
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wa-client-portal-export.php';
+
 	}
 
 	/**

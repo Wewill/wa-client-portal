@@ -34,14 +34,31 @@ while ( have_posts() ) :
 				echo '<p><a href="' . wp_lostpassword_url() . '">' . esc_html__( 'Lost your password?', 'wacp' ) . '</a></p>';
                 echo '</div>'; // Login form end 
 
-			// Display a register form container 
+				// Display a register form container 
 				echo '<div class="register-form-container" style="margin: 1rem 0; padding: 3rem; border: 1px solid var(--waff-color-layout-trans-4); border-radius: 5px; background: var(--waff-color-layout-trans-2)">';
-                echo '<i class="bi bi-key fs-1"></i>';
+				echo '<i class="bi bi-key fs-1"></i>';
 				echo '<h6 style="text-align: left;">' . esc_html__( 'Register', 'wacp' ) . '</h6>';
 				if ( get_option( 'users_can_register' ) ) {
-					echo '<form action="' . esc_url( site_url( 'wp-login.php?action=register', 'login_post' ) ) . '" method="post">';
-					echo '<p><label for="user_login">' . esc_html__( 'Username', 'wacp' ) . '</label><input type="text" name="user_login" id="user_login" class="input" required></p>';
+					echo '<form action="' . esc_url( site_url( 'wp-login.php?action=register', 'login_post' ) ) . '" method="post" enctype="multipart/form-data">';
+					// Username field removed, will be auto-generated
+					// Email
 					echo '<p><label for="user_email">' . esc_html__( 'Email', 'wacp' ) . '</label><input type="email" name="user_email" id="user_email" class="input" required></p>';
+
+					// Firstname field
+					echo '<p><label for="first_name">' . esc_html__( 'First Name', 'wacp' ) . '</label><input type="text" name="first_name" id="first_name" class="input" required></p>';
+
+					// Lastname field
+					echo '<p><label for="last_name">' . esc_html__( 'Last Name', 'wacp' ) . '</label><input type="text" name="last_name" id="last_name" class="input" required></p>';
+
+					// Entity field
+					echo '<p><label for="user_entity">' . esc_html__( 'Entity', 'wacp' ) . '</label><input type="text" name="user_entity" id="user_entity" class="input" required></p>';
+
+					// Media field (file upload)
+					echo '<p><label for="user_media">' . esc_html__( 'Media', 'wacp' ) . '</label><input type="text" name="user_media" id="user_media" class="input" required></p>';
+
+					// Phone field
+					echo '<p><label for="user_phone">' . esc_html__( 'Phone', 'wacp' ) . '</label><input type="tel" name="user_phone" id="user_phone" class="input" required></p>';
+
 					do_action( 'register_form' );
 					echo '<p><input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="' . esc_attr__( 'Register', 'wacp' ) . '"></p>';
 					echo '</form>';
