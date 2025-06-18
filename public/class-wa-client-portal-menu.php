@@ -71,7 +71,7 @@ class Wa_Client_Portal_Menu {
             }
 
             // Add logout link.
-            $parent_item .= '<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="' . esc_url( wp_logout_url() ) . '">' . esc_html__( 'Logout', 'wacpm' ) . '</a></li>';
+            $parent_item .= '<li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="' . esc_url( wp_logout_url() ) . '">' . esc_html__( 'Logout', 'wacp' ) . '</a></li>';
 
             // End sub-menu and parent item.
             $parent_item .= '</ul></li>';
