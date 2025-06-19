@@ -37,4 +37,14 @@ add_action('wp_dashboard_setup', function() {
 			}
 		});
 	}
-}, 99); // Utilise une priorité élevée pour s'assurer que tous les widgets sont déjà ajoutés
+}, 100); // Utilise une priorité élevée pour s'assurer que tous les widgets sont déjà ajoutés
+
+
+// Supprimer le widget Redux Framework News
+add_action('wp_dashboard_setup', 'remove_redux_dashboard_widget', 100);
+function remove_redux_dashboard_widget() {
+    global $wp_meta_boxes;
+    if (isset($wp_meta_boxes['dashboard']['side']['high']['redux_dashboard_widget'])) {
+        unset($wp_meta_boxes['dashboard']['side']['high']['redux_dashboard_widget']);
+    }
+}
