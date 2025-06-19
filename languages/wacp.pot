@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WA Private Client Portal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-18 21:32+0000\n"
+"POT-Creation-Date: 2025-06-19 08:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -20,7 +20,12 @@ msgstr ""
 msgid "#"
 msgstr ""
 
+#: admin/class-wa-client-portal-roles.php:34
+msgid "Access my client portal"
+msgstr ""
+
 #: includes/class-wa-client-portal-activator.php:37
+#: admin/class-wa-client-portal-roles.php:22
 msgid "Client Portal"
 msgstr ""
 
@@ -30,16 +35,14 @@ msgstr ""
 
 #: admin/wa-client-portal-clients-page.php:17
 #: admin/class-wa-client-portal-export.php:82
+#: templates/template-client-portal.php:47
 msgid "E-mail"
 msgstr ""
 
-#: templates/template-client-portal.php:45
-msgid "Email"
-msgstr ""
-
+#: admin/class-wa-client-portal-user.php:16
 #: admin/wa-client-portal-clients-page.php:14
 #: admin/class-wa-client-portal-export.php:84
-#: templates/template-client-portal.php:54
+#: templates/template-client-portal.php:56
 msgid "Entity"
 msgstr ""
 
@@ -56,16 +59,13 @@ msgstr ""
 msgid "Export members"
 msgstr ""
 
-#: admin/class-wa-client-portal-export.php:80
-msgid "First name"
-msgstr ""
-
 #: admin/wa-client-portal-clients-page.php:13
-#: templates/template-client-portal.php:48
+#: admin/class-wa-client-portal-export.php:80
+#: templates/template-client-portal.php:50
 msgid "Firstname"
 msgstr ""
 
-#: templates/template-client-portal.php:91
+#: templates/template-client-portal.php:93
 msgid "Hello"
 msgstr ""
 
@@ -81,31 +81,29 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#: admin/class-wa-client-portal-export.php:81
-msgid "Last name"
-msgstr ""
-
 #: admin/wa-client-portal-clients-page.php:12
-#: templates/template-client-portal.php:51
+#: admin/class-wa-client-portal-export.php:81
+#: templates/template-client-portal.php:53
 msgid "Lastname"
 msgstr ""
 
-#: templates/template-client-portal.php:31
+#: templates/template-client-portal.php:33
 msgid "Login Required"
 msgstr ""
 
 #: public/class-wa-client-portal-menu.php:74
-#: templates/template-client-portal.php:108
+#: templates/template-client-portal.php:110
 msgid "Logout"
 msgstr ""
 
-#: templates/template-client-portal.php:34
+#: templates/template-client-portal.php:36
 msgid "Lost your password?"
 msgstr ""
 
+#: admin/class-wa-client-portal-user.php:21
 #: admin/wa-client-portal-clients-page.php:15
 #: admin/class-wa-client-portal-export.php:85
-#: templates/template-client-portal.php:57
+#: templates/template-client-portal.php:59
 msgid "Media"
 msgstr ""
 
@@ -116,22 +114,27 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
-#: templates/template-client-portal.php:104
+#: admin/class-wa-client-portal-roles.php:36
+msgid "No client portal page found."
+msgstr ""
+
+#: templates/template-client-portal.php:106
 msgid "No private pages available."
 msgstr ""
 
+#: admin/class-wa-client-portal-user.php:26
 #: admin/wa-client-portal-clients-page.php:16
 #: admin/class-wa-client-portal-export.php:86
-#: templates/template-client-portal.php:60
+#: templates/template-client-portal.php:62
 msgid "Phone"
 msgstr ""
 
-#: templates/template-client-portal.php:40
-#: templates/template-client-portal.php:63
+#: templates/template-client-portal.php:42
+#: templates/template-client-portal.php:65
 msgid "Register"
 msgstr ""
 
-#: templates/template-client-portal.php:66
+#: templates/template-client-portal.php:68
 msgid "Registration is currently disabled."
 msgstr ""
 
@@ -147,7 +150,7 @@ msgstr ""
 msgid "WA Private Client Portal"
 msgstr ""
 
-#: templates/template-client-portal.php:93
+#: templates/template-client-portal.php:95
 msgid "Welcome to the client portal!"
 msgstr ""
 

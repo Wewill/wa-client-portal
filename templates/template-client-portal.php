@@ -44,7 +44,7 @@ while ( have_posts() ) :
 					echo '<form action="' . esc_url( site_url( 'wp-login.php?action=register', 'login_post' ) ) . '" method="post" enctype="multipart/form-data">';
 					// Username field removed, will be auto-generated
 					// Email
-					echo '<p><label for="user_email">' . esc_html__( 'Email', 'wacp' ) . '</label><input type="email" name="user_email" id="user_email" class="input" required></p>';
+					echo '<p><label for="user_email">' . esc_html__( 'E-mail', 'wacp' ) . '</label><input type="email" name="user_email" id="user_email" class="input" required></p>';
 
 					// Firstname field
 					echo '<p><label for="first_name">' . esc_html__( 'Firstname', 'wacp' ) . '</label><input type="text" name="first_name" id="first_name" class="input" required></p>';

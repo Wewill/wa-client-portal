@@ -19,7 +19,7 @@ add_action('wp_dashboard_setup', function() {
 		// Supprime tous les widgets du dashboard
 		$wp_meta_boxes['dashboard'] = array();
 		// Ajoute un widget personnalisé
-		wp_add_dashboard_widget('client_portal_dashboard_widget', __('Client portal', 'wacp'), function() {
+		wp_add_dashboard_widget('client_portal_dashboard_widget', __('Client Portal', 'wacp'), function() {
 			// Recherche la page avec le template client portal
 			$args = [
 				'meta_key'   => '_wp_page_template',

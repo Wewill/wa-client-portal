@@ -24,9 +24,12 @@ msgid "Access my client portal"
 msgstr "Accéder à mon espace Pro/Presse"
 
 #: includes/class-wa-client-portal-activator.php:37
-#: admin/class-wa-client-portal-roles.php:22
 msgid "Client Portal"
 msgstr "Espace Pro/Presse"
+
+#: admin/class-wa-client-portal-roles.php:22
+msgid "Client portal"
+msgstr ""
 
 #: admin/class-wa-client-portal-export.php:88
 msgid "Date"
@@ -34,8 +37,11 @@ msgstr ""
 
 #: admin/wa-client-portal-clients-page.php:17
 #: admin/class-wa-client-portal-export.php:82
-#: templates/template-client-portal.php:47
 msgid "E-mail"
+msgstr ""
+
+#: templates/template-client-portal.php:47
+msgid "Email"
 msgstr ""
 
 #: admin/class-wa-client-portal-user.php:16

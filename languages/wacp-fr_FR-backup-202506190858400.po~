@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WA Private Client Portal\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-18 21:27+0000\n"
-"PO-Revision-Date: 2025-06-19 08:58+0000\n"
+"PO-Revision-Date: 2025-06-18 21:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -19,12 +19,7 @@ msgstr ""
 msgid "#"
 msgstr ""
 
-#: admin/class-wa-client-portal-roles.php:34
-msgid "Access my client portal"
-msgstr "Accéder à mon espace Pro/Presse"
-
 #: includes/class-wa-client-portal-activator.php:37
-#: admin/class-wa-client-portal-roles.php:22
 msgid "Client Portal"
 msgstr "Espace Pro/Presse"
 
@@ -34,14 +29,16 @@ msgstr ""
 
 #: admin/wa-client-portal-clients-page.php:17
 #: admin/class-wa-client-portal-export.php:82
-#: templates/template-client-portal.php:47
 msgid "E-mail"
 msgstr ""
 
-#: admin/class-wa-client-portal-user.php:16
+#: templates/template-client-portal.php:45
+msgid "Email"
+msgstr ""
+
 #: admin/wa-client-portal-clients-page.php:14
 #: admin/class-wa-client-portal-export.php:84
-#: templates/template-client-portal.php:56
+#: templates/template-client-portal.php:54
 msgid "Entity"
 msgstr "Entité"
 
@@ -51,20 +48,23 @@ msgstr ""
 
 #: admin/class-wa-client-portal-export.php:33
 msgid "export"
-msgstr "exporter"
+msgstr ""
 
 #: admin/class-wa-client-portal-export.php:22
 #: admin/class-wa-client-portal-export.php:23
 msgid "Export members"
 msgstr "Export membres pro"
 
-#: admin/wa-client-portal-clients-page.php:13
 #: admin/class-wa-client-portal-export.php:80
-#: templates/template-client-portal.php:50
+msgid "First name"
+msgstr ""
+
+#: admin/wa-client-portal-clients-page.php:13
+#: templates/template-client-portal.php:48
 msgid "Firstname"
 msgstr "Prénom"
 
-#: templates/template-client-portal.php:93
+#: templates/template-client-portal.php:91
 msgid "Hello"
 msgstr "Bonjour"
 
@@ -80,29 +80,31 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#: admin/wa-client-portal-clients-page.php:12
 #: admin/class-wa-client-portal-export.php:81
-#: templates/template-client-portal.php:53
+msgid "Last name"
+msgstr ""
+
+#: admin/wa-client-portal-clients-page.php:12
+#: templates/template-client-portal.php:51
 msgid "Lastname"
 msgstr "Nom"
 
-#: templates/template-client-portal.php:33
+#: templates/template-client-portal.php:31
 msgid "Login Required"
 msgstr "Connexion requise"
 
 #: public/class-wa-client-portal-menu.php:74
-#: templates/template-client-portal.php:110
+#: templates/template-client-portal.php:108
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: templates/template-client-portal.php:36
+#: templates/template-client-portal.php:34
 msgid "Lost your password?"
 msgstr "Mot de passe oublié ?"
 
-#: admin/class-wa-client-portal-user.php:21
 #: admin/wa-client-portal-clients-page.php:15
 #: admin/class-wa-client-portal-export.php:85
-#: templates/template-client-portal.php:59
+#: templates/template-client-portal.php:57
 msgid "Media"
 msgstr "Média"
 
@@ -113,29 +115,24 @@ msgstr "Média"
 msgid "Members"
 msgstr "Pro/Presse"
 
-#: admin/class-wa-client-portal-roles.php:36
-msgid "No client portal page found."
-msgstr "Aucune page de espace Pro/Presse trouvée."
-
-#: templates/template-client-portal.php:106
+#: templates/template-client-portal.php:104
 msgid "No private pages available."
 msgstr "Pas de pages privées disponibles."
 
-#: admin/class-wa-client-portal-user.php:26
 #: admin/wa-client-portal-clients-page.php:16
 #: admin/class-wa-client-portal-export.php:86
-#: templates/template-client-portal.php:62
+#: templates/template-client-portal.php:60
 msgid "Phone"
 msgstr "Téléphone"
 
-#: templates/template-client-portal.php:42
-#: templates/template-client-portal.php:65
+#: templates/template-client-portal.php:40
+#: templates/template-client-portal.php:63
 msgid "Register"
 msgstr "Inscription"
 
-#: templates/template-client-portal.php:68
+#: templates/template-client-portal.php:66
 msgid "Registration is currently disabled."
-msgstr "L'inscription est actuellement désactivée."
+msgstr ""
 
 #: admin/class-wa-client-portal-export.php:79
 msgid "Username"
@@ -147,9 +144,9 @@ msgstr "Vérifié"
 
 #. Name of the plugin
 msgid "WA Private Client Portal"
-msgstr "WA Espace Pro/Presse"
+msgstr ""
 
-#: templates/template-client-portal.php:95
+#: templates/template-client-portal.php:93
 msgid "Welcome to the client portal!"
 msgstr "Bienvenue dans l'espace Pro/Presse"
 
@@ -162,5 +159,3 @@ msgid ""
 "WordPress Client Portal Plugin that creates private pages for all users that "
 "only an administrator can edit."
 msgstr ""
-"Plugin de portail client WordPress qui crée des pages privées pour tous les "
-"utilisateurs que seul un administrateur peut modifier."
