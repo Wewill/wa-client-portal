@@ -37,4 +37,4 @@ add_action('wp_dashboard_setup', function() {
 			}
 		});
 	}
-});
+}, 99); // Utilise une priorité élevée pour s'assurer que tous les widgets sont déjà ajoutés
