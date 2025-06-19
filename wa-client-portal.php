@@ -126,19 +126,23 @@ add_action('user_register', function($user_id) {
 
 // Redirige les utilisateurs 'client-portal' vers la page portail après connexion
 add_filter('login_redirect', function($redirect_to, $request, $user) {
-    if (isset($user->roles) && in_array('client-portal', $user->roles)) {
-        // Recherche la page qui utilise le template 'Client portal content'
-		$args_template = [
-			'meta_key'   => '_wp_page_template',
-			'meta_value' => '../templates/template-client-portal.php',
-			'post_type'  => 'page',
-			'post_status'=> 'publish',
-			'numberposts'=> 1,
-		];
-        $portal_page = get_posts($args);
-        if (!empty($portal_page)) {
-            return get_permalink($portal_page[0]->ID);
-        }
+    if (is_wp_error($user) || !isset($user->roles) || !in_array('client-portal', $user->roles)) {
+        return $redirect_to;
     }
+
+    // Recherche la page qui utilise le template 'template-client-portal.php'
+    $args = [
+        'meta_key'    => '_wp_page_template',
+        'meta_value'  => 'template-client-portal.php', // Juste le nom du fichier
+        'post_type'   => 'page',
+        'post_status' => 'publish',
+        'numberposts' => 1,
+    ];
+
+    $portal_page = get_posts($args);
+    if (!empty($portal_page)) {
+        return get_permalink($portal_page[0]->ID);
+    }
+
     return $redirect_to;
 }, 10, 3);
