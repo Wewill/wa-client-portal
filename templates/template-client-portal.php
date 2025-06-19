@@ -9,10 +9,12 @@
 get_header();
 ?>
 
+<div class="container">
+
 <?php 
 // Start the Loop.
 while ( have_posts() ) :
-	echo '<h2>' . get_the_title() . '</h2>';
+	// echo '<h2>' . get_the_title() . '</h2>';
 	the_post();
 
 	        if ( !is_user_logged_in() ) {
@@ -119,5 +121,9 @@ while ( have_posts() ) :
 	}
 
 endwhile;
+?>
 
+</div>
+
+<?php
 get_footer();
