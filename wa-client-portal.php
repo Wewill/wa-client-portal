@@ -133,7 +133,7 @@ add_filter('login_redirect', function($redirect_to, $request, $user) {
     // Recherche la page qui utilise le template 'template-client-portal.php'
     $args = [
         'meta_key'    => '_wp_page_template',
-        'meta_value'  => 'template-client-portal.php', // Juste le nom du fichier
+		'meta_value' => '../templates/template-client-portal.php',
         'post_type'   => 'page',
         'post_status' => 'publish',
         'numberposts' => 1,
