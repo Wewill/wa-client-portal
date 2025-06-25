@@ -14,125 +14,134 @@ defined('ABSPATH') || exit;
 $messages = [];
 
 // Traitement du formulaire
-if (!empty($_POST['magic_email']) && is_email($_POST['magic_email'])) {
+if (!empty($_POST['magic_email'])) {
 
-	echo '—————————— magic_email ——————————<br>';
+	// Vérifier si l'email est valide
+	echo '—————————— POST magic_email ——————————<br>';
+	if ( is_email($_POST['magic_email']) ) {
 
-	$email = sanitize_email($_POST['magic_email']);
-	$resend_magic_email = isset($_POST['resend_magic_email']) ? intval($_POST['resend_magic_email']) : 0;
-	$create_magic_email = isset($_POST['create_magic_email']) ? intval($_POST['create_magic_email']) : 0;
-	$limit_key = 'magic_login_attempts_' . md5($email);
-	$attempts = get_transient($limit_key) ?: 0;
+		echo '—————————— magic_email ——————————<br>';
 
-	// Limite à 5 tentatives / 24h
-	if ($attempts >= 10) {
-		$messages[] = "<p style='color:red'>Trop de demandes aujourd'hui. Réessayez demain.</p>";
-	} else {
-		$user = get_user_by('email', $email);
+		$email = sanitize_email($_POST['magic_email']);
+		$resend_magic_email = isset($_POST['resend_magic_email']) ? intval($_POST['resend_magic_email']) : 0;
+		$create_magic_email = isset($_POST['create_magic_email']) ? intval($_POST['create_magic_email']) : 0;
+		$limit_key = 'magic_login_attempts_' . md5($email);
+		$attempts = get_transient($limit_key) ?: 0;
 
-		// Si on vient du formulaire de création et que l'utilisateur existe déjà
-		if ($create_magic_email === 1 && $user) {
-			$messages[] = "<p style='color:orange'>Un compte existe déjà avec l'adresse <strong>{$email}</strong>.</p>";
-			// On continue pour envoyer le lien magique
-		}
+		// Limite à 5 tentatives / 24h
+		if ($attempts >= 10) {
+			$messages[] = "<p style='color:red'>Trop de demandes aujourd'hui. Réessayez demain.</p>";
+		} else {
+			$user = get_user_by('email', $email);
 
-		// Créer utilisateur si inexistant et ce n'est pas une demande de renvoi de lien
-		if (!$user && $resend_magic_email === 0) {
-			// Create an automatic username from first and last name
-			if (
-				isset($_POST['first_name']) && isset($_POST['last_name']) &&
-				trim(sanitize_text_field($_POST['first_name'])) !== '' &&
-				trim(sanitize_text_field($_POST['last_name'])) !== ''
-			) {
-				echo '—————————— first_name +  last_name ——————————<br>';
+			// Si on vient du formulaire de création et que l'utilisateur existe déjà
+			if ($create_magic_email === 1 && $user) {
+				$messages[] = "<p style='color:orange'>Un compte existe déjà avec l'adresse <strong>{$email}</strong>.</p>";
+				// On continue pour envoyer le lien magique
+			}
 
-				$first_name = sanitize_key(sanitize_user(strtolower(sanitize_text_field($_POST['first_name']))));
-				$last_name = sanitize_key(sanitize_user(strtolower(sanitize_text_field($_POST['last_name']))));
-				$username = $first_name . '.' . $last_name;
+			// Créer utilisateur si inexistant et ce n'est pas une demande de renvoi de lien
+			if (!$user && $resend_magic_email === 0) {
+				// Create an automatic username from first and last name
+				if (
+					isset($_POST['first_name']) && isset($_POST['last_name']) &&
+					trim(sanitize_text_field($_POST['first_name'])) !== '' &&
+					trim(sanitize_text_field($_POST['last_name'])) !== ''
+				) {
+					echo '—————————— first_name +  last_name ——————————<br>';
 
-				echo '—————————— '.$username.' ——————————<br>';
+					$first_name = sanitize_key(sanitize_user(strtolower(sanitize_text_field($_POST['first_name']))));
+					$last_name = sanitize_key(sanitize_user(strtolower(sanitize_text_field($_POST['last_name']))));
+					$username = $first_name . '.' . $last_name;
 
-				// Check if username already exists
-				$base_username = $username;
-				$i = 1;
-				while (username_exists($username)) {
-					$username = $base_username . $i;
-					$i++;
+					echo '—————————— '.$username.' ——————————<br>';
+
+					// Check if username already exists
+					$base_username = $username;
+					$i = 1;
+					while (username_exists($username)) {
+						$username = $base_username . $i;
+						$i++;
+					}
+
+					// Create user with generated username
+					$user_id = wp_create_user($username, wp_generate_password(), $email);
+
+					// Update first and last name
+					wp_update_user([
+						'ID' => $user_id,
+						'first_name' => $first_name,
+						'last_name' => $last_name,
+					]);
+				} else {
+					echo '—————————— email ——————————<br>';
+
+					// If first and last name are not provided, use the email as username
+					$username = sanitize_user($email);
+					$user_id = wp_create_user($username, wp_generate_password(), $email);
 				}
 
-				// Create user with generated username
-				$user_id = wp_create_user($username, wp_generate_password(), $email);
+				// Set default role to 'client-portal'
+				$user = new WP_User($user_id);
+				$user->set_role('client-portal');
 
-				// Update first and last name
-				wp_update_user([
-					'ID' => $user_id,
-					'first_name' => $first_name,
-					'last_name' => $last_name,
-				]);
-			} else {
-				echo '—————————— email ——————————<br>';
+				// Save additional user meta
+				$prefix = 'wacp-';
+				if (isset($_POST['first_name'])) {
+					update_user_meta($user_id, 'first_name', sanitize_user($_POST['first_name']));
+				}
+				if (isset($_POST['last_name'])) {
+					update_user_meta($user_id, 'last_name', sanitize_user($_POST['last_name']));
+				}
+				if (isset($_POST['user_entity'])) {
+					update_user_meta($user_id, $prefix . 'entity', sanitize_text_field($_POST['user_entity']));
+				}
+				if (isset($_POST['user_media'])) {
+					update_user_meta($user_id, $prefix . 'media', sanitize_text_field($_POST['user_media']));
+				}
+				if (isset($_POST['user_phone'])) {
+					update_user_meta($user_id, $prefix . 'phone', sanitize_text_field($_POST['user_phone']));
+				}
 
-				// If first and last name are not provided, use the email as username
-				$username = sanitize_user($email);
-				$user_id = wp_create_user($username, wp_generate_password(), $email);
-			}
-
-			// Set default role to 'client-portal'
-			$user = new WP_User($user_id);
-			$user->set_role('client-portal');
-
-			// Save additional user meta
-			$prefix = 'wacp-';
-			if (isset($_POST['first_name'])) {
-				update_user_meta($user_id, 'first_name', sanitize_user($_POST['first_name']));
-			}
-			if (isset($_POST['last_name'])) {
-				update_user_meta($user_id, 'last_name', sanitize_user($_POST['last_name']));
-			}
-			if (isset($_POST['user_entity'])) {
-				update_user_meta($user_id, $prefix . 'entity', sanitize_text_field($_POST['user_entity']));
-			}
-			if (isset($_POST['user_media'])) {
-				update_user_meta($user_id, $prefix . 'media', sanitize_text_field($_POST['user_media']));
-			}
-			if (isset($_POST['user_phone'])) {
-				update_user_meta($user_id, $prefix . 'phone', sanitize_text_field($_POST['user_phone']));
+				$user = get_user_by('ID', $user_id);
 			}
 
-			$user = get_user_by('ID', $user_id);
+			// Si l'utilisateur n'existe pas et qu'on ne renvoie pas le lien magique, on demande l'inscription
+			if (!$user && $resend_magic_email === 1) {
+				$messages[] = "<p style='color:red'>Aucun utilisateur trouvé avec l'email <strong>{$email}</strong>.</p>";
+				$unknown_user = true;
+			}
+
+			if ( $user ) {
+				$user_id = $user->ID;
+
+				// Générer token
+				$token = bin2hex(random_bytes(32));
+				update_user_meta($user_id, 'magic_login_token', $token);
+				update_user_meta($user_id, 'magic_login_token_expires', time() + (6 * 30 * 24 * 60 * 60)); // 6 mois
+
+				// Envoi par email
+				$url = add_query_arg([
+					'magic_login' => 1,
+					'token' => $token,
+					'user_id' => $user_id,
+				], site_url());
+
+				wp_mail($email, 'Votre lien magique de connexion', "Cliquez ici pour vous connecter : $url");
+
+					$messages[] = "<p style='color:green'>Un lien de connexion a été envoyé à <strong>{$email}</strong>. Vérifiez votre boîte mail.</p>";
+
+				// Incrémenter compteur
+				set_transient($limit_key, $attempts + 1, DAY_IN_SECONDS);
+			}
 		}
 
-		// Si l'utilisateur n'existe pas et qu'on ne renvoie pas le lien magique, on demande l'inscription
-		if (!$user && $resend_magic_email === 1) {
-			$messages[] = "<p style='color:red'>Aucun utilisateur trouvé avec l'email <strong>{$email}</strong>.</p>";
-			$unknown_user = true;
-		}
-
-		if ( $user ) {
-			$user_id = $user->ID;
-
-			// Générer token
-			$token = bin2hex(random_bytes(32));
-			update_user_meta($user_id, 'magic_login_token', $token);
-			update_user_meta($user_id, 'magic_login_token_expires', time() + (6 * 30 * 24 * 60 * 60)); // 6 mois
-
-			// Envoi par email
-			$url = add_query_arg([
-				'magic_login' => 1,
-				'token' => $token,
-				'user_id' => $user_id,
-			], site_url());
-
-			wp_mail($email, 'Votre lien magique de connexion', "Cliquez ici pour vous connecter : $url");
-
-				$messages[] = "<p style='color:green'>Un lien de connexion a été envoyé à <strong>{$email}</strong>. Vérifiez votre boîte mail.</p>";
-
-			// Incrémenter compteur
-			set_transient($limit_key, $attempts + 1, DAY_IN_SECONDS);
-		}
+	// Not valid email 
+	} else {
+		$messages[] = "<p style='color:red'>Veuillez entrer une adresse <b>e-mail</b> valide.</p>";
 	}
-} else {
-	$messages[] = "<p style='color:red'>Veuillez entrer une adresse <b>e-mail</b> valide.</p>";
+
+// No email from form 
 }
 
 // Traitement du lien magique
@@ -247,20 +256,29 @@ while ( have_posts() ) :
 					// Email
 					echo '<p><label for="magic_email">' . esc_html__( 'E-mail', 'wacp' ) . '</label><input type="email" name="magic_email" id="magic_email" class="input" required></p>';
 
-					// Firstname field
+					// Firstname and Lastname fields in two columns
+					echo '<div style="display: flex; gap: 1rem;">';
+					echo '<div style="flex:1;">';
 					echo '<p><label for="first_name">' . esc_html__( 'Firstname', 'wacp' ) . '</label><input type="text" name="first_name" id="first_name" class="input" required></p>';
-
-					// Lastname field
+					echo '</div>';
+					echo '<div style="flex:1;">';
 					echo '<p><label for="last_name">' . esc_html__( 'Lastname', 'wacp' ) . '</label><input type="text" name="last_name" id="last_name" class="input" required></p>';
-
-					// Entity field
-					echo '<p><label for="user_entity">' . esc_html__( 'Entity', 'wacp' ) . '</label><input type="text" name="user_entity" id="user_entity" class="input" required></p>';
-
-					// Media field (file upload)
-					echo '<p><label for="user_media">' . esc_html__( 'Media', 'wacp' ) . '</label><input type="text" name="user_media" id="user_media" class="input" required></p>';
+					echo '</div>';
+					echo '</div>';
 
 					// Phone field
 					echo '<p><label for="user_phone">' . esc_html__( 'Phone', 'wacp' ) . '</label><input type="tel" name="user_phone" id="user_phone" class="input" required></p>';
+
+					// Entity and Media fields in two columns
+					echo '<div style="display: flex; gap: 1rem;">';
+					echo '<div style="flex:1;">';
+					echo '<p><label for="user_entity">' . esc_html__( 'Entity', 'wacp' ) . '</label><input type="text" name="user_entity" id="user_entity" class="input" required></p>';
+					echo '</div>';
+					echo '<div style="flex:1;">';
+					echo '<p><label for="user_media">' . esc_html__( 'Media', 'wacp' ) . '</label><input type="text" name="user_media" id="user_media" class="input" required></p>';
+					echo '</div>';
+					echo '</div>';
+
 
 					do_action( 'register_form' );
 					echo '<input type="hidden" name="create_magic_email" value="1">';
