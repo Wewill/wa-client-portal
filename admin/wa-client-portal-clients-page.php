@@ -39,15 +39,17 @@ $prefix = 'wacp-';
 							$cookie_expires = get_user_meta($client->ID, 'magic_login_cookie_expires', true);
 							$code_style = $cookie_expires ? 'style="color: green;"' : '';
 						?>
-						<code <?php echo $code_style; ?>><small>
-							<strong>
-								<?php echo !empty($token) ? esc_html($token) : '-'; ?>
-							</strong><br>
-							<strong><?php esc_html_e('Token Expires:', 'wacp'); ?></strong>
-							<?php echo $token_expires ? esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), intval($token_expires))) : '-'; ?><br>
-							<strong><?php esc_html_e('Cookie Expires:', 'wacp'); ?></strong>
-							<?php echo $cookie_expires ? esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), intval($cookie_expires))) : '-'; ?>
-						</small></code>
+						<?php if (empty($token)): ?>
+							-
+						<?php else: ?>
+							<code <?php echo $code_style; ?>><small>
+								<strong><?php echo esc_html($token); ?></strong><br>
+								<strong><?php esc_html_e('Token Expires:', 'wacp'); ?></strong>
+								<?php echo $token_expires ? esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), intval($token_expires))) : '-'; ?><br>
+								<strong><?php esc_html_e('Cookie Expires:', 'wacp'); ?></strong>
+								<?php echo $cookie_expires ? esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), intval($cookie_expires))) : '-'; ?>
+							</small></code>
+						<?php endif; ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

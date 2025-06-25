@@ -30,13 +30,13 @@ if (!empty($_POST['magic_email'])) {
 
 		// Limite à 5 tentatives / 24h
 		if ($attempts >= 10) {
-			$messages[] = "<p style='color:red'>Trop de demandes aujourd'hui. Réessayez demain.</p>";
+			$messages[] = "<p style='margin:0;color:red'>Trop de demandes aujourd'hui. Réessayez demain.</p>";
 		} else {
 			$user = get_user_by('email', $email);
 
 			// Si on vient du formulaire de création et que l'utilisateur existe déjà
 			if ($create_magic_email === 1 && $user) {
-				$messages[] = "<p style='color:orange'>Un compte existe déjà avec l'adresse <strong>{$email}</strong>.</p>";
+				$messages[] = "<p style='margin:0;color:orange'>Un compte existe déjà avec l'adresse <strong>{$email}</strong>.</p>";
 				// On continue pour envoyer le lien magique
 			}
 
@@ -108,7 +108,7 @@ if (!empty($_POST['magic_email'])) {
 
 			// Si l'utilisateur n'existe pas et qu'on ne renvoie pas le lien magique, on demande l'inscription
 			if (!$user && $resend_magic_email === 1) {
-				$messages[] = "<p style='color:red'>Aucun utilisateur trouvé avec l'email <strong>{$email}</strong>.</p>";
+				$messages[] = "<p style='margin:0;color:red'>Aucun utilisateur trouvé avec l'email <strong>{$email}</strong>.</p>";
 				$unknown_user = true;
 			}
 
@@ -129,7 +129,7 @@ if (!empty($_POST['magic_email'])) {
 
 				wp_mail($email, 'Votre lien magique de connexion', "Cliquez ici pour vous connecter : $url");
 
-					$messages[] = "<p style='color:green'>Un lien de connexion a été envoyé à <strong>{$email}</strong>. Vérifiez votre boîte mail.</p>";
+					$messages[] = "<p style='margin:0;color:green'>Un lien de connexion a été envoyé à <strong>{$email}</strong>. Vérifiez votre boîte mail.</p>";
 
 				// Incrémenter compteur
 				set_transient($limit_key, $attempts + 1, DAY_IN_SECONDS);
@@ -138,7 +138,7 @@ if (!empty($_POST['magic_email'])) {
 
 	// Not valid email 
 	} else {
-		$messages[] = "<p style='color:red'>Veuillez entrer une adresse <b>e-mail</b> valide.</p>";
+		$messages[] = "<p style='margin:0;color:red'>Veuillez entrer une adresse <b>e-mail</b> valide.</p>";
 	}
 
 // No email from form 
@@ -238,16 +238,20 @@ while ( have_posts() ) :
 					echo apply_filters( 'the_content', do_shortcode( $public_content ) );
 				}
 						
-				// Print messages if any.
-				foreach ($messages as $msg) {
-					echo $msg;
+				if (!empty($messages)) {
+					echo '<div class="client-portal-messages" style="margin: 1rem 0; padding: 1rem 2rem; border: 1px solid var(--waff-color-layout-trans-4); border-radius: 5px; background: var(--waff-color-layout-trans-2)">';
+					// Print messages if any.
+					foreach ($messages as $msg) {
+						echo $msg;
+					}
+					echo '</div>'; // Messages end 
 				}
 
 				// Display the login form in a styled container.
-				echo '<div class="client-portal-forms" style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin: 0 auto;">';
+				echo '<div class="client-portal-forms" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 0 auto;">';
 
 				// Display a register form container 
-				echo '<div class="register-form-container" style="margin: 1rem 0; padding: 3rem; border: 1px solid var(--waff-color-layout-trans-4); border-radius: 5px; background: var(--waff-color-layout-trans-2)">';
+				echo '<div class="register-form-container" style="margin: 1rem 0; padding: 2rem; border: 1px solid var(--waff-color-layout-trans-4); border-radius: 5px; background: var(--waff-color-layout-trans-2)">';
 				echo '<i class="bi bi-key fs-1"></i>';
 				echo '<h6 style="text-align: left;">' . esc_html__( 'New, register', 'wacp' ) . '</h6>';
 				if ( get_option( 'users_can_register' ) ) {
@@ -291,7 +295,7 @@ while ( have_posts() ) :
 
 
 				// Display a Receive login link form container
-				echo '<div class="login-form-container" style="margin: 1rem 0; padding: 3rem; border: 1px solid var(--waff-color-layout-trans-4); border-radius: 5px; background: var(--waff-color-layout-trans-2)">';
+				echo '<div class="login-form-container" style="margin: 1rem 0; padding: 2rem; border: 1px solid var(--waff-color-layout-trans-4); border-radius: 5px; background: var(--waff-color-layout-trans-2)">';
                 echo '<i class="bi bi-person-lock fs-1"></i>';
 				echo '<h6 style="text-align: left;">' . esc_html__( 'Already been there ?', 'wacp' ) . '</h6>';
 				// Display a login form without the password field.
