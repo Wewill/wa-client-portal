@@ -117,7 +117,7 @@ if (!empty($_POST['magic_email'])) {
 					'user_id' => $user_id,
 				], site_url());
 
-				wp_mail($email, esc_html__('Your magic login link', 'wacp'), esc_html__("Click here to log in: ", 'wacp') . $url);
+				wp_mail($email, esc_html__('Client Portal : your magic login link', 'wacp'), esc_html__("Click here to log in: ", 'wacp') . $url);
 
 				$messages[] = "<p style='margin:0;color:green'>" . sprintf(esc_html__("A login link has been sent to <strong>%s</strong>. Check your inbox.", 'wacp'), esc_html($email)) . "</p>";
 

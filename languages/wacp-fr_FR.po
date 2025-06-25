@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WA Private Client Portal\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-18 21:27+0000\n"
-"PO-Revision-Date: 2025-06-25 09:26+0000\n"
+"PO-Revision-Date: 2025-06-25 09:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -51,6 +51,10 @@ msgstr "Cliquez ici pour vous connecter :"
 #: admin/class-wa-client-portal-roles.php:22
 msgid "Client Portal"
 msgstr "Espace Pro/Presse"
+
+#: templates/template-client-portal.php:120
+msgid "Client Portal : your magic login link"
+msgstr "Espace Pro/Presse : votre lien de connexion automatique"
 
 #: admin/wa-client-portal-clients-page.php:49
 msgid "Cookie Expires:"
@@ -222,7 +226,3 @@ msgid ""
 msgstr ""
 "Plugin de portail client WordPress qui crée des pages privées pour tous les "
 "utilisateurs que seul un administrateur peut modifier."
-
-#: templates/template-client-portal.php:120
-msgid "Your magic login link"
-msgstr "Votre lien de connexion magique"

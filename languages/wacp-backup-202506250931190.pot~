@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WA Private Client Portal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-25 09:31+0000\n"
+"POT-Creation-Date: 2025-06-25 09:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -49,10 +49,6 @@ msgstr ""
 #: includes/class-wa-client-portal-activator.php:37
 #: admin/class-wa-client-portal-roles.php:22
 msgid "Client Portal"
-msgstr ""
-
-#: templates/template-client-portal.php:120
-msgid "Client Portal : your magic login link"
 msgstr ""
 
 #: admin/wa-client-portal-clients-page.php:49
@@ -222,4 +218,8 @@ msgstr ""
 msgid ""
 "WordPress Client Portal Plugin that creates private pages for all users that "
 "only an administrator can edit."
+msgstr ""
+
+#: templates/template-client-portal.php:120
+msgid "Your magic login link"
 msgstr ""
