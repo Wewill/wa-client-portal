@@ -1,14 +1,13 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: WA Private Client Portal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-25 09:22+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"POT-Creation-Date: 2025-06-18 21:27+0000\n"
+"PO-Revision-Date: 2025-06-25 09:26+0000\n"
+"Last-Translator: \n"
+"Language-Team: Français\n"
+"Language: fr_FR\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,54 +23,56 @@ msgstr ""
 #, php-format
 msgid "A login link has been sent to <strong>%s</strong>. Check your inbox."
 msgstr ""
+"Un lien de connexion a été envoyé à <strong>%s</strong>. Consultez votre "
+"boîte de réception."
 
 #: wa-client-portal.php:185
 msgid "Access denied."
-msgstr ""
+msgstr "Accès refusé."
 
 #: admin/class-wa-client-portal-roles.php:34
 msgid "Access my client portal"
-msgstr ""
+msgstr "Accéder à mon espace Pro/Presse"
 
 #: templates/template-client-portal.php:215
 msgid "Already been there ?"
-msgstr ""
+msgstr "Déjà venu ici ?"
 
 #: templates/template-client-portal.php:34
 #, php-format
 msgid "An account already exists with the address <strong>%s</strong>."
-msgstr ""
+msgstr "Il existe déjà un compte associé à l’adresse <strong>%s</strong>."
 
 #: templates/template-client-portal.php:120
 msgid "Click here to log in: "
-msgstr ""
+msgstr "Cliquez ici pour vous connecter :"
 
 #: includes/class-wa-client-portal-activator.php:37
 #: admin/class-wa-client-portal-roles.php:22
 msgid "Client Portal"
-msgstr ""
+msgstr "Espace Pro/Presse"
 
 #: admin/wa-client-portal-clients-page.php:49
 msgid "Cookie Expires:"
-msgstr ""
+msgstr "Le cookie expire le :"
 
 #: admin/class-wa-client-portal-export.php:88
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: admin/wa-client-portal-clients-page.php:17
 #: admin/class-wa-client-portal-export.php:82
 #: templates/template-client-portal.php:176
 #: templates/template-client-portal.php:218
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: admin/class-wa-client-portal-user.php:16
 #: admin/wa-client-portal-clients-page.php:14
 #: admin/class-wa-client-portal-export.php:84
 #: templates/template-client-portal.php:194
 msgid "Entity"
-msgstr ""
+msgstr "Entité"
 
 #: admin/class-wa-client-portal-export.php:45
 msgid "Export"
@@ -79,22 +80,22 @@ msgstr ""
 
 #: admin/class-wa-client-portal-export.php:33
 msgid "export"
-msgstr ""
+msgstr "exporter"
 
 #: admin/class-wa-client-portal-export.php:22
 #: admin/class-wa-client-portal-export.php:23
 msgid "Export members"
-msgstr ""
+msgstr "Export membres pro"
 
 #: admin/wa-client-portal-clients-page.php:13
 #: admin/class-wa-client-portal-export.php:80
 #: templates/template-client-portal.php:181
 msgid "Firstname"
-msgstr ""
+msgstr "Prénom"
 
 #: templates/template-client-portal.php:248
 msgid "Hello"
-msgstr ""
+msgstr "Bonjour"
 
 #. URI of the plugin
 msgid "https://www.wilhemarnoldy.fr"
@@ -110,105 +111,105 @@ msgstr ""
 
 #: wa-client-portal.php:179
 msgid "Invalid login link."
-msgstr ""
+msgstr "Lien de connexion invalide."
 
 #: admin/wa-client-portal-clients-page.php:12
 #: admin/class-wa-client-portal-export.php:81
 #: templates/template-client-portal.php:184
 msgid "Lastname"
-msgstr ""
+msgstr "Nom"
 
 #: public/class-wa-client-portal-menu.php:74
 #: templates/template-client-portal.php:265
 msgid "Logout"
-msgstr ""
+msgstr "Déconnexion"
 
 #: admin/wa-client-portal-clients-page.php:18
 msgid "Magic Login"
-msgstr ""
+msgstr "Connexion magique"
 
 #: admin/class-wa-client-portal-user.php:21
 #: admin/wa-client-portal-clients-page.php:15
 #: admin/class-wa-client-portal-export.php:85
 #: templates/template-client-portal.php:197
 msgid "Media"
-msgstr ""
+msgstr "Média"
 
 #: admin/class-wa-client-portal-menu.php:7
 #: admin/class-wa-client-portal-menu.php:8
 #: admin/wa-client-portal-clients-page.php:7
 #: admin/class-wa-client-portal-export.php:33
 msgid "Members"
-msgstr ""
+msgstr "Pro/Presse"
 
 #: templates/template-client-portal.php:171
 msgid "New, register"
-msgstr ""
+msgstr "Nouveau, inscrivez-vous"
 
 #: admin/class-wa-client-portal-roles.php:36
 msgid "No client portal page found."
-msgstr ""
+msgstr "Aucune page de espace Pro/Presse trouvée."
 
 #: templates/template-client-portal.php:261
 msgid "No private pages available."
-msgstr ""
+msgstr "Pas de pages privées disponibles."
 
 #: templates/template-client-portal.php:101
 #, php-format
 msgid "No user found with the email <strong>%s</strong>."
-msgstr ""
+msgstr "Aucun utilisateur trouvé avec l'e-mail <strong>%s</strong>."
 
 #: admin/class-wa-client-portal-user.php:26
 #: admin/wa-client-portal-clients-page.php:16
 #: admin/class-wa-client-portal-export.php:86
 #: templates/template-client-portal.php:189
 msgid "Phone"
-msgstr ""
+msgstr "Téléphone"
 
 #: templates/template-client-portal.php:131
 msgid "Please enter a valid <b>e-mail</b> address."
-msgstr ""
+msgstr "Veuillez saisir une adresse <b>e-mail</b> valide."
 
 #: templates/template-client-portal.php:220
 msgid "Receive login link"
-msgstr ""
+msgstr "Recevoir le lien de connexion"
 
 #: templates/template-client-portal.php:204
 msgid "Register"
-msgstr ""
+msgstr "Inscription"
 
 #: templates/template-client-portal.php:207
 msgid "Registration is currently disabled."
-msgstr ""
+msgstr "L'inscription est actuellement désactivée."
 
 #: wa-client-portal.php:175
 #, php-format
 msgid "This link has expired. <a href='%s'>Resend a new link?</a>"
-msgstr ""
+msgstr "Ce lien a expiré. <a href='%s'>Renvoyer un nouveau lien ?</a>"
 
 #: admin/wa-client-portal-clients-page.php:47
 msgid "Token Expires:"
-msgstr ""
+msgstr "Le jeton expire :"
 
 #: templates/template-client-portal.php:28
 msgid "Too many requests today. Please try again tomorrow."
-msgstr ""
+msgstr "Trop de demandes aujourd'hui. Veuillez réessayer demain."
 
 #: admin/class-wa-client-portal-export.php:79
 msgid "Username"
-msgstr ""
+msgstr "Utilisateur"
 
 #: admin/class-wa-client-portal-export.php:89
 msgid "Verified"
-msgstr ""
+msgstr "Vérifié"
 
 #. Name of the plugin
 msgid "WA Private Client Portal"
-msgstr ""
+msgstr "WA Espace Pro/Presse"
 
 #: templates/template-client-portal.php:250
 msgid "Welcome to the client portal!"
-msgstr ""
+msgstr "Bienvenue dans l'espace Pro/Presse"
 
 #. Author of the plugin
 msgid "Wilhem Arnoldy"
@@ -219,7 +220,9 @@ msgid ""
 "WordPress Client Portal Plugin that creates private pages for all users that "
 "only an administrator can edit."
 msgstr ""
+"Plugin de portail client WordPress qui crée des pages privées pour tous les "
+"utilisateurs que seul un administrateur peut modifier."
 
 #: templates/template-client-portal.php:120
 msgid "Your magic login link"
-msgstr ""
+msgstr "Votre lien de connexion magique"

@@ -8,19 +8,14 @@
 
 defined('ABSPATH') || exit;
 
-	echo '—————————— ICI ?  ——————————<br>';
-
-
+// Error messages array
 $messages = [];
 
-// Traitement du formulaire
+// Form processing
 if (!empty($_POST['magic_email'])) {
 
-	// Vérifier si l'email est valide
-	echo '—————————— POST magic_email ——————————<br>';
+	// Check if the email is valid
 	if ( is_email($_POST['magic_email']) ) {
-
-		echo '—————————— magic_email ——————————<br>';
 
 		$email = sanitize_email($_POST['magic_email']);
 		$resend_magic_email = isset($_POST['resend_magic_email']) ? intval($_POST['resend_magic_email']) : 0;
@@ -28,19 +23,19 @@ if (!empty($_POST['magic_email'])) {
 		$limit_key = 'magic_login_attempts_' . md5($email);
 		$attempts = get_transient($limit_key) ?: 0;
 
-		// Limite à 5 tentatives / 24h
+		// Limit to 10 attempts / 24h
 		if ($attempts >= 10) {
-			$messages[] = "<p style='margin:0;color:red'>Trop de demandes aujourd'hui. Réessayez demain.</p>";
+			$messages[] = "<p style='margin:0;color:red'>" . esc_html__("Too many requests today. Please try again tomorrow.", 'wacp') . "</p>";
 		} else {
 			$user = get_user_by('email', $email);
 
-			// Si on vient du formulaire de création et que l'utilisateur existe déjà
+			// If coming from the registration form and the user already exists
 			if ($create_magic_email === 1 && $user) {
-				$messages[] = "<p style='margin:0;color:orange'>Un compte existe déjà avec l'adresse <strong>{$email}</strong>.</p>";
-				// On continue pour envoyer le lien magique
+				$messages[] = "<p style='margin:0;color:orange'>" . sprintf(esc_html__("An account already exists with the address <strong>%s</strong>.", 'wacp'), esc_html($email)) . "</p>";
+				// Continue to send the magic link
 			}
 
-			// Créer utilisateur si inexistant et ce n'est pas une demande de renvoi de lien
+			// Create user if not existing and not a resend link request
 			if (!$user && $resend_magic_email === 0) {
 				// Create an automatic username from first and last name
 				if (
@@ -48,13 +43,10 @@ if (!empty($_POST['magic_email'])) {
 					trim(sanitize_text_field($_POST['first_name'])) !== '' &&
 					trim(sanitize_text_field($_POST['last_name'])) !== ''
 				) {
-					echo '—————————— first_name +  last_name ——————————<br>';
-
+					// Sanitize first and last name
 					$first_name = sanitize_key(sanitize_user(strtolower(sanitize_text_field($_POST['first_name']))));
 					$last_name = sanitize_key(sanitize_user(strtolower(sanitize_text_field($_POST['last_name']))));
 					$username = $first_name . '.' . $last_name;
-
-					echo '—————————— '.$username.' ——————————<br>';
 
 					// Check if username already exists
 					$base_username = $username;
@@ -74,8 +66,6 @@ if (!empty($_POST['magic_email'])) {
 						'last_name' => $last_name,
 					]);
 				} else {
-					echo '—————————— email ——————————<br>';
-
 					// If first and last name are not provided, use the email as username
 					$username = sanitize_user($email);
 					$user_id = wp_create_user($username, wp_generate_password(), $email);
@@ -106,39 +96,39 @@ if (!empty($_POST['magic_email'])) {
 				$user = get_user_by('ID', $user_id);
 			}
 
-			// Si l'utilisateur n'existe pas et qu'on ne renvoie pas le lien magique, on demande l'inscription
+			// If the user does not exist and this is a resend magic link request, show error
 			if (!$user && $resend_magic_email === 1) {
-				$messages[] = "<p style='margin:0;color:red'>Aucun utilisateur trouvé avec l'email <strong>{$email}</strong>.</p>";
+				$messages[] = "<p style='margin:0;color:red'>" . sprintf(esc_html__("No user found with the email <strong>%s</strong>.", 'wacp'), esc_html($email)) . "</p>";
 				$unknown_user = true;
 			}
 
 			if ( $user && in_array('client-portal', (array)$user->roles) ) {
 				$user_id = $user->ID;
 
-				// Générer token
+				// Generate token
 				$token = bin2hex(random_bytes(32));
 				update_user_meta($user_id, 'magic_login_token', $token);
-				update_user_meta($user_id, 'magic_login_token_expires', time() + (6 * 30 * 24 * 60 * 60)); // 6 mois
+				update_user_meta($user_id, 'magic_login_token_expires', time() + (6 * 30 * 24 * 60 * 60)); // 6 months
 
-				// Envoi par email
+				// Send by email
 				$url = add_query_arg([
 					'magic_login' => 1,
 					'token' => $token,
 					'user_id' => $user_id,
 				], site_url());
 
-				wp_mail($email, 'Votre lien magique de connexion', "Cliquez ici pour vous connecter : $url");
+				wp_mail($email, esc_html__('Your magic login link', 'wacp'), esc_html__("Click here to log in: ", 'wacp') . $url);
 
-				$messages[] = "<p style='margin:0;color:green'>Un lien de connexion a été envoyé à <strong>{$email}</strong>. Vérifiez votre boîte mail.</p>";
+				$messages[] = "<p style='margin:0;color:green'>" . sprintf(esc_html__("A login link has been sent to <strong>%s</strong>. Check your inbox.", 'wacp'), esc_html($email)) . "</p>";
 
-				// Incrémenter compteur
+				// Increment counter
 				set_transient($limit_key, $attempts + 1, DAY_IN_SECONDS);
 			}
 		}
 
 	// Not valid email 
 	} else {
-		$messages[] = "<p style='margin:0;color:red'>Veuillez entrer une adresse <b>e-mail</b> valide.</p>";
+		$messages[] = "<p style='margin:0;color:red'>" . esc_html__("Please enter a valid <b>e-mail</b> address.", 'wacp') . "</p>";
 	}
 
 // No email from form 

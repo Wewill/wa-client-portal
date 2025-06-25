@@ -85,6 +85,7 @@ function run_wa_client_portal() {
 run_wa_client_portal();
 
 // Auto-generate username from first and last name on registration when user login is empty 
+// Not used anymore with magic link 
 add_action('init', function() {
     if (
         isset($_POST['user_email'], $_POST['first_name'], $_POST['last_name']) &&
@@ -127,7 +128,7 @@ add_action('init', function() {
 
 // Traitement du lien magique
 function wacp_handle_magic_login() {
-    // Recherche la page qui utilise le template 'template-client-portal.php'
+    // Find the page using the 'template-client-portal.php' template
     $args = [
         'meta_key'    => '_wp_page_template',
         'meta_value'  => '../templates/template-client-portal.php',
@@ -137,11 +138,11 @@ function wacp_handle_magic_login() {
     ];
     $portal_page = get_posts($args);
 
-	// Si l'utilisateur est déjà connecté, on ne fait rien
-	// On ne veut pas que les utilisateurs connectés soient redirigés vers le portail
+	// If the user is already logged in, do nothing
+	// We do not want logged-in users to be redirected to the portal
 	if (is_user_logged_in()) return;
 
-	// Vérifier si le cookie de connexion magique existe
+	// Check if the magic login cookie exists
 	if (!empty($_COOKIE['magic_login_remember'])) {
 		$data = json_decode(base64_decode($_COOKIE['magic_login_remember']), true);
 		if (isset($data['user_id'], $data['token'])) {
@@ -149,7 +150,7 @@ function wacp_handle_magic_login() {
 			if (hash_equals($expected_token, $data['token'])) {
 				$user = get_user_by('ID', $data['user_id']);
 				if ($user && in_array('client-portal', $user->roles)) {
-					// Connexion automatique
+					// Automatic login
 					wp_set_auth_cookie($user->ID, true);
 					wp_set_current_user($user->ID);
 				}
@@ -157,7 +158,7 @@ function wacp_handle_magic_login() {
 		}
 	}
 
-	// Vérifier si on a un lien magique dans l'URL
+	// Check if we have a magic link in the URL
 	if (
 		isset($_GET['magic_login'], $_GET['token'], $_GET['user_id']) &&
 		$_GET['magic_login'] == '1'
@@ -171,37 +172,37 @@ function wacp_handle_magic_login() {
 
 		if (!$saved_token || !$expires || time() > $expires) {
             $redirect_url = !empty($portal_page) ? get_permalink($portal_page[0]->ID) : esc_url(site_url());
-            wp_die('Ce lien a expiré. <a href="' . $redirect_url . '">Renvoyer un nouveau lien ?</a>');
+            wp_die(sprintf(__("This link has expired. <a href='%s'>Resend a new link?</a>", 'wacp'), $redirect_url));
 		}
 
 		if (!hash_equals($saved_token, $token)) {
-			wp_die('Lien de connexion invalide.');
+			wp_die(__("Invalid login link.", 'wacp'));
 		}
 
-		// Vérifier que l'utilisateur a UNIQUEMENT le rôle client-portal (pas admin, etc.)
+		// Check that the user has ONLY the client-portal role (not admin, etc.)
 		$user = get_user_by('ID', $user_id);
 		if (!$user || !in_array('client-portal', (array)$user->roles) || count($user->roles) !== 1) {
-			wp_die('Accès refusé.');
+			wp_die(__("Access denied.", 'wacp'));
 		}
 
-		// Connexion
+		// Login
 		wp_set_auth_cookie($user_id, true);
 		wp_set_current_user($user_id);
 
-		// Créer cookie custom (durée : 30 jours)
+		// Create custom cookie (duration: 30 days)
 		$cookie_value = base64_encode(json_encode([
 			'user_id' => $user_id,
-			'token' => hash_hmac('sha256', $user_id, AUTH_KEY), // Signature simple
+			'token' => hash_hmac('sha256', $user_id, AUTH_KEY), // Simple signature
 		]));
 		setcookie('magic_login_remember', $cookie_value, time() + (30 * DAY_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true);
 		update_user_meta($user_id, 'magic_login_cookie_expires', time() + (30 * DAY_IN_SECONDS));
 
-		// (Optionnel) Invalider token après 1 usage :
+		// (Optional) Invalidate token after 1 use:
 		// delete_user_meta($user_id, 'magic_login_token');
 		// delete_user_meta($user_id, 'magic_login_token_expires');
 
 		// Redirect to the client portal page 
-        // Recherche la page qui utilise le template 'template-client-portal.php'
+        // Find the page using the 'template-client-portal.php' template
         $args = [
             'meta_key'    => '_wp_page_template',
             'meta_value'  => '../templates/template-client-portal.php',
@@ -226,13 +227,14 @@ add_action('init', 'wacp_handle_magic_login');
 //     setcookie('magic_login_remember', '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN);
 // });
 
-// Redirige les utilisateurs 'client-portal' vers la page portail après connexion
+// Redirect 'client-portal' users to the portal page after login
+// Not REALLY used anymore with magic link 
 add_filter('login_redirect', function($redirect_to, $request, $user) {
     if (is_wp_error($user) || !isset($user->roles) || !in_array('client-portal', $user->roles)) {
         return $redirect_to;
     }
 
-    // Recherche la page qui utilise le template 'template-client-portal.php'
+    // Find the page using the 'template-client-portal.php' template
     $args = [
         'meta_key'    => '_wp_page_template',
 		'meta_value' => '../templates/template-client-portal.php',
