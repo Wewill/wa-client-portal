@@ -40,7 +40,9 @@ $prefix = 'wacp-';
 							$code_style = $cookie_expires ? 'style="color: green;"' : '';
 						?>
 						<code <?php echo $code_style; ?>><small>
-							<strong><?php echo esc_html($token); ?></strong><br>
+							<strong>
+								<?php echo !empty($token) ? esc_html($token) : '-'; ?>
+							</strong><br>
 							<strong><?php esc_html_e('Token Expires:', 'wacp'); ?></strong>
 							<?php echo $token_expires ? esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), intval($token_expires))) : '-'; ?><br>
 							<strong><?php esc_html_e('Cookie Expires:', 'wacp'); ?></strong>
