@@ -112,7 +112,7 @@ if (!empty($_POST['magic_email'])) {
 				$unknown_user = true;
 			}
 
-			if ( $user ) {
+			if ( $user && in_array('client-portal', (array)$user->roles) ) {
 				$user_id = $user->ID;
 
 				// Générer token
@@ -129,7 +129,7 @@ if (!empty($_POST['magic_email'])) {
 
 				wp_mail($email, 'Votre lien magique de connexion', "Cliquez ici pour vous connecter : $url");
 
-					$messages[] = "<p style='margin:0;color:green'>Un lien de connexion a été envoyé à <strong>{$email}</strong>. Vérifiez votre boîte mail.</p>";
+				$messages[] = "<p style='margin:0;color:green'>Un lien de connexion a été envoyé à <strong>{$email}</strong>. Vérifiez votre boîte mail.</p>";
 
 				// Incrémenter compteur
 				set_transient($limit_key, $attempts + 1, DAY_IN_SECONDS);
@@ -160,7 +160,7 @@ add_action('init', function () {
             $expected_token = hash_hmac('sha256', $data['user_id'], AUTH_KEY);
             if (hash_equals($expected_token, $data['token'])) {
                 $user = get_user_by('ID', $data['user_id']);
-                if ($user && in_array('subscriber', $user->roles)) {
+                if ($user && in_array('client-portal', $user->roles)) {
                     // Connexion automatique
                     wp_set_auth_cookie($user->ID, true);
                     wp_set_current_user($user->ID);
@@ -170,30 +170,36 @@ add_action('init', function () {
     }
 
 	// Vérifier si on a un lien magique dans l'URL
-    if (
-        isset($_GET['magic_login'], $_GET['token'], $_GET['user_id']) &&
-        $_GET['magic_login'] == '1'
-    ) {
+	if (
+		isset($_GET['magic_login'], $_GET['token'], $_GET['user_id']) &&
+		$_GET['magic_login'] == '1'
+	) {
 
-			echo '—————————— magic_login ——————————<br>';
+		echo '—————————— magic_login ——————————<br>';
 
-        $user_id = intval($_GET['user_id']);
-        $token = sanitize_text_field($_GET['token']);
+		$user_id = intval($_GET['user_id']);
+		$token = sanitize_text_field($_GET['token']);
 
-        $saved_token = get_user_meta($user_id, 'magic_login_token', true);
-        $expires = get_user_meta($user_id, 'magic_login_token_expires', true);
+		$saved_token = get_user_meta($user_id, 'magic_login_token', true);
+		$expires = get_user_meta($user_id, 'magic_login_token_expires', true);
 
-        if (!$saved_token || !$expires || time() > $expires) {
-            wp_die('Ce lien a expiré. <a href="' . esc_url(site_url()) . '">Renvoyer un nouveau lien ?</a>');
-        }
+		if (!$saved_token || !$expires || time() > $expires) {
+			wp_die('Ce lien a expiré. <a href="' . esc_url(site_url()) . '">Renvoyer un nouveau lien ?</a>');
+		}
 
-        if (!hash_equals($saved_token, $token)) {
-            wp_die('Lien de connexion invalide.');
-        }
+		if (!hash_equals($saved_token, $token)) {
+			wp_die('Lien de connexion invalide.');
+		}
 
-        // Connexion
-        wp_set_auth_cookie($user_id, true);
-        wp_set_current_user($user_id);
+		// Vérifier que l'utilisateur a UNIQUEMENT le rôle client-portal (pas admin, etc.)
+		$user = get_user_by('ID', $user_id);
+		if (!$user || !in_array('client-portal', (array)$user->roles) || count($user->roles) !== 1) {
+			wp_die('Accès refusé.');
+		}
+
+		// Connexion
+		wp_set_auth_cookie($user_id, true);
+		wp_set_current_user($user_id);
 
 		// Créer cookie custom (durée : 30 jours)
 		$cookie_value = base64_encode(json_encode([
@@ -203,14 +209,14 @@ add_action('init', function () {
 		setcookie('magic_login_remember', $cookie_value, time() + (30 * DAY_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true);
 		update_user_meta($user_id, 'magic_login_cookie_expires', time() + (30 * DAY_IN_SECONDS));
 
-        // (Optionnel) Invalider token après 1 usage :
-        // delete_user_meta($user_id, 'magic_login_token');
-        // delete_user_meta($user_id, 'magic_login_token_expires');
+		// (Optionnel) Invalider token après 1 usage :
+		// delete_user_meta($user_id, 'magic_login_token');
+		// delete_user_meta($user_id, 'magic_login_token_expires');
 
 		// Do not redirect to the client portal page 
-        // wp_redirect(home_url());
-        // exit;
-    }
+		// wp_redirect(home_url());
+		// exit;
+	}
 });
 
 // Uncomment to clear the magic login cookie on logout
