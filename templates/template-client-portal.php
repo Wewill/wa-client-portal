@@ -105,6 +105,18 @@ if (!empty($_POST['magic_email'])) {
 			if ( $user && in_array('client-portal', (array)$user->roles) ) {
 				$user_id = $user->ID;
 
+
+				// Find the page using the 'template-client-portal.php' template
+				$args = [
+					'meta_key'    => '_wp_page_template',
+					'meta_value'  => '../templates/template-client-portal.php',
+					'post_type'   => 'page',
+					'post_status' => 'publish',
+					'numberposts' => 1,
+				];
+				$portal_page = get_posts($args);
+
+
 				// Generate token
 				$token = bin2hex(random_bytes(32));
 				update_user_meta($user_id, 'magic_login_token', $token);
@@ -126,11 +138,14 @@ if (!empty($_POST['magic_email'])) {
 				$message .= '<p>' . esc_html__('Click the link below to log in securely to your client portal:', 'wacp') . '</p>';
 				$message .= '<p><a href="' . esc_url($url) . '" style="background:#acb43f;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;">' . esc_html__('Log in now', 'wacp') . '</a></p>';
 				$message .= '<p style="color:#888;font-size:10px;">' . esc_html__('If you did not request this email, you can ignore it.', 'wacp') . '</p>';
+				
 				// Ajout du texte en petit avec lien vers la page client-portal
-				$client_portal_url = get_permalink(get_page_by_path('client-portal'));
+				$client_portal_url = !empty($portal_page) ? get_permalink($portal_page[0]->ID) : esc_url(site_url());
+
+
 				$message .= '<p style="color:#888;font-size:10px;">' . sprintf(
 					esc_html__('This login link may have expired. %s', 'wacp'),
-					'<a href="' . esc_url($client_portal_url) . '">' . esc_html__('Send a new link by email?', 'wacp') . '</a>'
+					'<a href="' . esc_url($client_portal_url) . '">' . esc_html__('Resend a new link by email ?', 'wacp') . '</a>'
 				) . '</p>';
 				$message .= '</body></html>';
 
