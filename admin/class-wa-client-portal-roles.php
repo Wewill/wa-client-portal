@@ -48,3 +48,10 @@ function remove_redux_dashboard_widget() {
         unset($wp_meta_boxes['dashboard']['side']['high']['redux_dashboard_widget']);
     }
 }
+
+// When logged as client-portal, do not show the admin bar
+add_action('after_setup_theme', function() {
+	if (current_user_can('client-portal')) {
+		show_admin_bar(false);
+	}
+});
