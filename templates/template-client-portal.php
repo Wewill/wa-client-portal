@@ -31,7 +31,10 @@ if (!empty($_POST['magic_email'])) {
 
 			// If coming from the registration form and the user already exists
 			if ($create_magic_email === 1 && $user) {
-				$messages[] = "<p style='margin:0;color:orange'>" . sprintf(esc_html__("An account already exists with the address <strong>%s</strong>.", 'wacp'), esc_html($email)) . "</p>";
+				$messages[] = "<p style='margin:0;color:orange'>" . sprintf(
+					__('An account already exists with the address <strong>%s</strong>.', 'wacp'),
+					esc_html($email)
+				) . "</p>";
 				// Continue to send the magic link
 			}
 
@@ -98,7 +101,10 @@ if (!empty($_POST['magic_email'])) {
 
 			// If the user does not exist and this is a resend magic link request, show error
 			if (!$user && $resend_magic_email === 1) {
-				$messages[] = "<p style='margin:0;color:red'>" . sprintf(esc_html__("No user found with the email <strong>%s</strong>.", 'wacp'), esc_html($email)) . "</p>";
+				$messages[] = "<p style='margin:0;color:red'>" . sprintf(
+					__('No user found with the email <strong>%s</strong>.', 'wacp'),
+					esc_html($email)
+				) . "</p>";
 				$unknown_user = true;
 			}
 
@@ -160,7 +166,10 @@ if (!empty($_POST['magic_email'])) {
 				// Envoi du mail personnalisé sans affecter les autres envois
 				wp_mail($email, $subject, $message, $headers);
 
-				$messages[] = "<p style='margin:0;color:green'>" . sprintf(esc_html__("A login link has been sent to <strong>%s</strong>. Check your inbox.", 'wacp'), esc_html($email)) . "</p>";
+				$messages[] = "<p style='margin:0;color:green'>" . sprintf(
+					__('A login link has been sent to <strong>%s</strong>. Check your inbox.', 'wacp'),
+					esc_html($email)
+				) . "</p>";
 
 				// Increment counter
 				set_transient($limit_key, $attempts + 1, DAY_IN_SECONDS);
@@ -169,7 +178,7 @@ if (!empty($_POST['magic_email'])) {
 
 	// Not valid email 
 	} else {
-		$messages[] = "<p style='margin:0;color:red'>" . esc_html__("Please enter a valid <b>e-mail</b> address.", 'wacp') . "</p>";
+		$messages[] = "<p style='margin:0;color:red'>" . __('Please enter a valid <b>e-mail</b> address.', 'wacp') . "</p>";
 	}
 
 // No email from form 
@@ -198,7 +207,7 @@ while ( have_posts() ) :
 					echo '<div class="client-portal-messages" style="margin: 1rem 0; padding: 1rem 2rem; border: 1px solid var(--waff-color-layout-trans-4); border-radius: 5px; background: var(--waff-color-layout-trans-2)">';
 					// Print messages if any.
 					foreach ($messages as $msg) {
-						echo $msg;
+						echo wp_kses_post($msg);
 					}
 					echo '</div>'; // Messages end 
 				}
