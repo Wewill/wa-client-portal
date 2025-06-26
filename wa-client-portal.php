@@ -223,9 +223,9 @@ function wacp_handle_magic_login() {
 add_action('init', 'wacp_handle_magic_login');
 
 // Uncomment to clear the magic login cookie on logout
-// add_action('wp_logout', function () {
-//     setcookie('magic_login_remember', '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN);
-// });
+add_action('wp_logout', function () {
+    setcookie('magic_login_remember', '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN);
+});
 
 // Redirect 'client-portal' users to the portal page after login
 // Not REALLY used anymore with magic link 
