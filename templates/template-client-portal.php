@@ -117,7 +117,31 @@ if (!empty($_POST['magic_email'])) {
 					'user_id' => $user_id,
 				], site_url());
 
-				wp_mail($email, esc_html__('Client Portal : your magic login link', 'wacp'), esc_html__("Click here to log in: ", 'wacp') . $url);
+				// Préparer le contenu HTML du mail personnalisé
+				$subject = esc_html__('Client Portal : your magic login link', 'wacp');
+				$message = '<html><body>';
+				// Add centered logo
+				$message .= '<div style="text-align:center;margin-bottom:24px;"><img src="https://www.artetjardins-hdf.com/wp-content/uploads/2018/03/Logotype_AJ_175px.png" alt="Logo" style="max-width:175px;height:auto;"></div>';
+				$message .= '<h2 style="color:#333;">' . esc_html__('Your Magic Login Link', 'wacp') . '</h2>';
+				$message .= '<p>' . esc_html__('Click the link below to log in securely to your client portal:', 'wacp') . '</p>';
+				$message .= '<p><a href="' . esc_url($url) . '" style="background:#acb43f;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;">' . esc_html__('Log in now', 'wacp') . '</a></p>';
+				$message .= '<p style="color:#888;font-size:10px;">' . esc_html__('If you did not request this email, you can ignore it.', 'wacp') . '</p>';
+				// Ajout du texte en petit avec lien vers la page client-portal
+				$client_portal_url = get_permalink(get_page_by_path('client-portal'));
+				$message .= '<p style="color:#888;font-size:10px;">' . sprintf(
+					esc_html__('This login link may have expired. %s', 'wacp'),
+					'<a href="' . esc_url($client_portal_url) . '">' . esc_html__('Send a new link by email?', 'wacp') . '</a>'
+				) . '</p>';
+				$message .= '</body></html>';
+
+				// Headers pour envoyer un mail HTML
+				$headers = [
+					'Content-Type: text/html; charset=UTF-8',
+					'From: ' . get_bloginfo('name') . ' <' . get_option('admin_email') . '>'
+				];
+
+				// Envoi du mail personnalisé sans affecter les autres envois
+				wp_mail($email, $subject, $message, $headers);
 
 				$messages[] = "<p style='margin:0;color:green'>" . sprintf(esc_html__("A login link has been sent to <strong>%s</strong>. Check your inbox.", 'wacp'), esc_html($email)) . "</p>";
 
