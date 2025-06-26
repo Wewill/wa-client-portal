@@ -143,14 +143,13 @@ if (!empty($_POST['magic_email'])) {
 				$message .= '<div style="text-align:center;margin-bottom:50px;"><img src="https://www.artetjardins-hdf.com/wp-content/uploads/2018/03/Logotype_AJ_175px.png" alt="Logo" style="max-width:175px;height:auto;"></div>';
 				$message .= '<h2 style="color:#333;">' . esc_html__('Your Magic Login Link', 'wacp') . '</h2>';
 				$message .= '<p>' . esc_html__('Click the link below to log in securely to your client portal:', 'wacp') . '</p>';
-				$message .= '<p><a href="' . esc_url($url) . '" style="font-size:16px;background:#acb43f;color:#fff;padding:10px 20px;margin-top:10px;text-decoration:none;border-radius:4px;">' . esc_html__('Log in now', 'wacp') . '</a></p>';
-				$message .= '<div style="text-align:center;margin-top:25px;margin-bottom:25px;"></div>';
-				$message .= '<p style="color:#888;font-size:10px;margin-bottom:5px;">' . esc_html__('If you did not request this email, you can ignore it.', 'wacp') . '</p>';
+				$message .= '<div style="text-align:center;margin-top:25px;margin-bottom:50px;"><p><a href="' . esc_url($url) . '" style="font-size:16px;background:#acb43f;color:#fff;padding:10px 20px;margin-top:10px;text-decoration:none;border-radius:4px;">' . esc_html__('Log in now', 'wacp') . '</a></p></div>';
+				$message .= '<p style="color:#888;font-size:10px;margin:0px;">' . esc_html__('If you did not request this email, you can ignore it.', 'wacp') . '</p>';
 				
 				// Ajout du texte en petit avec lien vers la page client-portal
 				$client_portal_url = !empty($portal_page) ? get_permalink($portal_page[0]->ID) : esc_url(site_url());
 
-				$message .= '<p style="color:#888;font-size:10px;">' . sprintf(
+				$message .= '<p style="color:#888;font-size:10px;margin:0px;">' . sprintf(
 					esc_html__('This login link may have expired. %s', 'wacp'),
 					'<a href="' . esc_url($client_portal_url) . '">' . esc_html__('Resend a new link by email ?', 'wacp') . '</a>'
 				) . '</p>';
