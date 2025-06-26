@@ -140,10 +140,10 @@ if (!empty($_POST['magic_email'])) {
 				$message = '<html><body>';
 				$message .= '<div style="text-align:center;">';
 				// Add centered logo
-				$message .= '<div style="text-align:center;margin-bottom:50px;"><img src="https://www.artetjardins-hdf.com/wp-content/uploads/2018/03/Logotype_AJ_175px.png" alt="Logo" style="max-width:175px;height:auto;"></div>';
-				$message .= '<h2 style="color:#333;">' . esc_html__('Your Magic Login Link', 'wacp') . '</h2>';
-				$message .= '<p>' . esc_html__('Click the link below to log in securely to your client portal:', 'wacp') . '</p>';
-				$message .= '<div style="text-align:center;margin-top:25px;margin-bottom:50px;"><p><a href="' . esc_url($url) . '" style="font-size:16px;background:#acb43f;color:#fff;padding:10px 20px;margin-top:10px;text-decoration:none;border-radius:4px;">' . esc_html__('Log in now', 'wacp') . '</a></p></div>';
+				$message .= '<div style="text-align:center;margin-bottom:50px;"><img src="https://www.artetjardins-hdf.com/wp-content/uploads/2018/03/Logotype_AJ_175px_x2.png" alt="Logo" style="max-width:175px;height:auto;"></div>';
+				$message .= '<h2 style="color:#0d1724;">' . esc_html__('Your Magic Login Link', 'wacp') . '</h2>';
+				$message .= '<p style="color:#0d1724;">' . esc_html__('Click the link below to log in securely to your client portal:', 'wacp') . '</p>';
+				$message .= '<div style="text-align:center;margin-top:30px;margin-bottom:60px;"><p><a href="' . esc_url($url) . '" style="font-size:16px;background:#acb43f;color:#fff;padding:10px 20px;margin-top:10px;text-decoration:none;border-radius:4px;">' . esc_html__('Log in now', 'wacp') . '</a></p></div>';
 				$message .= '<p style="color:#888;font-size:10px;margin:0px;">' . esc_html__('If you did not request this email, you can ignore it.', 'wacp') . '</p>';
 				
 				// Ajout du texte en petit avec lien vers la page client-portal
@@ -159,7 +159,7 @@ if (!empty($_POST['magic_email'])) {
 				// Headers pour envoyer un mail HTML
 				$headers = [
 					'Content-Type: text/html; charset=UTF-8',
-					'From: ' . get_bloginfo('name') . ' <' . get_option('admin_email') . '>'
+					'From: ' . html_entity_decode(get_bloginfo('name'), ENT_QUOTES, 'UTF-8') . ' <contact@artetjardins-hdf.com>'
 				];
 
 				// Envoi du mail personnalisé sans affecter les autres envois
