@@ -225,6 +225,10 @@ add_action('init', 'wacp_handle_magic_login');
 // Uncomment to clear the magic login cookie on logout
 add_action('wp_logout', function () {
     setcookie('magic_login_remember', '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN);
+	// Also clear the cookie expire ts in user meta
+	if (is_user_logged_in()) {
+		delete_user_meta(get_current_user_id(), 'magic_login_cookie_expires');
+	}
 });
 
 // Redirect 'client-portal' users to the portal page after login

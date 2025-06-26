@@ -108,6 +108,16 @@ if (!empty($_POST['magic_email'])) {
 				$unknown_user = true;
 			}
 
+			// If this is a resend magic email request, flush the magic_login_remember cookie
+			if ($resend_magic_email === 1) {
+				setcookie('magic_login_remember', '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN);
+				// Also clear the cookie expire ts in user meta
+				if ($user) {
+					delete_user_meta($user->ID, 'magic_login_cookie_expires');
+				}
+			}
+
+			// If the user exists and has the 'client-portal' role, proceed to send the magic login link
 			if ( $user && in_array('client-portal', (array)$user->roles) ) {
 				$user_id = $user->ID;
 
