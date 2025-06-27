@@ -50,8 +50,9 @@ function remove_redux_dashboard_widget() {
 }
 
 // When logged as client-portal, do not show the admin bar
-add_action('after_setup_theme', function() {
+add_filter('show_admin_bar', function($show) {
 	if (current_user_can('client-portal')) {
-		show_admin_bar(false);
+		return false;
 	}
+	return $show;
 });
