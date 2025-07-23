@@ -11,18 +11,16 @@ defined('ABSPATH') || exit;
 // Error messages array
 $messages = [];
 
-// Form processing
-if (!empty($_POST['magic_email'])) {
+// Added = ✅ Google reCAPTCHA v2 Checkbox (or Invisible v3) via the plugin Advanced noCaptcha & Invisible Captcha
+// Please check plugin settings
 
-	// Added = ✅ Google reCAPTCHA v2 Checkbox (or Invisible v3) via the plugin Advanced noCaptcha & Invisible Captcha
-	// Please check plugin settings
+// Check for spam bots using honeypot field
+if (!empty($_POST['hp_message'])) {
+	$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Spam detected. Please try again.', 'wacp') . "</p>";
+}
 
-	// Check for spam bots using honeypot field
-	if (!empty($_POST['hp_message'])) {
-		$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Spam detected. Please try again.', 'wacp') . "</p>";
-		get_header();
-		return;
-	}
+// Form processing : we got an email from the form and no honeypot field filled
+if (!empty($_POST['magic_email']) && empty($_POST['hp_message']) ) {
 
 	// Check if the email is valid
 	if ( is_email($_POST['magic_email']) ) {
