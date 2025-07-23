@@ -22,9 +22,15 @@ $prefix = 'wacp-';
 			<?php foreach ($clients as $client): ?>
 				<tr>
 					<td>
-						<a href="<?php echo esc_url(admin_url('user-edit.php?user_id=' . $client->ID)); ?>" class="button button-primary button-small">
-							<?php echo esc_html($client->ID); ?>
-						</a>
+						<?php if ( current_user_can('list_users') ) : ?>
+							<a href="<?php echo esc_url(admin_url('user-edit.php?user_id=' . $client->ID)); ?>" class="button button-primary button-small">
+								<?php echo esc_html($client->ID); ?>
+							</a>
+						<?php else : ?>
+							<button class="button button-small" disabled>
+								<?php echo esc_html($client->ID); ?>
+							</button>
+						<?php endif; ?>	
 					</td>
 					<td><?php echo esc_html($client->last_name); ?></td>
 					<td><?php echo esc_html($client->first_name); ?></td>
