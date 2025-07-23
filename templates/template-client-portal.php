@@ -14,6 +14,16 @@ $messages = [];
 // Form processing
 if (!empty($_POST['magic_email'])) {
 
+	// Added = ✅ Google reCAPTCHA v2 Checkbox (or Invisible v3) via the plugin Advanced noCaptcha & Invisible Captcha
+	// Please check plugin settings
+
+	// Check for spam bots using honeypot field
+	if (!empty($_POST['hp_message'])) {
+		$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Spam detected. Please try again.', 'wacp') . "</p>";
+		get_header();
+		return;
+	}
+
 	// Check if the email is valid
 	if ( is_email($_POST['magic_email']) ) {
 
@@ -257,6 +267,11 @@ while ( have_posts() ) :
 					echo '</div>';
 					echo '</div>';
 
+					// Hidden field to prevent spam bots = honeypot
+					echo '<p style="display:none;">';
+					echo '<label for="hp_message">' . esc_html_e( 'Your message', 'wacp'). '</label>';
+					echo '<input type="text" name="hp_message" id="hp_message" class="input">';
+					echo '</p>';
 
 					do_action( 'register_form' );
 					echo '<input type="hidden" name="create_magic_email" value="1">';
