@@ -6,7 +6,7 @@ function wa_client_portal_admin_menu() {
 	add_menu_page(
 		__('Members', 'wacp'),
 		__('Members', 'wacp'),
-		'list_users',
+		'edit_others_posts',
 		'wa-client-portal-clients',
 		'wa_client_portal_clients_page',
 		'dashicons-editor-table',
