@@ -159,6 +159,7 @@ class Wa_Client_Portal {
 
 		$this->loader->add_action( 'init', $plugin_admin, 'init_plugin' ); // ex : Register post types 
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'init_admin' ); // ex : Register admin after init 
+		$this->loader->add_action( 'plugin_loaded', $plugin_admin, 'loaded_plugin' ); // Register admin after plugin loaded 
 	}
 
 	/**

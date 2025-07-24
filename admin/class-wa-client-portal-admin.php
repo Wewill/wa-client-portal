@@ -148,6 +148,16 @@ class Wa_Client_Portal_Admin {
 	}
 
 	/**
+	 * Plugin loaded 
+	 *
+	 * @since    1.1.0
+	 */
+	public function loaded_plugin() {
+		// Manage settings
+		require_once plugin_dir_path( dirname( __FILE__ ) )  . 'admin/class-wa-client-portal-settings.php';
+	}
+
+	/**
 	 * Init admin
 	 *
 	 * @since    1.2.0

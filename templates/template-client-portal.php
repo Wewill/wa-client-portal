@@ -8,21 +8,53 @@
 
 defined('ABSPATH') || exit;
 
+function wacp_enqueue_recaptcha_script() {
+    if (wacp_get_recaptcha_site_key_from_setting_page()) { // Optional: load only when needed
+        wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js', [], null, true);
+    }
+}
+add_action('wp_enqueue_scripts', 'wacp_enqueue_recaptcha_script');
+
 // Error messages array
 $messages = [];
 
-// Added = ✅ Google reCAPTCHA v2 Checkbox (or Invisible v3) via the plugin Advanced noCaptcha & Invisible Captcha
-// Please check plugin settings
+// Use Google reCAPTCHA v2 Checkbox
+// Please check plugin settings : wacp_get_recaptcha_site_key_from_setting_page() &&  wacp_get_recaptcha_secret_key_from_setting_page()
+
+// Function to verify reCAPTCHA
+if ( empty(wacp_get_recaptcha_site_key_from_setting_page())  || empty(wacp_get_recaptcha_secret_key_from_setting_page()) ) {
+	$messages[] = "<p style='margin:0;color:orange'>" . esc_html__('Admin notice : Google reCAPTCHA is not configured. Please check the portal plugin settings.', 'wacp') . "</p>";
+} 
 
 // Validate Google reCAPTCHA
 $captcha_success = true;
 $honeypot_success = true;
 if (!empty($_POST['magic_email'])) {
 	
-	if ( isset($_POST['g-recaptcha-response']) && function_exists( 'anr_verify_captcha' ) ) {
-		$captcha_result = anr_verify_captcha(); // Don not expose reCAPTCHA Secret key to public
-		if ( is_wp_error( $captcha_result ) ) {
-			$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Captcha verification failed. Please try again.', 'wacp') . "</p>";
+	
+	if ( isset($_POST['g-recaptcha-response'])) {
+
+		$recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
+		$verify_response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
+			'body' => [
+				'secret' => wacp_get_recaptcha_secret_key_from_setting_page(),
+				'response' => $recaptcha_response,
+				'remoteip' => $_SERVER['REMOTE_ADDR']
+			]
+		]);
+
+		if (!is_wp_error( $verify_response )) {
+			$response_body = wp_remote_retrieve_body($verify_response);
+			$result = json_decode($response_body);
+
+			if (empty($result->success) ) {
+				$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Captcha verification failed. Please try again.', 'wacp') . "</p>";
+				$captcha_success = false;
+			}
+		}
+
+		if (is_wp_error( $verify_response )) {
+			$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Captcha response failed. Please try again.', 'wacp') . "</p>";
 			$captcha_success = false;
 		}
 	} else {
@@ -285,7 +317,10 @@ while ( have_posts() ) :
 					echo '</div>';
 
 					// reCAPTCHA field
-					// do_action('anr_captcha_form_field');
+					do_action('anr_captcha_form_field');
+					if ( wacp_get_recaptcha_site_key_from_setting_page() ) {
+						echo '<div class="g-recaptcha" data-sitekey="'.wacp_get_recaptcha_site_key_from_setting_page().'"></div>';
+					}
 
 					// Hidden field to prevent spam bots = honeypot
 					echo '<p style="display:none;">';
