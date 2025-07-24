@@ -19,7 +19,7 @@ $captcha_success = true;
 $honeypot_success = true;
 if (!empty($_POST['magic_email'])) {
 	
-	if ( isset($_POST['g-recaptcha-response']) && function_exists( 'anr_captcha_form_field' ) ) {
+	if ( isset($_POST['g-recaptcha-response']) && function_exists( 'anr_verify_captcha' ) ) {
 		$captcha_result = anr_verify_captcha(); // Don not expose reCAPTCHA Secret key to public
 		if ( is_wp_error( $captcha_result ) ) {
 			$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Captcha verification failed. Please try again.', 'wacp') . "</p>";
@@ -283,6 +283,9 @@ while ( have_posts() ) :
 					echo '<p><label for="user_media">' . esc_html__( 'Media', 'wacp' ) . '</label><input type="text" name="user_media" id="user_media" class="input" required></p>';
 					echo '</div>';
 					echo '</div>';
+
+					// reCAPTCHA field
+					// do_action('anr_captcha_form_field');
 
 					// Hidden field to prevent spam bots = honeypot
 					echo '<p style="display:none;">';
