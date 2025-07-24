@@ -19,18 +19,9 @@ $captcha_success = true;
 $honeypot_success = true;
 if (!empty($_POST['magic_email'])) {
 	
-	if ( isset($_POST['g-recaptcha-response'])) {
-		$recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
-		$response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
-			'body' => [
-				'secret' => '6Ld_MNgUAAAAADQ_rQlQWdc-d0yNM_d875VjggHX', // Secret key for reCAPTCHA v2 Checkbox
-				'response' => $recaptcha_response,
-				'remoteip' => $_SERVER['REMOTE_ADDR']
-			]
-		]);
-		$result = json_decode(wp_remote_retrieve_body($response));
-
-		if (!$result->success) {
+	if ( isset($_POST['g-recaptcha-response']) && function_exists( 'anr_captcha_form_field' ) ) {
+		$captcha_result = anr_verify_captcha(); // Don not expose reCAPTCHA Secret key to public
+		if ( is_wp_error( $captcha_result ) ) {
 			$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Captcha verification failed. Please try again.', 'wacp') . "</p>";
 			$captcha_success = false;
 		}
