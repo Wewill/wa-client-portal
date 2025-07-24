@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WA Private Client Portal\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-18 21:27+0000\n"
-"PO-Revision-Date: 2025-07-24 19:34+0000\n"
+"PO-Revision-Date: 2025-06-26 08:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "#"
 msgstr ""
 
-#: templates/template-client-portal.php:236
+#: templates/template-client-portal.php:170
 #, php-format
 msgid "A login link has been sent to <strong>%s</strong>. Check your inbox."
 msgstr ""
@@ -34,36 +34,16 @@ msgstr "Accès refusé."
 msgid "Access my client portal"
 msgstr "Accéder à mon espace Pro/Presse"
 
-#: templates/template-client-portal.php:26
-msgid ""
-"Admin notice : Google reCAPTCHA is not configured. Please check the portal "
-"plugin settings."
-msgstr ""
-"Notice administrateur : Google reCAPTCHA n'est pas configuré. Veuillez "
-"vérifier les paramètres du plugin espace Pro/Presse."
-
-#: templates/template-client-portal.php:342
+#: templates/template-client-portal.php:265
 msgid "Already been there ?"
 msgstr "Déjà venu ici ?"
 
-#: templates/template-client-portal.php:92
+#: templates/template-client-portal.php:35
 #, php-format
 msgid "An account already exists with the address <strong>%s</strong>."
 msgstr "Il existe déjà un compte associé à l’adresse <strong>%s</strong>."
 
-#: templates/template-client-portal.php:62
-msgid "Captcha missing. Please complete the captcha."
-msgstr "Captcha manquant. Veuillez compléter le captcha."
-
-#: templates/template-client-portal.php:58
-msgid "Captcha response failed. Please try again."
-msgstr "Échec de la réponse du captcha. Veuillez réessayer."
-
-#: templates/template-client-portal.php:52
-msgid "Captcha verification failed. Please try again."
-msgstr "La vérification du captcha a échoué. Veuillez réessayer."
-
-#: templates/template-client-portal.php:212
+#: templates/template-client-portal.php:145
 msgid "Click the link below to log in securely to your client portal:"
 msgstr ""
 "Cliquez sur le lien ci-dessous pour vous connecter en toute sécurité à votre "
@@ -74,11 +54,11 @@ msgstr ""
 msgid "Client Portal"
 msgstr "Espace Pro/Presse"
 
-#: templates/template-client-portal.php:206
+#: templates/template-client-portal.php:139
 msgid "Client Portal : your magic login link"
 msgstr "Espace Pro/Presse : votre lien de connexion automatique"
 
-#: admin/wa-client-portal-clients-page.php:55
+#: admin/wa-client-portal-clients-page.php:49
 msgid "Cookie Expires:"
 msgstr "Le cookie expire le :"
 
@@ -88,23 +68,15 @@ msgstr "Date"
 
 #: admin/wa-client-portal-clients-page.php:17
 #: admin/class-wa-client-portal-export.php:82
-#: templates/template-client-portal.php:292
-#: templates/template-client-portal.php:345
+#: templates/template-client-portal.php:226
+#: templates/template-client-portal.php:268
 msgid "E-mail"
 msgstr "E-mail"
-
-#: admin/class-wa-client-portal-settings.php:65
-msgid "Enter your reCAPTCHA Secret Key"
-msgstr "Saisissez votre clé secrète reCAPTCHA"
-
-#: admin/class-wa-client-portal-settings.php:59
-msgid "Enter your reCAPTCHA Site Key"
-msgstr "Saisissez votre clé de site reCAPTCHA"
 
 #: admin/class-wa-client-portal-user.php:16
 #: admin/wa-client-portal-clients-page.php:14
 #: admin/class-wa-client-portal-export.php:84
-#: templates/template-client-portal.php:310
+#: templates/template-client-portal.php:244
 msgid "Entity"
 msgstr "Entité"
 
@@ -123,16 +95,11 @@ msgstr "Export membres pro"
 
 #: admin/wa-client-portal-clients-page.php:13
 #: admin/class-wa-client-portal-export.php:80
-#: templates/template-client-portal.php:297
+#: templates/template-client-portal.php:231
 msgid "Firstname"
 msgstr "Prénom"
 
-#: admin/class-wa-client-portal-settings.php:41
-#: admin/class-wa-client-portal-settings.php:49
-msgid "Google reCAPTCHA V2 settings"
-msgstr "Paramètres Google reCAPTCHA V2"
-
-#: templates/template-client-portal.php:375
+#: templates/template-client-portal.php:298
 msgid "Hello"
 msgstr "Bonjour"
 
@@ -148,7 +115,7 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#: templates/template-client-portal.php:214
+#: templates/template-client-portal.php:148
 msgid "If you did not request this email, you can ignore it."
 msgstr "Si vous n'avez pas demandé cet e-mail, vous pouvez l'ignorer."
 
@@ -158,16 +125,16 @@ msgstr "Lien de connexion invalide."
 
 #: admin/wa-client-portal-clients-page.php:12
 #: admin/class-wa-client-portal-export.php:81
-#: templates/template-client-portal.php:300
+#: templates/template-client-portal.php:234
 msgid "Lastname"
 msgstr "Nom"
 
-#: templates/template-client-portal.php:213
+#: templates/template-client-portal.php:146
 msgid "Log in now"
 msgstr "Connectez-vous maintenant"
 
 #: public/class-wa-client-portal-menu.php:74
-#: templates/template-client-portal.php:392
+#: templates/template-client-portal.php:315
 msgid "Logout"
 msgstr "Déconnexion"
 
@@ -178,7 +145,7 @@ msgstr "Connexion magique"
 #: admin/class-wa-client-portal-user.php:21
 #: admin/wa-client-portal-clients-page.php:15
 #: admin/class-wa-client-portal-export.php:85
-#: templates/template-client-portal.php:313
+#: templates/template-client-portal.php:247
 msgid "Media"
 msgstr "Média"
 
@@ -189,7 +156,7 @@ msgstr "Média"
 msgid "Members"
 msgstr "Pro/Presse"
 
-#: templates/template-client-portal.php:287
+#: templates/template-client-portal.php:221
 msgid "New, register"
 msgstr "Nouveau, inscrivez-vous"
 
@@ -197,11 +164,11 @@ msgstr "Nouveau, inscrivez-vous"
 msgid "No client portal page found."
 msgstr "Aucune page de espace Pro/Presse trouvée."
 
-#: templates/template-client-portal.php:388
+#: templates/template-client-portal.php:311
 msgid "No private pages available."
 msgstr "Pas de pages privées disponibles."
 
-#: templates/template-client-portal.php:162
+#: templates/template-client-portal.php:105
 #, php-format
 msgid "No user found with the email <strong>%s</strong>."
 msgstr "Aucun utilisateur trouvé avec l'e-mail <strong>%s</strong>."
@@ -209,75 +176,45 @@ msgstr "Aucun utilisateur trouvé avec l'e-mail <strong>%s</strong>."
 #: admin/class-wa-client-portal-user.php:26
 #: admin/wa-client-portal-clients-page.php:16
 #: admin/class-wa-client-portal-export.php:86
-#: templates/template-client-portal.php:305
+#: templates/template-client-portal.php:239
 msgid "Phone"
 msgstr "Téléphone"
 
-#: templates/template-client-portal.php:247
+#: templates/template-client-portal.php:181
 msgid "Please enter a valid <b>e-mail</b> address."
 msgstr "Veuillez saisir une adresse <b>e-mail</b> valide."
 
-#: admin/class-wa-client-portal-settings.php:8
-msgid "Portal settings"
-msgstr "Options Pro/Presse"
-
-#: admin/class-wa-client-portal-settings.php:64
-msgid "reCAPTCHA Secret Key"
-msgstr "Clé secrète reCAPTCHA"
-
-#: admin/class-wa-client-portal-settings.php:58
-msgid "reCAPTCHA Site Key"
-msgstr "Clé du site reCAPTCHA"
-
-#: templates/template-client-portal.php:347
+#: templates/template-client-portal.php:270
 msgid "Receive login link"
 msgstr "Recevoir le lien de connexion"
 
-#: templates/template-client-portal.php:331
+#: templates/template-client-portal.php:254
 msgid "Register"
 msgstr "Inscription"
 
-#: templates/template-client-portal.php:334
+#: templates/template-client-portal.php:257
 msgid "Registration is currently disabled."
 msgstr "L'inscription est actuellement désactivée."
 
-#: templates/template-client-portal.php:221
+#: templates/template-client-portal.php:155
 msgid "Resend a new link by email ?"
 msgstr "Renvoyer un nouveau lien par email ?"
-
-#: templates/template-client-portal.php:69
-msgid "Spam detected. Please try again."
-msgstr "Spam détecté. Veuillez réessayer."
 
 #: wa-client-portal.php:175
 #, php-format
 msgid "This link has expired. <a href='%s'>Resend a new link?</a>"
 msgstr "Ce lien a expiré. <a href='%s'>Renvoyer un nouveau lien ?</a>"
 
-#: templates/template-client-portal.php:220
+#: templates/template-client-portal.php:154
 #, php-format
 msgid "This login link may have expired. %s"
 msgstr "Ce lien de connexion a peut-être expiré. %s"
 
-#: admin/class-wa-client-portal-settings.php:50
-#, php-format
-msgid ""
-"To utilize the Google reCAPTCHA service on your website you need to get a "
-"Site and Secret key.<br/> If you do not have these keys yet, you can get "
-"them for free by registering to <a href=\"%s\" target=\"_blank\">the Google "
-"reCAPTCHA admin</a> to get your keys."
-msgstr ""
-"Pour utiliser le service Google reCAPTCHA sur votre site Web, vous devez "
-"obtenir une clé de site et une clé secrète.<br/> Si vous ne possédez pas "
-"encore ces clés, vous pouvez les obtenir gratuitement en vous inscrivant "
-"auprès de <a href=\"%s\" target=\"_blank\">l'administrateur Google "
-"reCAPTCHA</a> pour obtenir vos clés."
-
-#: admin/wa-client-portal-clients-page.php:53
+#: admin/wa-client-portal-clients-page.php:47
 msgid "Token Expires:"
 msgstr "Le jeton expire :"
 
-#: templates/template-client-portal.php:85
+#: templates/template-client-portal.php:28
 msgid "Too many requests today. Please try again tomorrow."
 msgstr "Trop de demandes aujourd'hui. Veuillez réessayer demain."
 
@@ -293,7 +230,7 @@ msgstr "Vérifié"
 msgid "WA Private Client Portal"
 msgstr "WA Espace Pro/Presse"
 
-#: templates/template-client-portal.php:377
+#: templates/template-client-portal.php:300
 msgid "Welcome to the client portal!"
 msgstr "Bienvenue dans l'espace Pro/Presse"
 
@@ -309,10 +246,6 @@ msgstr ""
 "Plugin de portail client WordPress qui crée des pages privées pour tous les "
 "utilisateurs que seul un administrateur peut modifier."
 
-#: templates/template-client-portal.php:211
+#: templates/template-client-portal.php:144
 msgid "Your Magic Login Link"
 msgstr "Votre lien de connexion"
-
-#: templates/template-client-portal.php:325
-msgid "Your message"
-msgstr "Votre message"
