@@ -14,13 +14,37 @@ $messages = [];
 // Added = ✅ Google reCAPTCHA v2 Checkbox (or Invisible v3) via the plugin Advanced noCaptcha & Invisible Captcha
 // Please check plugin settings
 
+// Validate Google reCAPTCHA
+$captcha_success = true;
+$honeypot_success = true;
+if (isset($_POST['g-recaptcha-response'])) {
+    $recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
+    $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
+        'body' => [
+            'secret' => 'YOUR_SECRET_KEY_HERE',
+            'response' => $recaptcha_response,
+            'remoteip' => $_SERVER['REMOTE_ADDR']
+        ]
+    ]);
+    $result = json_decode(wp_remote_retrieve_body($response));
+
+    if (!$result->success) {
+        $messages[] = "<p style='margin:0;color:red'>" . esc_html__('Captcha verification failed. Please try again.', 'wacp') . "</p>";
+		$captcha_success = false;
+    }
+} else {
+    $messages[] = "<p style='margin:0;color:red'>" . esc_html__('Captcha missing. Please complete the captcha.', 'wacp') . "</p>";
+	$captcha_success = false;
+}
+
 // Check for spam bots using honeypot field
 if (!empty($_POST['hp_message'])) {
 	$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Spam detected. Please try again.', 'wacp') . "</p>";
+	$honeypot_success = false;
 }
 
-// Form processing : we got an email from the form and no honeypot field filled
-if (!empty($_POST['magic_email']) && empty($_POST['hp_message']) ) {
+// Form processing : we got an email from the form and no honeypot field filled & reCAPTCHA is valid
+if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success ) ) {
 
 	// Check if the email is valid
 	if ( is_email($_POST['magic_email']) ) {
