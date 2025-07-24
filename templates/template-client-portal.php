@@ -17,11 +17,11 @@ $messages = [];
 // Validate Google reCAPTCHA
 $captcha_success = true;
 $honeypot_success = true;
-if (isset($_POST['g-recaptcha-response'])) {
+if (!empty($_POST['magic_email']) && isset($_POST['g-recaptcha-response'])) {
     $recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
     $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
         'body' => [
-            'secret' => 'YOUR_SECRET_KEY_HERE',
+            'secret' => '6Ld_MNgUAAAAADQ_rQlQWdc-d0yNM_d875VjggHX', // Secret key for reCAPTCHA v2 Checkbox
             'response' => $recaptcha_response,
             'remoteip' => $_SERVER['REMOTE_ADDR']
         ]
@@ -38,7 +38,7 @@ if (isset($_POST['g-recaptcha-response'])) {
 }
 
 // Check for spam bots using honeypot field
-if (!empty($_POST['hp_message'])) {
+if (!empty($_POST['magic_email']) && !empty($_POST['hp_message'])) {
 	$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Spam detected. Please try again.', 'wacp') . "</p>";
 	$honeypot_success = false;
 }
