@@ -29,9 +29,10 @@ if ( empty(wacp_get_recaptcha_site_key_from_setting_page())  || empty(wacp_get_r
 // Validate Google reCAPTCHA
 $captcha_success = true;
 $honeypot_success = true;
-if (!empty($_POST['magic_email'])) {
-	
-	
+$resend_magic_email = isset($_POST['resend_magic_email']) ? intval($_POST['resend_magic_email']) : 0;
+$create_magic_email = isset($_POST['create_magic_email']) ? intval($_POST['create_magic_email']) : 0;
+
+if (!empty($_POST['magic_email']) && $create_magic_email === 1) {
 	if ( isset($_POST['g-recaptcha-response'])) {
 
 		$recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
@@ -61,7 +62,6 @@ if (!empty($_POST['magic_email'])) {
 		$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Captcha missing. Please complete the captcha.', 'wacp') . "</p>";
 		$captcha_success = false;
 	}
-	
 }
 
 // Check for spam bots using honeypot field
@@ -71,14 +71,12 @@ if (!empty($_POST['magic_email']) && !empty($_POST['hp_message'])) {
 }
 
 // Form processing : we got an email from the form and no honeypot field filled & reCAPTCHA is valid
-if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success ) ) {
+if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 
 	// Check if the email is valid
 	if ( is_email($_POST['magic_email']) ) {
 
 		$email = sanitize_email($_POST['magic_email']);
-		$resend_magic_email = isset($_POST['resend_magic_email']) ? intval($_POST['resend_magic_email']) : 0;
-		$create_magic_email = isset($_POST['create_magic_email']) ? intval($_POST['create_magic_email']) : 0;
 		$limit_key = 'magic_login_attempts_' . md5($email);
 		$attempts = get_transient($limit_key) ?: 0;
 
