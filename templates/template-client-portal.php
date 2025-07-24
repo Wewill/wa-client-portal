@@ -17,24 +17,28 @@ $messages = [];
 // Validate Google reCAPTCHA
 $captcha_success = true;
 $honeypot_success = true;
-if (!empty($_POST['magic_email']) && isset($_POST['g-recaptcha-response'])) {
-    $recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
-    $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
-        'body' => [
-            'secret' => '6Ld_MNgUAAAAADQ_rQlQWdc-d0yNM_d875VjggHX', // Secret key for reCAPTCHA v2 Checkbox
-            'response' => $recaptcha_response,
-            'remoteip' => $_SERVER['REMOTE_ADDR']
-        ]
-    ]);
-    $result = json_decode(wp_remote_retrieve_body($response));
+if (!empty($_POST['magic_email'])) {
+	
+	if ( isset($_POST['g-recaptcha-response'])) {
+		$recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
+		$response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
+			'body' => [
+				'secret' => '6Ld_MNgUAAAAADQ_rQlQWdc-d0yNM_d875VjggHX', // Secret key for reCAPTCHA v2 Checkbox
+				'response' => $recaptcha_response,
+				'remoteip' => $_SERVER['REMOTE_ADDR']
+			]
+		]);
+		$result = json_decode(wp_remote_retrieve_body($response));
 
-    if (!$result->success) {
-        $messages[] = "<p style='margin:0;color:red'>" . esc_html__('Captcha verification failed. Please try again.', 'wacp') . "</p>";
+		if (!$result->success) {
+			$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Captcha verification failed. Please try again.', 'wacp') . "</p>";
+			$captcha_success = false;
+		}
+	} else {
+		$messages[] = "<p style='margin:0;color:red'>" . esc_html__('Captcha missing. Please complete the captcha.', 'wacp') . "</p>";
 		$captcha_success = false;
-    }
-} else {
-    $messages[] = "<p style='margin:0;color:red'>" . esc_html__('Captcha missing. Please complete the captcha.', 'wacp') . "</p>";
-	$captcha_success = false;
+	}
+	
 }
 
 // Check for spam bots using honeypot field
