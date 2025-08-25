@@ -254,3 +254,22 @@ add_filter('login_redirect', function($redirect_to, $request, $user) {
 
     return $redirect_to;
 }, 10, 3);
+
+// Block frontend access to register action 
+// but do not block registration
+add_action('login_init', function() {
+    if (isset($_GET['action']) && $_GET['action'] === 'register') {
+		wp_die("Access denied.");
+        wp_redirect(home_url()); // redirection vers l'accueil
+        exit;
+    }
+});
+
+// Display an admin notice to inform if resgistration is not allowed in this website 
+add_action('admin_notices', function() {
+	if (get_option('users_can_register') != 1) {
+		echo '<div class="notice notice-warning is-dismissible">
+			<p>' . __('Warning: User registration is disabled. Please enable it in Settings > General to allow users to register.', 'wacp') . '</p>
+		</div>';
+	}
+});
