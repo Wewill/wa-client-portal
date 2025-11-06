@@ -2,6 +2,9 @@
 /**
  * Register Meta Box fields for user profile/registration
  */
+
+global $current_edition_id;
+
 add_filter( 'rwmb_meta_boxes', function( $meta_boxes ) {
 	$prefix = 'wacp-';
 
@@ -10,21 +13,36 @@ add_filter( 'rwmb_meta_boxes', function( $meta_boxes ) {
 		'title' => 'Informations Client',
 		'type'  => 'user',
 		'fields' => [
+			// All films that have current_edition_id 
 			[
-				'id'   => $prefix . 'entity',
-				'type' => 'text',
-				'name' => __( 'Entity', 'wacp' ),
-			],
-			[
-				'id'   => $prefix . 'media',
-				'type' => 'text',
-				'name' => __( 'Media', 'wacp' ),
-			],
-			[
-				'id'   => $prefix . 'phone',
-				'type' => 'text',
-				'name' => __( 'Phone', 'wacp' ),
-			],
+                'name'            => __( 'My favorites films', 'wacp' ),
+                'id'              => $prefix . 'favorite_films',
+                'type'            => 'post',
+                'post_type'       => ['film'],
+                'add_new'         => false,
+                'multiple'        => true,
+                'parent'          => false,
+				'query_args'	  => [
+					'meta_query' => [
+						[
+							'key'     => '_status',
+							'value' => ['approved','programmed'],
+							'compare' => 'IN',
+						],
+					],
+				],
+                // 'query_args'      => [
+                //     'tax_query' => [
+                //         [
+                //             'taxonomy' => 'edition',
+				//             'field'    => 'id',
+				//             'terms'    => $current_edition_id,
+				//             'operator' => 'IN',
+                //         ],
+                //     ],
+                // ],
+                'hide_from_rest'  => false,
+            ],
 		],
 	];
 	return $meta_boxes;

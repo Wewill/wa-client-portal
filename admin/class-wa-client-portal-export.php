@@ -81,9 +81,7 @@ class Wa_Rsfp_Export {
             __('Lastname', 'wacp'),
             __('E-mail', 'wacp'),
 
-			__('Entity', 'wacp'),
-			__('Media', 'wacp'),
-			__('Phone', 'wacp'),
+			__('Favorite films', 'wacp'),
 	
             __('Date', 'wacp'),
             __('Verified', 'wacp')
@@ -102,9 +100,8 @@ class Wa_Rsfp_Export {
                 esc_html($user->last_name),
                 esc_html($user->user_email),
 
-				get_user_meta($user->ID, $prefix.'entity', true),
-				get_user_meta($user->ID, $prefix.'media', true),
-				get_user_meta($user->ID, $prefix.'phone', true),
+                // Ici la liste des film favoris de l'utilisateur
+                implode(', ', (array) get_user_meta($user->ID, $prefix . 'favorite_films', true)),
 			
                 esc_html($user->user_registered),
 				get_user_meta($user->ID, 'email_verification', true) ? 'Oui' : 'Non',

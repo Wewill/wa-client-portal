@@ -143,16 +143,9 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 				if (isset($_POST['last_name'])) {
 					update_user_meta($user_id, 'last_name', sanitize_user($_POST['last_name']));
 				}
-				if (isset($_POST['user_entity'])) {
-					update_user_meta($user_id, $prefix . 'entity', sanitize_text_field($_POST['user_entity']));
+				if (isset($_POST['nickname'])) {
+					update_user_meta($user_id, 'nickname', sanitize_user($_POST['nickname']));
 				}
-				if (isset($_POST['user_media'])) {
-					update_user_meta($user_id, $prefix . 'media', sanitize_text_field($_POST['user_media']));
-				}
-				if (isset($_POST['user_phone'])) {
-					update_user_meta($user_id, $prefix . 'phone', sanitize_text_field($_POST['user_phone']));
-				}
-
 				$user = get_user_by('ID', $user_id);
 			}
 
@@ -207,7 +200,7 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 				$message = '<html><body>';
 				$message .= '<div style="text-align:center;">';
 				// Add centered logo
-				$message .= '<div style="text-align:center;margin-bottom:50px;"><img src="https://www.artetjardins-hdf.com/wp-content/uploads/2018/03/Logotype_AJ_175px_x2.png" alt="Logo" style="max-width:175px;height:auto;"></div>';
+				$message .= '<div style="text-align:center;margin-bottom:50px;"><img src="http://localhost/wp-content/themes/waffthree/dist/images/logotype_fifam_dark.svg" alt="Logo" style="max-width:175px;height:auto;"></div>';
 				$message .= '<h2 style="color:#0d1724;">' . esc_html__('Your Magic Login Link', 'wacp') . '</h2>';
 				$message .= '<p style="color:#0d1724;">' . esc_html__('Click the link below to log in securely to your client portal:', 'wacp') . '</p>';
 				$message .= '<div style="text-align:center;margin-top:30px;margin-bottom:60px;"><p><a href="' . esc_url($url) . '" style="font-size:16px;background:#acb43f;color:#fff;padding:10px 20px;margin-top:10px;text-decoration:none;border-radius:4px;">' . esc_html__('Log in now', 'wacp') . '</a></p></div>';
@@ -226,7 +219,7 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 				// Headers pour envoyer un mail HTML
 				$headers = [
 					'Content-Type: text/html; charset=UTF-8',
-					'From: ' . html_entity_decode(get_bloginfo('name'), ENT_QUOTES, 'UTF-8') . ' <contact@artetjardins-hdf.com>'
+					'From: ' . html_entity_decode(get_bloginfo('name'), ENT_QUOTES, 'UTF-8') . ' <contact@fifam.fr>'
 				];
 
 				// Envoi du mail personnalisé sans affecter les autres envois
@@ -301,19 +294,6 @@ while ( have_posts() ) :
 					echo '</div>';
 					echo '</div>';
 
-					// Phone field
-					echo '<p><label for="user_phone">' . esc_html__( 'Phone', 'wacp' ) . '</label><input type="tel" name="user_phone" id="user_phone" class="input" required></p>';
-
-					// Entity and Media fields in two columns
-					echo '<div style="display: flex; gap: 1rem;">';
-					echo '<div style="flex:1;">';
-					echo '<p><label for="user_entity">' . esc_html__( 'Entity', 'wacp' ) . '</label><input type="text" name="user_entity" id="user_entity" class="input" required></p>';
-					echo '</div>';
-					echo '<div style="flex:1;">';
-					echo '<p><label for="user_media">' . esc_html__( 'Media', 'wacp' ) . '</label><input type="text" name="user_media" id="user_media" class="input" required></p>';
-					echo '</div>';
-					echo '</div>';
-
 					// reCAPTCHA field
 					do_action('anr_captcha_form_field');
 					if ( wacp_get_recaptcha_site_key_from_setting_page() ) {
@@ -328,7 +308,7 @@ while ( have_posts() ) :
 
 					do_action( 'register_form' );
 					echo '<input type="hidden" name="create_magic_email" value="1">';
-					echo '<p><input type="submit" name="wp-submit" id="wp-submit" class="button button-secondary" value="' . esc_attr__( 'Register', 'wacp' ) . '"></p>';
+					echo '<p class="mt-3"><input type="submit" name="wp-submit" id="wp-submit" class="button button-secondary" value="' . esc_attr__( 'Register', 'wacp' ) . '"></p>';
 					echo '</form>';
 				} else {
 					echo '<p>' . esc_html__( 'Registration is currently disabled.', 'wacp' ) . '</p>';

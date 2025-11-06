@@ -27,7 +27,11 @@ class Wa_Client_Portal_Menu {
      */
     public static function add_logged_in_menu_items( $items, $args ) {
 
-        if ( is_user_logged_in() && $args->theme_location === 'secondary' ) {
+        if ( $args->theme_location !== 'account' ) {
+            return $items;
+        }
+
+        if ( is_user_logged_in() ) {
 
             // Add a link to page where the _wp_page_template (page template slug ) is : template-client-portal.php
             $args_template = [
@@ -42,10 +46,10 @@ class Wa_Client_Portal_Menu {
             $menu_classes = isset( $args->menu_class ) ? esc_attr( $args->menu_class ) : '';
             $add_li_classes = isset( $args->add_li_class ) ? esc_attr( $args->add_li_class ) : '';
             $parent_item  = '<li id="menu-item-client-portal" class="menu-item --menu-item-type-custom --menu-item-object-custom menu-item-has-children '.$add_li_classes.' --link-featured">';
-            $parent_item .= '<a href="' . ( !empty( $template_pages ) ? esc_url( get_permalink( $template_page->ID ) ) : '#' ) . '"><i class="bi bi-person-fill-lock fs-3 lh-0"></i></a>';
+            $parent_item .= '<a href="' . ( !empty( $template_pages ) ? esc_url( get_permalink( $template_page->ID ) ) : '#' ) . '"><i class="bi bi-person-heart fs-4 lh-0"></i></a>';
 
             // Start sub-menu.
-            $parent_item .= '<ul class="sub-menu">';
+            $parent_item .= '<ul class="sub-menu"><i class="icon icon-down-right"></i>';
 
             $template_pages = get_posts( $args_template );
             if ( !empty( $template_pages ) ) {
@@ -96,7 +100,7 @@ class Wa_Client_Portal_Menu {
                 $menu_classes = isset( $args->menu_class ) ? esc_attr( $args->menu_class ) : '';
                 $add_li_classes = isset( $args->add_li_class ) ? esc_attr( $args->add_li_class ) : '';
                 $parent_item  = '<li id="menu-item-client-portal" class="menu-item --menu-item-type-custom --menu-item-object-custom menu-item-has-children '.$add_li_classes.' --link-featured">';
-                $parent_item .= '<a href="' . esc_url( get_permalink( $template_page->ID ) ) . '"><i class="bi bi-person-fill-lock fs-3 lh-0"></i></a>';
+                $parent_item .= '<a href="' . esc_url( get_permalink( $template_page->ID ) ) . '"><i class="bi bi-person fs-4 lh-0"></i></a>';
                 // esc_html( $template_page->post_title )
                 
                 // End sub-menu and parent item.

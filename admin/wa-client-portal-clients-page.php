@@ -11,9 +11,7 @@ $prefix = 'wacp-';
 				<th><?php esc_html_e('#', 'wacp'); ?></th>
 				<th><?php esc_html_e('Lastname', 'wacp'); ?></th>
 				<th><?php esc_html_e('Firstname', 'wacp'); ?></th>
-				<th><?php esc_html_e('Entity', 'wacp'); ?></th>
-				<th><?php esc_html_e('Media', 'wacp'); ?></th>
-				<th><?php esc_html_e('Phone', 'wacp'); ?></th>
+				<th><?php esc_html_e('Favorite films', 'wacp'); ?></th>
 				<th><?php esc_html_e('E-mail', 'wacp'); ?></th>
 				<th><?php esc_html_e('Magic Login', 'wacp'); ?></th>
 			</tr>
@@ -34,9 +32,23 @@ $prefix = 'wacp-';
 					</td>
 					<td><?php echo esc_html($client->last_name); ?></td>
 					<td><?php echo esc_html($client->first_name); ?></td>
-					<td><?php echo esc_html(get_user_meta($client->ID, $prefix.'entity', true)); ?></td>
-					<td><?php echo esc_html(get_user_meta($client->ID, $prefix.'media', true)); ?></td>
-					<td><?php echo esc_html(get_user_meta($client->ID, $prefix.'phone', true)); ?></td>
+					<td>
+						<?php
+							$favorite_films = get_user_meta($client->ID, $prefix . 'favorite_films', true);
+							if ( ! empty( $favorite_films ) && is_array( $favorite_films ) ) {
+								$film_titles = [];
+								foreach ( $favorite_films as $film_id ) {
+									$film = get_post( $film_id );
+									if ( $film ) {
+										$film_titles[] = get_the_title( $film_id );
+									}
+								}
+								echo esc_html( implode( ', ', $film_titles ) );
+							} else {
+								echo '-';
+							}
+						?>
+					</td>
 					<td><?php echo esc_html($client->user_email); ?></td>
 					<td>
 						<?php

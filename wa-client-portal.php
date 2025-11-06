@@ -15,8 +15,8 @@
  * @wordpress-plugin
  * Plugin Name:       WA Private Client Portal
  * Plugin URI:        https://www.wilhemarnoldy.fr
- * Description:       WordPress Client Portal Plugin that creates private pages for all users that only an administrator can edit.
- * Version:           1.1.0
+ * Description:       WordPress Client Portal Plugin — fifam version — that creates private pages for all users that only an administrator can edit.
+ * Version:           1.2.0
  * Author:            Wilhem Arnoldy
  * Author URI:        https://www.wilhemarnoldy.fr/
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WA_CLIENT_PORTAL_VERSION', '1.1.0' );
+define( 'WA_CLIENT_PORTAL_VERSION', '1.2.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -104,26 +104,6 @@ add_action('init', function() {
         $_POST['user_login'] = $username;
     }
 });
-
-// // Save extra registration fields to user meta
-// add_action('user_register', function($user_id) {
-// 	$prefix = 'wacp-';
-//     if (isset($_POST['first_name'])) {
-//         update_user_meta($user_id, 'first_name', sanitize_text_field($_POST['first_name']));
-//     }
-//     if (isset($_POST['last_name'])) {
-//         update_user_meta($user_id, 'last_name', sanitize_text_field($_POST['last_name']));
-//     }
-//     if (isset($_POST['user_entity'])) {
-//         update_user_meta($user_id, $prefix.'entity', sanitize_text_field($_POST['user_entity']));
-//     }
-//     if (isset($_POST['user_media'])) {
-//         update_user_meta($user_id, $prefix.'media', sanitize_text_field($_POST['user_media']));
-//     }
-//     if (isset($_POST['user_phone'])) {
-//         update_user_meta($user_id, $prefix.'phone', sanitize_text_field($_POST['user_phone']));
-//     }
-// });
 
 
 // Traitement du lien magique
