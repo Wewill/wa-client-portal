@@ -203,7 +203,7 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 				$message .= '<div style="text-align:center;margin-bottom:50px;"><img src="http://localhost/wp-content/themes/waffthree/dist/images/logotype_fifam_dark.svg" alt="Logo" style="max-width:175px;height:auto;"></div>';
 				$message .= '<h2 style="color:#0d1724;">' . esc_html__('Your Magic Login Link', 'wacp') . '</h2>';
 				$message .= '<p style="color:#0d1724;">' . esc_html__('Click the link below to log in securely to your client portal:', 'wacp') . '</p>';
-				$message .= '<div style="text-align:center;margin-top:30px;margin-bottom:60px;"><p><a href="' . esc_url($url) . '" style="font-size:16px;background:#acb43f;color:#fff;padding:10px 20px;margin-top:10px;text-decoration:none;border-radius:4px;">' . esc_html__('Log in now', 'wacp') . '</a></p></div>';
+				$message .= '<div style="text-align:center;margin-top:30px;margin-bottom:60px;"><p><a href="' . esc_url($url) . '" style="font-size:16px;background:#9600ff;;color:#fff;padding:10px 20px;margin-top:10px;text-decoration:none;border-radius:4px;">' . esc_html__('Log in now', 'wacp') . '</a></p></div>';
 				$message .= '<p style="color:#888;font-size:10px;margin:0px;">' . esc_html__('If you did not request this email, you can ignore it.', 'wacp') . '</p>';
 				
 				// Ajout du texte en petit avec lien vers la page client-portal
