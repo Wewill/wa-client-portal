@@ -306,7 +306,7 @@ while ( have_posts() ) :
 					echo '<input type="text" name="hp_message" id="hp_message" class="input">';
 					echo '</p>';
 
-					do_action( 'register_form' );
+					//do_action( 'register_form' );
 					echo '<input type="hidden" name="create_magic_email" value="1">';
 					echo '<p class="mt-3"><input type="submit" name="wp-submit" id="wp-submit" class="button button-secondary" value="' . esc_attr__( 'Register', 'wacp' ) . '"></p>';
 					echo '</form>';
