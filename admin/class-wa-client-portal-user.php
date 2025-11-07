@@ -48,27 +48,24 @@ add_filter( 'rwmb_meta_boxes', function( $meta_boxes ) {
 	return $meta_boxes;
 });
 
+
 /**
- * Choose the way of storing in database (serialize or json)
+ * Force Meta Box to save wacp-favorite_films as a single serialized array
+ * instead of multiple rows.
  */
-add_filter( 'rwmb_wacp-favorite-films_value', function( $new, $old, $object_id ) {
-    // Ensure it's saved as a single user_meta entry (array)
-    if ( is_array( $new ) ) {
-        return $new;
-    }
-    return (array) $new;
-}, 10, 3 );
-// Or 
-// add_filter( 'rwmb_wacp-favorite-films_sanitize', function( $new, $field ) {
-//     // Ensure it's stored as an array (WordPress handles serialization)
-//     return (array) $new;
-// }, 10, 2 );
+add_action( 'rwmb_wacp-favorite-films_before_save', function( $new, $field, $old, $object_id ) {
 
+    // Make sure we’re dealing with a user field
+    if ( 'user' === $field['object_type'] ) {
+        // Normalize to array
+        $new = (array) $new;
 
-//And when retrieving, you can unserialize it:
-add_filter( 'rwmb_wacp-favorite-films_value', function( $value, $args, $object_id ) {
-    if ( is_serialized( $value ) ) {
-        return maybe_unserialize( $value );
+        // Save as a single entry (WordPress will serialize automatically)
+        update_user_meta( $object_id, $field['id'], $new );
+
+        // Returning false tells Meta Box not to perform its default save
+        return false;
     }
-    return $value;
-}, 10, 3 );
+
+    return $new;
+}, 10, 4 );

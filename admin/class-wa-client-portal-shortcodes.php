@@ -45,7 +45,7 @@ function wacp_favorite_star_shortcode( $atts ) {
 	$aria_pressed = $favorited ? 'true' : 'false';
 
 	// Icon for empty and filled star
-	$html = '<span class="' . esc_attr( $classes ) . '" role="button" tabindex="0" title="' . esc_attr( $title ) . '" aria-pressed="' . $aria_pressed . '" data-film-id="' . esc_attr( $film_id ) . '" data-nonce="' . esc_attr( $nonce ) . '">';
+	$html = '<span class="' . esc_attr( $classes ) . '" role="button" tabindex="0" data-bs-toggle="tooltip" data-toggle="tooltip" title="' . esc_attr( $title ) . '" aria-pressed="' . $aria_pressed . '" data-film-id="' . esc_attr( $film_id ) . '" data-nonce="' . esc_attr( $nonce ) . '">';
 	$html .= '<i class="wacp-star-icon bi bi-star empty" style="display:' . ( $favorited ? 'none' : 'inline' ) . ';"></i>';
 	$html .= '<i class="wacp-star-icon bi bi-star-fill filled" style="display:' . ( $favorited ? 'inline' : 'none' ) . ';"></i>';
 	$html .= '</span>';
@@ -58,6 +58,7 @@ function wacp_favorite_star_shortcode( $atts ) {
    ------------------------- */
 
 function wacp_user_get_favorites( $user_id ) {
+	global $prefix;
 	$favs = get_user_meta( $user_id, $prefix . 'favorite_films', true );
 	if ( ! is_array( $favs ) ) {
 		$favs = array();
@@ -72,6 +73,7 @@ function wacp_user_has_favorite( $user_id, $film_id ) {
 }
 
 function wacp_user_add_favorite( $user_id, $film_id ) {
+	global $prefix;
 	$favs = wacp_user_get_favorites( $user_id );
 	$fid = intval( $film_id );
 	if ( ! in_array( $fid, $favs, true ) ) {
@@ -82,6 +84,7 @@ function wacp_user_add_favorite( $user_id, $film_id ) {
 }
 
 function wacp_user_remove_favorite( $user_id, $film_id ) {
+	global $prefix;
 	$favs = wacp_user_get_favorites( $user_id );
 	$fid = intval( $film_id );
 	if ( in_array( $fid, $favs, true ) ) {
