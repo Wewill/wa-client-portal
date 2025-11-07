@@ -374,7 +374,7 @@ while ( have_posts() ) :
 						echo '<p class="headflat">' . esc_html__( 'Hello', 'wacp' ) . ' ' . esc_html( $current_user->display_name ) . '!</p>';
 					}
 					if ( ! empty( $private_pages ) ) {
-						echo '<ul class="list-group">';
+						echo '<ul class="list-group mt-5">';
 						foreach ( $private_pages as $page ) {
 							// Check if the current user can read the private page.
 							if ( current_user_can( 'read_private_pages', $page->ID ) ) {
@@ -389,7 +389,7 @@ while ( have_posts() ) :
 					// Display a logout link.
 					// echo '<p><a class="button button-primary" href="' . wp_logout_url( get_permalink() ) . '">' . esc_html__( 'Logout', 'wacp' ) . '</a></p>';
 					// Redirect to home url instaed of logout url
-					echo '<p><a class="button button-primary" href="' . esc_url( home_url() ) . '">' . esc_html__( 'Logout', 'wacp' ) . '</a></p>';
+					echo '<p class="mt-4"><a class="btn button button-primary" href="' . esc_url( home_url() ) . '"><i class="bi bi-box-arrow-right me-2"></i>' . esc_html__( 'Logout', 'wacp' ) . '</a></p>';
 
 			echo '</aside>'; // End of aside
 
