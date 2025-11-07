@@ -199,11 +199,23 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 				$subject = esc_html__('Client Portal : your magic login link', 'wacp');
 				$message = '<html><body>';
 				$message .= '<div style="text-align:center;">';
+
 				// Add centered logo
-				$message .= '<div style="text-align:center;margin-bottom:50px;"><img src="http://localhost/wp-content/themes/waffthree/dist/images/logotype_fifam_dark.svg" alt="Logo" style="max-width:175px;height:auto;"></div>';
+				$message .= '<div style="text-align:center;margin-bottom:50px;"><img src="https://www.fifam.fr/wp-content/uploads/2025/11/logotype_fifam_700px.png" alt="Logo" style="max-width:185px;height:auto;"></div>';
 				$message .= '<h2 style="color:#0d1724;">' . esc_html__('Your Magic Login Link', 'wacp') . '</h2>';
 				$message .= '<p style="color:#0d1724;">' . esc_html__('Click the link below to log in securely to your client portal:', 'wacp') . '</p>';
 				$message .= '<div style="text-align:center;margin-top:30px;margin-bottom:60px;"><p><a href="' . esc_url($url) . '" style="font-size:16px;background:#9600ff;;color:#fff;padding:10px 20px;margin-top:10px;text-decoration:none;border-radius:4px;">' . esc_html__('Log in now', 'wacp') . '</a></p></div>';
+				
+				// Content step by step instructions  
+				$message .= '<div style="text-align:left;max-width:500px;margin:0 auto;color:#0d1724;font-size:14px;line-height:1.6;">';
+				$message .= '<p><strong>' . esc_html__('Important – Please keep this email carefully:', 'wacp') . '</strong><br>'
+				. esc_html__('— It contains a secret key that allows you to connect securely to your personal FIFAM account space.', 'wacp') . '</p>';
+				$message .= '<p>' . esc_html__('— Once you are logged in, your access will remain valid for one month.', 'wacp') . '<br>'
+				. esc_html__('— However, if you change your device (computer, browser, or phone), you can reconnect at any time using this same email.', 'wacp') . '</p>';
+				$message .= '<p>' . esc_html__('— If you lose this email, simply return to the FIFAM website and enter your email address again to receive a new login link.', 'wacp') . '</p>';
+				$message .= '</div>';
+
+				// Additional info
 				$message .= '<p style="color:#888;font-size:10px;margin:0px;">' . esc_html__('If you did not request this email, you can ignore it.', 'wacp') . '</p>';
 				
 				// Ajout du texte en petit avec lien vers la page client-portal
@@ -213,6 +225,15 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 					esc_html__('This login link may have expired. %s', 'wacp'),
 					'<a href="' . esc_url($client_portal_url) . '">' . esc_html__('Resend a new link by email ?', 'wacp') . '</a>'
 				) . '</p>';
+
+				// End 
+				$message .= '<p style="color:#888;font-size:10px;margin:0px;">Festival international du film d\'Amiens<br>
+				c/o MCA Place Leon Gontier - 80000 Amiens (France)<br>
+				Tel: +33 (0)3 22 71 35 70<br>
+				https://www.fifam.fr<br>
+				Copyright © 2016-2019 Festival international du film d\'Amiens, Tous droits réservés.</p>';
+
+
 				$message .= '</div>'; // End center
 				$message .= '</body></html>';
 
