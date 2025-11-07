@@ -63,6 +63,8 @@ class Wa_Client_Portal_Menu {
             
             $private_pages = get_pages( [
                 'post_status' => 'private',
+                'hierarchical' => true,
+                'number' => -1
             ] );
 
             foreach ( $private_pages as $page ) {
