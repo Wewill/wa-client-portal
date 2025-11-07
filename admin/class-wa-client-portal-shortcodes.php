@@ -46,8 +46,8 @@ function wacp_favorite_star_shortcode( $atts ) {
 
 	// Icon for empty and filled star
 	$html = '<span class="' . esc_attr( $classes ) . '" role="button" tabindex="0" title="' . esc_attr( $title ) . '" aria-pressed="' . $aria_pressed . '" data-film-id="' . esc_attr( $film_id ) . '" data-nonce="' . esc_attr( $nonce ) . '">';
-	$html .= '<i class="bi bi-star empty" style="display:' . ( $favorited ? 'none' : 'inline' ) . ';"></i>';
-	$html .= '<i class="bi bi-star-fill filled" style="display:' . ( $favorited ? 'inline' : 'none' ) . ';"></i>';
+	$html .= '<i class="wacp-star-icon bi bi-star empty" style="display:' . ( $favorited ? 'none' : 'inline' ) . ';"></i>';
+	$html .= '<i class="wacp-star-icon bi bi-star-fill filled" style="display:' . ( $favorited ? 'inline' : 'none' ) . ';"></i>';
 	$html .= '</span>';
 
 	return $html;
