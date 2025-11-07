@@ -125,29 +125,8 @@ function wacp_toggle_favorite_ajax() {
    ------------------------- */
 
 function wacp_enqueue_front_assets() {
-	// Minimal style
-	wp_register_style( 'wacp-fav-style', false );
-
-	// @TODO > styles into theme 
-	$css = '
-	.wacp-favorite-film { cursor: pointer; display:inline-flex; align-items:center; color: black; transition: color .2s; }
-	.wacp-favorite-film:hover { color: var(--waff-action-1); }
-	.wacp-favorite-film.favorited { color: var(--waff-action-1); }
-	/* simple modal styles */
-	#wacp-login-modal { display:none; position:fixed; z-index:99999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; }
-	.wacp-modal-container { display:flex; align-items: center; justify-content: center; width:100%; height:100%; }
-	#wacp-login-modal .wacp-modal-box { background:#fff; max-width:560px; width:90%; padding:20px; border-radius:8px; box-shadow:0 6px 24px rgba(0,0,0,0.2); }
-	#wacp-login-modal .wacp-modal-close { float:right; cursor:pointer; font-weight:bold; }
-
-	#pagetitle .wacp-favorite-film { position: relative; top: -4px; margin-left: 12px; }
-	#pagetitle .wacp-favorite-film i { font-size:60% }
-
-	.film-card .wacp-favorite-film { position: relative; top: -1px; margin-left: 1px; }
-	.film-card .wacp-favorite-film i { font-size:80% }
-	';
-	wp_add_inline_style( 'wacp-fav-style', $css );
-	wp_enqueue_style( 'wacp-fav-style' );
-
+	// Styles see waff-theme > specific-fifam
+	
 	// Register an empty script handle to attach inline script
 	wp_register_script( 'wacp-fav-script', '' , array( 'jquery' ), null, true );
 	wp_enqueue_script( 'wacp-fav-script' );
