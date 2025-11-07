@@ -127,6 +127,8 @@ function wacp_toggle_favorite_ajax() {
 function wacp_enqueue_front_assets() {
 	// Minimal style
 	wp_register_style( 'wacp-fav-style', false );
+
+	// @TODO > styles into theme 
 	$css = '
 	.wacp-favorite-film { cursor: pointer; display:inline-flex; align-items:center; color: black; transition: color .2s; }
 	.wacp-favorite-film:hover { color: var(--waff-action-1); }
@@ -137,10 +139,11 @@ function wacp_enqueue_front_assets() {
 	#wacp-login-modal .wacp-modal-box { background:#fff; max-width:560px; width:90%; padding:20px; border-radius:8px; box-shadow:0 6px 24px rgba(0,0,0,0.2); }
 	#wacp-login-modal .wacp-modal-close { float:right; cursor:pointer; font-weight:bold; }
 
-
 	#pagetitle .wacp-favorite-film { position: relative; top: -4px; margin-left: 12px; }
 	#pagetitle .wacp-favorite-film i { font-size:60% }
 
+	.film-card .wacp-favorite-film { position: relative; top: -1px; margin-left: 1px; }
+	.film-card .wacp-favorite-film i { font-size:80% }
 	';
 	wp_add_inline_style( 'wacp-fav-style', $css );
 	wp_enqueue_style( 'wacp-fav-style' );
@@ -306,6 +309,28 @@ function wacp_favorite_films_list_shortcode() {
 		}
 	}
 	$html .= '</ul>';
+
+	return $html;
+}
+
+
+/**
+ * Shortcode wacp_account to print account informations such as First name, Last name, Email, etc.
+ */
+add_shortcode( 'wacp_account', 'wacp_account_shortcode' );
+
+function wacp_account_shortcode() {
+	if ( ! is_user_logged_in() ) {
+		return esc_html__( 'You must be logged in to view your account information.', 'wacp' );
+	}
+
+	$user = wp_get_current_user();
+	$html = '<div class="wacp-account-info">';
+	$html .= '<p><strong>' . esc_html__( 'First Name', 'wacp' ) . '</strong> ' . esc_html( $user->first_name ) . '</p>';
+	$html .= '<p><strong>' . esc_html__( 'Last Name', 'wacp' ) . '</strong> ' . esc_html( $user->last_name ) . '</p>';
+	$html .= '<p><strong>' . esc_html__( 'Email', 'wacp' ) . '</strong> ' . esc_html( $user->user_email ) . '</p>';
+	// Add more fields as needed
+	$html .= '</div>';
 
 	return $html;
 }

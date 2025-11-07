@@ -369,7 +369,9 @@ while ( have_posts() ) :
 					}
 
 					// Display a logout link.
-					echo '<p><a class="button button-primary" href="' . wp_logout_url( get_permalink() ) . '">' . esc_html__( 'Logout', 'wacp' ) . '</a></p>';
+					// echo '<p><a class="button button-primary" href="' . wp_logout_url( get_permalink() ) . '">' . esc_html__( 'Logout', 'wacp' ) . '</a></p>';
+					// Redirect to home url instaed of logout url
+					echo '<p><a class="button button-primary" href="' . esc_url( home_url() ) . '">' . esc_html__( 'Logout', 'wacp' ) . '</a></p>';
 
 			echo '</aside>'; // End of aside
 
