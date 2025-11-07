@@ -122,6 +122,9 @@ class Wa_Client_Portal_Admin {
 		// Include members export
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wa-client-portal-export.php';
 
+		// include custom shortocodes
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wa-client-portal-shortcodes.php';
+
 	}
 
 	/**
