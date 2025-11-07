@@ -61,19 +61,22 @@ class Wa_Client_Portal_Menu {
                 );
             }
             
-            $private_pages = get_pages( [
+            // List all pages that are private and accessible to the user.
+            $private_pages = get_posts( array(
+                'post_type'   => 'page',
                 'post_status' => 'private',
-                'hierarchical' => true,
-                'number' => -1
-            ] );
+                'numberposts' => -1,
+            ) );
 
             foreach ( $private_pages as $page ) {
-                $parent_item .= sprintf(
-                    '<li id="menu-item-client-portal-%1$d" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="%2$s">%3$s</a></li>',
-                    esc_attr( $page->ID ),
-                    esc_url( get_permalink( $page->ID ) ),
-                    esc_html( $page->post_title )
-                );
+                // Check if the current user can read the private page.
+                if ( current_user_can( 'read_private_pages', $page->ID ) )
+                    $parent_item .= sprintf(
+                        '<li id="menu-item-client-portal-%1$d" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="%2$s">%3$s</a></li>',
+                        esc_attr( $page->ID ),
+                        esc_url( get_permalink( $page->ID ) ),
+                        esc_html( $page->post_title )
+                    );
             }
 
             // Add logout link.
