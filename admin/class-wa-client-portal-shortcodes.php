@@ -11,8 +11,6 @@
  */
 
 defined( 'ABSPATH' ) || exit;
-$prefix = 'wacp-';
-
 
 add_action( 'wp_enqueue_scripts', 'wacp_enqueue_front_assets' );
 add_action( 'wp_ajax_wacp_toggle_favorite', 'wacp_toggle_favorite_ajax' );
@@ -58,7 +56,7 @@ function wacp_favorite_star_shortcode( $atts ) {
    ------------------------- */
 
 function wacp_user_get_favorites( $user_id ) {
-	global $prefix;
+	$prefix = 'wacp-';
 	$favs = get_user_meta( $user_id, $prefix . 'favorite_films', true );
 	if ( ! is_array( $favs ) ) {
 		$favs = array();
@@ -73,7 +71,7 @@ function wacp_user_has_favorite( $user_id, $film_id ) {
 }
 
 function wacp_user_add_favorite( $user_id, $film_id ) {
-	global $prefix;
+	$prefix = 'wacp-';
 	$favs = wacp_user_get_favorites( $user_id );
 	$fid = intval( $film_id );
 	if ( ! in_array( $fid, $favs, true ) ) {
@@ -84,7 +82,7 @@ function wacp_user_add_favorite( $user_id, $film_id ) {
 }
 
 function wacp_user_remove_favorite( $user_id, $film_id ) {
-	global $prefix;
+	$prefix = 'wacp-';
 	$favs = wacp_user_get_favorites( $user_id );
 	$fid = intval( $film_id );
 	if ( in_array( $fid, $favs, true ) ) {
