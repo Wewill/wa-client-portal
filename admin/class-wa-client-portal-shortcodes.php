@@ -11,6 +11,8 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+$prefix = 'wacp-';
+
 
 add_action( 'wp_enqueue_scripts', 'wacp_enqueue_front_assets' );
 add_action( 'wp_ajax_wacp_toggle_favorite', 'wacp_toggle_favorite_ajax' );
@@ -44,8 +46,8 @@ function wacp_favorite_star_shortcode( $atts ) {
 
 	// Icon for empty and filled star
 	$html = '<span class="' . esc_attr( $classes ) . '" role="button" tabindex="0" title="' . esc_attr( $title ) . '" aria-pressed="' . $aria_pressed . '" data-film-id="' . esc_attr( $film_id ) . '" data-nonce="' . esc_attr( $nonce ) . '">';
-	$html .= '<i class="bi bi-star" style="display:' . ( $favorited ? 'none' : 'inline' ) . ';"></i>';
-	$html .= '<i class="bi bi-star-fill" style="display:' . ( $favorited ? 'inline' : 'none' ) . ';"></i>';
+	$html .= '<i class="bi bi-star empty" style="display:' . ( $favorited ? 'none' : 'inline' ) . ';"></i>';
+	$html .= '<i class="bi bi-star-fill filled" style="display:' . ( $favorited ? 'inline' : 'none' ) . ';"></i>';
 	$html .= '</span>';
 
 	return $html;
@@ -56,7 +58,7 @@ function wacp_favorite_star_shortcode( $atts ) {
    ------------------------- */
 
 function wacp_user_get_favorites( $user_id ) {
-	$favs = get_user_meta( $user_id, 'wacp_favorite_films', true );
+	$favs = get_user_meta( $user_id, $prefix . 'favorite_films', true );
 	if ( ! is_array( $favs ) ) {
 		$favs = array();
 	}
@@ -74,7 +76,7 @@ function wacp_user_add_favorite( $user_id, $film_id ) {
 	$fid = intval( $film_id );
 	if ( ! in_array( $fid, $favs, true ) ) {
 		$favs[] = $fid;
-		update_user_meta( $user_id, 'wacp_favorite_films', $favs );
+		update_user_meta( $user_id, $prefix . 'favorite_films', $favs );
 	}
 	return true;
 }
@@ -84,7 +86,7 @@ function wacp_user_remove_favorite( $user_id, $film_id ) {
 	$fid = intval( $film_id );
 	if ( in_array( $fid, $favs, true ) ) {
 		$favs = array_values( array_diff( $favs, array( $fid ) ) );
-		update_user_meta( $user_id, 'wacp_favorite_films', $favs );
+		update_user_meta( $user_id, $prefix . 'favorite_films', $favs );
 	}
 	return true;
 }
@@ -125,9 +127,9 @@ function wacp_enqueue_front_assets() {
 	// Minimal style
 	wp_register_style( 'wacp-fav-style', false );
 	$css = '
-	.wacp-favorite-star { cursor: pointer; display:inline-flex; align-items:center; color: #666; transition: color .2s; }
-	.wacp-favorite-star:hover { color: #ffcc00; }
-	.wacp-favorite-star.favorited { color: #ffcc00; }
+	.wacp-favorite-star { cursor: pointer; display:inline-flex; align-items:center; color: black; transition: color .2s; }
+	.wacp-favorite-star:hover { color: var(--waff-action-1); }
+	.wacp-favorite-star.favorited { color: var(--waff-action-1); }
 	/* simple modal styles */
 	#wacp-login-modal { display:none; position:fixed; z-index:99999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; }
 	#wacp-login-modal .wacp-modal-box { background:#fff; max-width:560px; width:90%; padding:20px; border-radius:8px; box-shadow:0 6px 24px rgba(0,0,0,0.2); }
