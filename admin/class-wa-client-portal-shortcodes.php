@@ -40,7 +40,7 @@ function wacp_favorite_star_shortcode( $atts ) {
 	$nonce = wp_create_nonce( 'wacp_fav_nonce' );
 
 	// Minimal accessible markup: a span acting as button with data attributes
-	$classes = 'wacp-favorite-star' . ( $favorited ? ' favorited' : '' );
+	$classes = 'wacp-favorite-film' . ( $favorited ? ' favorited' : '' );
 	$title = $favorited ? esc_attr__( 'Remove from favorites', 'wacp' ) : esc_attr__( 'Add to favorites', 'wacp' );
 	$aria_pressed = $favorited ? 'true' : 'false';
 
@@ -127,9 +127,9 @@ function wacp_enqueue_front_assets() {
 	// Minimal style
 	wp_register_style( 'wacp-fav-style', false );
 	$css = '
-	.wacp-favorite-star { cursor: pointer; display:inline-flex; align-items:center; color: black; transition: color .2s; }
-	.wacp-favorite-star:hover { color: var(--waff-action-1); }
-	.wacp-favorite-star.favorited { color: var(--waff-action-1); }
+	.wacp-favorite-film { cursor: pointer; display:inline-flex; align-items:center; color: black; transition: color .2s; }
+	.wacp-favorite-film:hover { color: var(--waff-action-1); }
+	.wacp-favorite-film.favorited { color: var(--waff-action-1); }
 	/* simple modal styles */
 	#wacp-login-modal { display:none; position:fixed; z-index:99999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; }
 	#wacp-login-modal .wacp-modal-box { background:#fff; max-width:560px; width:90%; padding:20px; border-radius:8px; box-shadow:0 6px 24px rgba(0,0,0,0.2); }
@@ -153,7 +153,7 @@ function wacp_enqueue_front_assets() {
 		var globalNonce = '{nonce}';
 
 		// Click handler
-		$(document).on('click', '.wacp-favorite-star', function(e){
+		$(document).on('click', '.wacp-favorite-film', function(e){
 			e.preventDefault();
 			var el = $(this);
 			var filmId = el.data('film-id');
@@ -210,7 +210,7 @@ function wacp_enqueue_front_assets() {
 					}, function(resp){
 						// On success, reflect UI for any star present on page
 						if (resp && resp.success && resp.data.action === 'added') {
-							$('.wacp-favorite-star[data-film-id=\"'+pending+'"]').each(function(){
+							$('.wacp-favorite-film[data-film-id=\"'+pending+'"]').each(function(){
 								var el = $(this);
 								el.addClass('favorited').attr('aria-pressed','true');
 								el.find('.wacp-star-icon.empty').hide();
