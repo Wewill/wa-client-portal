@@ -170,7 +170,7 @@ function wacp_enqueue_front_assets() {
 			if (!loggedIn) {
 				// Store pending favorite, open modal
 				try { localStorage.setItem('wacp_pending_fav', filmId); } catch(e){}
-				$('#wacp-login-modal').fadeIn(150);
+				$('#wacp-login-modal').fadeIn(150).attr('aria-hidden','false');
 				return;
 			}
 			var nonce = el.data('nonce') || globalNonce;
@@ -199,10 +199,13 @@ function wacp_enqueue_front_assets() {
 			});
 		});
 
-		// close modal
+		// close modal: allow clicks on the overlay (only when clicking the overlay itself)
+		// and allow clicks on the close button (or its inner children)
 		$(document).on('click', '#wacp-login-modal, #wacp-login-modal .wacp-modal-close', function(e){
-			if ( e.target !== this ) return;
-			$('#wacp-login-modal').fadeOut(120);
+			var current = e.currentTarget;
+			// If current target is the overlay, ensure the direct overlay was clicked (not its children)
+			if ( $(current).is('#wacp-login-modal') && e.target !== current ) return;
+			$('#wacp-login-modal').fadeOut(120, function(){ $(this).attr('aria-hidden','true'); });
 		});
 
 		// If user just logged in (page loaded and loggedIn true), check pending fav
