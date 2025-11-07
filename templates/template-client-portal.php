@@ -263,7 +263,7 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 get_header();
 ?>
 
-<div class="container">
+<div class="container-fluid px-0">
 
 <?php 
 // Start the Loop.
@@ -368,16 +368,17 @@ while ( have_posts() ) :
 					) );
 
 					$current_user = wp_get_current_user();
+					echo '<div class="mt-5"></div>';
+					// echo '<p class="headflat">' . esc_html__( 'Welcome to the client portal!', 'wacp' ) . '</p>';
 					if ( !empty( $current_user->display_name ) ) {
-						echo '<p>' . esc_html__( 'Hello', 'wacp' ) . ' ' . esc_html( $current_user->display_name ) . '!</p>';
+						echo '<p class="headflat">' . esc_html__( 'Hello', 'wacp' ) . ' ' . esc_html( $current_user->display_name ) . '!</p>';
 					}
-					echo '<p class="subline">' . esc_html__( 'Welcome to the client portal!', 'wacp' ) . '</p>';
 					if ( ! empty( $private_pages ) ) {
-						echo '<ul>';
+						echo '<ul class="list-group">';
 						foreach ( $private_pages as $page ) {
 							// Check if the current user can read the private page.
 							if ( current_user_can( 'read_private_pages', $page->ID ) ) {
-								echo '<li><a href="' . get_permalink( $page->ID ) . '">' . esc_html( $page->post_title ) . '</a></li>';
+								echo '<li class="list-group-item d-flex justify-content-between align-items-center"><a href="' . get_permalink( $page->ID ) . '">' . esc_html( $page->post_title ) . '</a><i class="icon icon-down-right"></i></li>';
 							}
 						}
 						echo '</ul>';
