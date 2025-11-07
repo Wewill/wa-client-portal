@@ -276,7 +276,7 @@ while ( have_posts() ) :
 
 				// Display a register form container 
 				echo '<div class="register-form-container" style="margin: 1rem 0; padding: 2rem; border: 1px solid var(--waff-color-layout-trans-4); border-radius: 5px; background: var(--waff-color-layout-trans-2)">';
-				echo '<i class="bi bi-key fs-1"></i>';
+				echo '<i class="bi bi-star-half fs-1"></i>';
 				echo '<h6 style="text-align: left;">' . esc_html__( 'New, register', 'wacp' ) . '</h6>';
 				if ( get_option( 'users_can_register' ) ) {
 					echo '<form  method="post" enctype="multipart/form-data">';
@@ -318,7 +318,7 @@ while ( have_posts() ) :
 
 				// Display a Receive login link form container
 				echo '<div class="login-form-container" style="margin: 1rem 0; padding: 2rem; border: 1px solid var(--waff-color-layout-trans-4); border-radius: 5px; background: var(--waff-color-layout-trans-2)">';
-                echo '<i class="bi bi-person-lock fs-1"></i>';
+                echo '<i class="bi bi-person-heart fs-1"></i>';
 				echo '<h6 style="text-align: left;">' . esc_html__( 'Already been there ?', 'wacp' ) . '</h6>';
 				// Display a login form without the password field.
 				echo '<form name="loginform" id="loginform" method="post">';

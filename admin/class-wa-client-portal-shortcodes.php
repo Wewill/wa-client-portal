@@ -133,9 +133,9 @@ function wacp_enqueue_front_assets() {
 	.wacp-favorite-film.favorited { color: var(--waff-action-1); }
 	/* simple modal styles */
 	#wacp-login-modal { display:none; position:fixed; z-index:99999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; }
+	.wacp-modal-container { display:flex; align-items: center; justify-content: center; width:100%; height:100%; }
 	#wacp-login-modal .wacp-modal-box { background:#fff; max-width:560px; width:90%; padding:20px; border-radius:8px; box-shadow:0 6px 24px rgba(0,0,0,0.2); }
 	#wacp-login-modal .wacp-modal-close { float:right; cursor:pointer; font-weight:bold; }
-	#wacp-login-modal a.wacp-portal-btn { display:inline-block; margin-top:12px; padding:10px 14px; background:#9600ff;color:#fff;border-radius:4px;text-decoration:none; }
 	';
 	wp_add_inline_style( 'wacp-fav-style', $css );
 	wp_enqueue_style( 'wacp-fav-style' );
@@ -257,14 +257,50 @@ function wacp_print_login_modal() {
 	$portal_url = esc_url( wacp_get_portal_page_url() );
 	?>
 	<div id="wacp-login-modal" aria-hidden="true">
-		<div class="wacp-modal-box" role="dialog" aria-modal="true">
-			<span class="wacp-modal-close" title="<?php echo esc_attr__( 'Close', 'wacp' ); ?>">×</span>
-			<h3><?php echo esc_html__( 'Please log in to add favorites', 'wacp' ); ?></h3>
-			<p><?php echo esc_html__( 'You must be logged in to save favorites. Click below to open the client portal and log in or register.', 'wacp' ); ?></p>
-			<a class="wacp-portal-btn" href="<?php echo $portal_url; ?>"><?php echo esc_html__( 'Open Client Portal', 'wacp' ); ?></a>
+		<div class="wacp-modal-container">
+			<div class="wacp-modal-box" role="dialog" aria-modal="true">
+				<span class="wacp-modal-close" title="<?php echo esc_attr__( 'Close', 'wacp' ); ?>"><i class="bi bi-x-circle-fill"></i></span>
+				<i class="bi bi-star-half fs-1"></i>
+				<h4 class=""><?php echo esc_html__( 'Please log in to add favorites', 'wacp' ); ?></h4>
+				<p><?php echo esc_html__( 'You must be logged in to save favorites film into your Fifam account. Click below to open the account portal and log in or register.', 'wacp' ); ?></p>
+				<a class="wacp-portal-btn btn btn-action-1" href="<?php echo $portal_url; ?>"><?php echo esc_html__( 'Create my fifam account', 'wacp' ); ?></a> – <?php echo esc_html__( 'or', 'wacp' ); ?> –
+				<a class="wacp-portal-btn btn btn-dark" href="<?php echo $portal_url; ?>"><?php echo esc_html__( 'Log in to my fifam account', 'wacp' ); ?></a>
+			</div>
 		</div>
 	</div>
 	<?php
 }
 
 
+/**
+ * Shortcode to print a list of films favorited by the current logged in user
+ */
+
+add_shortcode( 'wacp_favorite_films_list', 'wacp_favorite_films_list_shortcode' );
+
+function wacp_favorite_films_list_shortcode() {
+	if ( ! is_user_logged_in() ) {
+		return esc_html__( 'You must be logged in to view your favorite films.', 'wacp' );
+	}
+
+	$user_id = get_current_user_id();
+	$fav_films = wacp_user_get_favorites( $user_id );
+
+	if ( empty( $fav_films ) ) {
+		return esc_html__( 'You have no favorite films yet.', 'wacp' );
+	}
+
+	// For simplicity, assume film IDs correspond to post IDs of a custom post type 'film'
+	$html = '<ul class="wacp-favorite-films-list">';
+	foreach ( $fav_films as $film_id ) {
+		$film_post = get_post( $film_id );
+		if ( $film_post && $film_post->post_type === 'film' ) {
+			$film_title = get_the_title( $film_post );
+			$film_link = get_permalink( $film_post );
+			$html .= '<li><a href="' . esc_url( $film_link ) . '">' . esc_html( $film_title ) . '</a></li>';
+		}
+	}
+	$html .= '</ul>';
+
+	return $html;
+}
