@@ -136,6 +136,11 @@ function wacp_enqueue_front_assets() {
 	.wacp-modal-container { display:flex; align-items: center; justify-content: center; width:100%; height:100%; }
 	#wacp-login-modal .wacp-modal-box { background:#fff; max-width:560px; width:90%; padding:20px; border-radius:8px; box-shadow:0 6px 24px rgba(0,0,0,0.2); }
 	#wacp-login-modal .wacp-modal-close { float:right; cursor:pointer; font-weight:bold; }
+
+
+	#pagetitle .wacp-favorite-film { position: relative; top: -4px; margin-left: 12px; }
+	#pagetitle .wacp-favorite-film i { font-size:60% }
+
 	';
 	wp_add_inline_style( 'wacp-fav-style', $css );
 	wp_enqueue_style( 'wacp-fav-style' );
