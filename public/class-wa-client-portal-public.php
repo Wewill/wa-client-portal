@@ -112,6 +112,9 @@ class Wa_Client_Portal_Public {
 	private function load_dependencies() {
 		// Include the menu class.
 		require_once plugin_dir_path( dirname( __FILE__ ) )  . 'public/class-wa-client-portal-menu.php';
+
+		// Include the page title class
+		require_once plugin_dir_path( dirname( __FILE__ ) )  . 'public/class-wa-client-portal-pagetitle.php';
 	}
 
 	/**
