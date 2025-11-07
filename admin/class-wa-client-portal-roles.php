@@ -37,8 +37,24 @@ add_action('wp_dashboard_setup', function() {
 			}
 		});
 	}
-}, 100); // Utilise une priorité élevée pour s'assurer que tous les widgets sont déjà ajoutés
+}, 999); // Utilise une priorité élevée pour s'assurer que tous les widgets sont déjà ajoutés
 
+// Hide admin menu for theme.php and admin.php ( Settings )	for client-portal users
+add_action('admin_menu', 'wa_client_portal_hide_admin_menu', 100);
+function wa_client_portal_hide_admin_menu() {
+	if (current_user_can('client-portal')) {
+		remove_menu_page('themes.php'); // Appearance
+		remove_menu_page('options-general.php'); // Settings
+	}
+}
+
+// Hide a custom welcom panel called wacw_custom_welcome_panel 	for client-portal users
+add_action('admin_head', 'wa_client_portal_hide_welcome_panel');
+function wa_client_portal_hide_welcome_panel() {
+	if (current_user_can('client-portal')) {
+		echo '<style>#welcome-panel { display: none; }</style>';
+	}
+}
 
 // Supprimer le widget Redux Framework News
 add_action('wp_dashboard_setup', 'remove_redux_dashboard_widget', 100);
@@ -56,3 +72,4 @@ add_filter('show_admin_bar', function($show) {
 	}
 	return $show;
 });
+
