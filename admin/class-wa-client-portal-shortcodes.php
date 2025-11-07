@@ -12,15 +12,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-add_action( 'init', 'wacp_register_shortcodes' );
 add_action( 'wp_enqueue_scripts', 'wacp_enqueue_front_assets' );
 add_action( 'wp_ajax_wacp_toggle_favorite', 'wacp_toggle_favorite_ajax' );
 // Note: we do not allow non-logged users to add favorites via ajax; they must log in first.
 
-function wacp_register_shortcodes() {
-	// Register shortcode [wacp_favorite_star film_id="123"]
-	add_shortcode( 'wacp_favorite_star', 'wacp_favorite_star_shortcode' );
-}
+// Register shortcode [wacp_favorite_star film_id="123"] ( no action, because always registered in a init action : add_action( 'init', 'wacp_register_shortcodes' );)
+add_shortcode( 'wacp_favorite_star', 'wacp_favorite_star_shortcode' );
 
 function wacp_favorite_star_shortcode( $atts ) {
 	$atts = shortcode_atts( array(
@@ -45,13 +42,10 @@ function wacp_favorite_star_shortcode( $atts ) {
 	$title = $favorited ? esc_attr__( 'Remove from favorites', 'wacp' ) : esc_attr__( 'Add to favorites', 'wacp' );
 	$aria_pressed = $favorited ? 'true' : 'false';
 
-	// Inline SVG star (empty / filled via .favorited)
-	$svg_empty = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 17.3l-6.16 3.64 1.64-7.03L2 9.76l7.19-.62L12 2l2.81 7.14L22 9.76l-5.48 4.15 1.64 7.03z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>';
-	$svg_filled = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 17.3l-6.16 3.64 1.64-7.03L2 9.76l7.19-.62L12 2l2.81 7.14L22 9.76l-5.48 4.15 1.64 7.03z" fill="currentColor"/></svg>';
-
+	// Icon for empty and filled star
 	$html = '<span class="' . esc_attr( $classes ) . '" role="button" tabindex="0" title="' . esc_attr( $title ) . '" aria-pressed="' . $aria_pressed . '" data-film-id="' . esc_attr( $film_id ) . '" data-nonce="' . esc_attr( $nonce ) . '">';
-	$html .= '<span class="wacp-star-icon empty">' . $svg_empty . '</span>';
-	$html .= '<span class="wacp-star-icon filled" style="display:' . ( $favorited ? 'inline' : 'none' ) . ';">' . $svg_filled . '</span>';
+	$html .= '<i class="bi bi-star" style="display:' . ( $favorited ? 'none' : 'inline' ) . ';"></i>';
+	$html .= '<i class="bi bi-star-fill" style="display:' . ( $favorited ? 'inline' : 'none' ) . ';"></i>';
 	$html .= '</span>';
 
 	return $html;
