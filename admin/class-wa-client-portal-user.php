@@ -69,3 +69,22 @@ add_action( 'rwmb_wacp-favorite-films_before_save', function( $new, $field, $old
 
     return $new;
 }, 10, 4 );
+
+/**
+ * Save the wacp-favorite_films field as a serialized array instead of multiple rows.
+ */
+add_filter( 'rwmb_wacp-favorite_films_value', function( $new, $old, $object_id ) {
+    // Only serialize if it's an array (multiple selected values)
+    if ( is_array( $new ) ) {
+        return maybe_serialize( $new );
+    }
+    return $new;
+}, 20, 3 );
+
+// If you want to ensure it loads properly when Meta Box displays the user profile, you can keep the unserialize safeguard:
+add_filter( 'rwmb_wacp-favorite-films_value', function( $value, $args, $object_id ) {
+    if ( is_serialized( $value ) ) {
+        $value = maybe_unserialize( $value );
+    }
+    return (array) $value;
+}, 10, 3 );
