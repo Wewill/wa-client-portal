@@ -16,7 +16,7 @@
  * Plugin Name:       WA Private Client Portal
  * Plugin URI:        https://www.wilhemarnoldy.fr
  * Description:       WordPress Client Portal Plugin — fifam version — that creates private pages for all users that only an administrator can edit.
- * Version:           1.2.0
+ * Version:           1.3.0
  * Author:            Wilhem Arnoldy
  * Author URI:        https://www.wilhemarnoldy.fr/
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WA_CLIENT_PORTAL_VERSION', '1.2.0' );
+define( 'WA_CLIENT_PORTAL_VERSION', '1.3.0' );
 
 /**
  * The code that runs during plugin activation.
