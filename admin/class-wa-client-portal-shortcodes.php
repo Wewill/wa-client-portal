@@ -11,6 +11,7 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+global $current_edition, $previous_editions, $current_edition_id, $current_edition_films_are_online;
 
 add_action( 'wp_enqueue_scripts', 'wacp_enqueue_front_assets' );
 add_action( 'wp_ajax_wacp_toggle_favorite', 'wacp_toggle_favorite_ajax' );
@@ -125,7 +126,7 @@ function wacp_toggle_favorite_ajax() {
    ------------------------- */
 
 function wacp_enqueue_front_assets() {
-	// Styles see waff-theme > specific-fifam
+	// Styles see wacp-theme > specific-fifam
 	
 	// Register an empty script handle to attach inline script
 	wp_register_script( 'wacp-fav-script', '' , array( 'jquery' ), null, true );
@@ -292,6 +293,164 @@ function wacp_favorite_films_list_shortcode() {
 	}
 	$html .= '</ul>';
 
+	return $html;
+}
+
+/**
+ * Shortocode to print a list of film-cards favorited by the current logged in user
+ */
+
+add_shortcode( 'wacp_favorite_films_cards', 'wacp_favorite_films_cards_shortcode' );
+
+function wacp_favorite_films_cards_shortcode() {
+	if ( ! is_user_logged_in() ) {
+		return esc_html__( 'You must be logged in to view your favorite films.', 'wacp' );
+	}
+
+	$user_id = get_current_user_id();
+	$fav_films = wacp_user_get_favorites( $user_id );
+
+	if ( empty( $fav_films ) ) {
+		return esc_html__( 'You have no favorite films yet.', 'wacp' );
+	}
+
+	?>
+	<!-- Get counts -->
+	<?php if ( !empty( $fav_films ) ) : 
+	if ( function_exists('get_counts') )
+		$counts = get_counts('', array(), array(), $fav_films);
+	// print_r( var_dump( $counts ) );
+
+	$random_sentence = array(
+		'**Une sélection affûtée !** Entre les rencontres et les débats, on sent que tu sais flairer le bon cinéma.',
+		'**Tes choix respirent le festival !** Des salles aux rencontres, tu as visé juste.',
+		'**Sélection premium !** On dirait bien que ton œil de cinéphile ne rate rien d’essentiel.',
+		'**Coup de cœur validé !** Ton programme reflètent parfaitement l’esprit du festival.',
+		'**Une sélection inspirée et inspirante !** Tu navigues entre les sections avec une vraie curiosité cinéphile.',
+		'**Bravo pour ton sens du cadre !** Entre pépites et découvertes, ta liste est un bijou de programmation.'
+	)
+	?> 
+	<section class="private-content alignwide mb-3">
+		<div class="row">
+			<div class="col-sm-2" data-aos="fade-right">
+				<p class="subline text-left opacity-75 mb-0">Édition <?= $current_edition_slug ?></p>
+				<?php if ( count($fav_films) > 0 ) {
+						print( '<span class="heading-4 mt-0"><strong class="count">' . sprintf( _n( '%s', '%s', count($fav_films), 'wacp' ),  count($fav_films) ) . '</strong></span>');
+						print( '<p class="w-50">' . _n( 'favorite film in your selection', 'favorites films in your selection', $counts['projections'], 'wacp' ) . '</p>');
+				} ?> 
+				<?php /* if ( isset($counts['films']) && $counts['films'] != '0' ) {
+						print( '<span class="heading-3 mt-0"><strong class="count">' . sprintf( _n( '%s', '%s', $counts['films'], 'wacp' ), $counts['films'] ) . '</strong></span>');
+						print( '<p class="w-50">' . _n( 'film screened in this room', 'films screened in this room', $counts['films'], 'wacp' ) . '</p>');
+				} */ ?> 
+			</div>
+
+			<div class="col-sm-2" data-aos="fade-right">
+				<p class="--text-muted text-black position-sticky sticky-top --mb-0">
+						<!-- <small class="d-block"><strong><?= $wp_query->post_count ?> films</strong></small> -->
+						<?php if ( isset($counts['films']) && $counts['films'] != '0' ) 
+							print( '<small class="d-block"><strong>' . sprintf( _n( '%s film', '%s films', $counts['films'], 'waff' ), $counts['films'] ) . '</strong></small>'); ?>
+						<?php /*if ( isset($counts['projections']) && $counts['projections'] != '0' ) 
+							print( '<small class="d-block"><strong>' . sprintf( _n( '%s projection', '%s projections', $counts['projections'], 'waff' ), $counts['projections'] ) . '</strong></small>'); */ ?>
+						<?php if ( isset($counts['events']) && $counts['events'] != '0' ) 
+							print( '<small class="d-block"><strong>' . sprintf( _n( '%s event', '%s events', $counts['events'], 'waff' ), $counts['events'] ) . '</strong></small>'); ?>
+						<?php if ( isset($counts['programs']) && $counts['programs'] != '0' ) 
+							print( '<small class="d-block"><strong>' . sprintf( _n( '%s program', '%s programs', $counts['programs'], 'waff' ), $counts['programs'] ) . '</strong></small>'); ?>
+						<?php if ( isset($counts['wpcf-p-is-guest']) && $counts['wpcf-p-is-guest'] != '0' ) 
+							print( '<small class="d-block"><i class="icon icon-guest mr-1 f-12"></i> ' . sprintf( _n( '%s with guest', '%s with guest\'s', $counts['wpcf-p-is-guest'], 'waff' ), $counts['wpcf-p-is-guest'] ) . '</small>'); ?>
+						<?php if ( isset($counts['wpcf-p-is-debate']) && $counts['wpcf-p-is-debate'] != '0' ) 
+							print( '<small class="d-block"><i class="icon icon-mic mr-1 f-12"></i> ' . sprintf( _n( '%s with debate', '%s with debate\'s', $counts['wpcf-p-is-debate'], 'waff' ), $counts['wpcf-p-is-debate'] ) . '</small>'); ?>
+						<?php if ( isset($counts['wpcf-p-young-public']) && $counts['wpcf-p-young-public'] != '0' ) 
+							print( '<small class="d-block"><i class="icon icon-young mr-1 f-12"></i> ' . sprintf( _n( '%s parent-children', '%s parent-children\'s', $counts['wpcf-p-young-public'], 'waff' ), $counts['wpcf-p-young-public'] ) . '</small>'); ?>
+						<?php if ( isset($counts['wpcf-p-highlights']) && $counts['wpcf-p-highlights'] != '0' ) 
+							print( '<small class="d-block"><i class="icon icon-sun mr-1 f-12"></i> ' . sprintf( _n( '%s highlight', '%s highlights', $counts['wpcf-p-highlights'], 'waff' ), $counts['wpcf-p-highlights'] ) . '</small>'); ?>
+						<?php if ( isset($counts['wpcf-f-promote']) && $counts['wpcf-f-promote'] != '0' ) 
+							print( '<small class="d-block"><i class="icon icon-ok mr-1 f-12"></i> ' . sprintf( _n( '%s favorite', '%s favorites', $counts['wpcf-f-promote'], 'waff' ), $counts['wpcf-f-promote'] ) . '</small>'); ?>
+						<!-- #44 -->
+						<?php if ( isset($counts['wpcf-f-premiere']) && $counts['wpcf-f-premiere'] != '0' ) 
+							print( '<small class="d-block"><i class="icon icon-premiere mr-1 f-12"></i> ' . sprintf( _n( '%s premiere', '%s premieres', $counts['wpcf-f-premiere'], 'waff' ), $counts['wpcf-f-premiere'] ) . '</small>'); ?>
+						<?php if ( isset($counts['wpcf-f-avant-premiere']) && $counts['wpcf-f-avant-premiere'] != '0' ) 
+							print( '<small class="d-block"><i class="icon icon-avantpremiere mr-1 f-12"></i> ' . sprintf( _n( '%s avant-premiere', '%s avant-premieres', $counts['wpcf-f-avant-premiere'], 'waff' ), $counts['wpcf-f-avant-premiere'] ) . '</small>'); ?>
+						<!-- EX: <small class="d-block">6 compétitons</small>-->
+				</p>
+			</div>			
+
+			<div class="col-sm-7" data-aos="fade-left">
+				<p class="lead">
+					<?php 
+					$rand_index = array_rand( $random_sentence );
+					echo WaffTwo\Core\waff_do_markdown(esc_html( $random_sentence[ $rand_index ] )); 
+					?>
+				</p>
+			</div>
+		</div>
+	</section>
+	<?php endif; ?>
+
+	<?php		
+	global $attributes;
+	// For simplicity, assume film IDs correspond to post IDs of a custom post type 'film'
+	$html = '<!-- FILM CARD --><section class="wacp-favorite-films-cards g-0 row --align-items-center py-2 --offset-md-2 col-12 --col-sm-10 alignwide">';
+	foreach ( $fav_films as $film_ID ) :
+		// Start the Loop.
+		// $film_post = get_post( $film_ID );
+		$promote 	= get_post_meta($film_ID, 'wpcf-f-promote', true);
+		$film_color = rwmb_meta( 'wacp_film_color', array(), $film_ID );
+		$film_color_class = 'contrast--light card-dark';
+		if ( isset($promote) && $promote=='1' && isset($film_color) && $film_color != '' ) {
+			$rgb = WaffTwo\Core\wacp_HTMLToRGB($film_color);
+			$hsl = WaffTwo\Core\wacp_RGBToHSL($rgb);
+			if($hsl->lightness < $lightness_threshold)
+				$film_color_class = 'contrast--dark card-light';
+		}
+	
+		// print_r(var_dump($promote));
+		// print_r(var_dump($film_color));
+		$attributes = array(
+			'wrapper' 		=> 'div', // div / li
+			'title_wrapper' => (($promote=='1')?'h3':'h5'), // h5 / h6
+			// section + projection : div
+			// Related-sections : li
+			'parent' 		=> 'film', // film / projection
+			// section : film
+			// Projection in fiche film : projection
+			// Related-sections : film
+			'class' 		=> 'card film-card flex-row flex-wrap '.(($promote=='1')?'col-md-12 h-520-px':'col-md-6 h-280-px').' bg-light my-2 border-0 shadow-sm '.$film_color_class,
+			// section : card film-card flex-row flex-wrap col-md-6 bg-light my-2 border-0 h-280-px shadow-sm card-dark
+			// Projection in fiche film : card film-card flex-row flex-wrap col-4 --bg-custom mx-2 my-0 border-0 h-300-px shadow-sm --card-white --p-0
+			// Related-sections : card film-card --flex-row flex-wrap bg-light border-0 h-200-px shadow-sm card-dark
+			'image_class' => '--w-100 '.(($promote=='1')?'h-520-px':'h-280-px').' fit-image',
+			// section : w-100 h-280-px fit-image
+			// Projection in fiche film : w-100 h-600-px fit-image
+			// Related-sections : w-100 --h-100 h-200-px fit-image
+			'image_width' => 'w-60',
+			// section : w-60
+			// Projection in fiche film : w-50 float-left
+			// Related-sections : w-150-px
+			'body_width' => 'w-40',
+			// section : w-40
+			// Projection in fiche film : w-50 h-100
+			// Related-sections : w-250-px
+			'show_sections' => 'false', // string = false / true
+			'show_cats' 	=> 'true', // string = false / true
+			'show_excerpt' 	=> 'true', // string = false / true
+			'excerpt_length' => '100',
+			// section = room : 100
+			// Projection in fiche film : 80
+			// Related-sections : 60
+			'show_rooms' 	=> 'false', // string = false / true
+			'items' 		=> '', // string = @film_projection.parent / empty
+			// Parent items 
+			// Color
+			'film_color'	=> (($promote=='1' && $film_color != '')?$film_color:''),
+		);
+		$subdomain = substr($_SERVER['SERVER_NAME'],0,4);
+		$view_id = ( $subdomain == 'dev2.' || $subdomain == 'www.' )?54057:44405;
+		if ( defined('wacp_THEME') && wacp_THEME == 'DINARD' )
+			$view_id = 670;
+		$html .= render_view_template( $view_id, $film_ID ); // ID de la vue Film card / film-card
+	endforeach;
+	
+	$html .= '</section><!-- END FILM CARD -->'; // wacp-favorite-films-cards
 	return $html;
 }
 
