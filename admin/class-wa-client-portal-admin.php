@@ -125,9 +125,6 @@ class Wa_Client_Portal_Admin {
 		// Include admin notices
 		require_once plugin_dir_path( dirname( __FILE__ ) )  . 'admin/class-wa-client-portal-notices.php';
 
-		// Include i18n debug page
-		require_once plugin_dir_path( dirname( __FILE__ ) )  . 'admin/class-wa-client-portal-i18n-debug.php';
-
 	}
 
 	/**
