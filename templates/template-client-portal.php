@@ -293,10 +293,10 @@ while ( have_posts() ) :
 				echo '<style type="text/css">
 				/* Handle small screens */
 				@media (max-width: 768px) {
-				.client-portal-forms {
-					grid-template-columns: 1fr; /* stack columns on mobile */
-					gap: 1rem;
-				}
+					.client-portal-forms {
+						grid-template-columns: 1fr; /* stack columns on mobile */
+						gap: 1rem;
+					}
 				}
 				</style>';
 
@@ -360,6 +360,10 @@ while ( have_posts() ) :
 				echo '</div>'; // Client portal forms end
 
         } else {
+
+			echo '<h6 class="private-page headflat fs-2 d-inline mb-0">' . __('My account', 'wacp') . '</h6>';
+			// echo '<h2>' . get_the_title() . '</h2>';
+			echo '<header class="account-header page-header entry-header m-auto px "><h1 data-aos="fade-down" class="">' . get_the_title() . '</h1></header>'; 
 
 			echo '<div class="row client-portal-content">';
 			echo '<div class="col">';
