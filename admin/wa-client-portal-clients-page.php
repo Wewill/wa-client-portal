@@ -6,7 +6,7 @@ $prefix = 'wacp-';
 // Calculate statistics
 $total_clients = count($clients);
 $clients_with_favorite_films = 0;
-$clients_with_magic_login = 0;
+$clients_who_clicked_login = 0;
 
 foreach ($clients as $client) {
 	$favorite_films = get_user_meta($client->ID, $prefix . 'favorite_films', true);
@@ -14,9 +14,9 @@ foreach ($clients as $client) {
 		$clients_with_favorite_films++;
 	}
 
-	$token = get_user_meta($client->ID, 'magic_login_token', true);
-	if (!empty($token)) {
-		$clients_with_magic_login++;
+	$cookie_expires = get_user_meta($client->ID, 'magic_login_cookie_expires', true);
+	if (!empty($cookie_expires)) {
+		$clients_who_clicked_login++;
 	}
 }
 ?>
@@ -36,8 +36,8 @@ foreach ($clients as $client) {
 		</div>
 
 		<div style="background: #fff; padding: 20px; border-left: 4px solid #00a32a; box-shadow: 0 1px 1px rgba(0,0,0,0.04);">
-			<h3 style="margin: 0 0 10px 0; font-size: 14px; color: #646970;"><?php esc_html_e('With Magic Login', 'wacp'); ?></h3>
-			<p style="margin: 0; font-size: 28px; font-weight: 600; color: #1d2327;"><?php echo esc_html($clients_with_magic_login); ?></p>
+			<h3 style="margin: 0 0 10px 0; font-size: 14px; color: #646970;"><?php esc_html_e('Clicked Login Link', 'wacp'); ?></h3>
+			<p style="margin: 0; font-size: 28px; font-weight: 600; color: #1d2327;"><?php echo esc_html($clients_who_clicked_login); ?></p>
 		</div>
 	</div>
 
