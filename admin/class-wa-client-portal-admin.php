@@ -113,10 +113,10 @@ class Wa_Client_Portal_Admin {
 		// Include the menu class.
 		require_once plugin_dir_path( dirname( __FILE__ ) )  . 'admin/class-wa-client-portal-menu.php';
 
-		// Include user custom fields register 
+		// Include user custom fields register
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wa-client-portal-user.php';
 
-		// Include user custom role 
+		// Include user custom role
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wa-client-portal-roles.php';
 
 		// Include members export
@@ -124,6 +124,9 @@ class Wa_Client_Portal_Admin {
 
 		// Include admin notices
 		require_once plugin_dir_path( dirname( __FILE__ ) )  . 'admin/class-wa-client-portal-notices.php';
+
+		// Include i18n debug page
+		require_once plugin_dir_path( dirname( __FILE__ ) )  . 'admin/class-wa-client-portal-i18n-debug.php';
 
 	}
 
