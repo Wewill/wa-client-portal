@@ -229,21 +229,6 @@ function wacp_enqueue_front_assets() {
 	add_action( 'wp_footer', 'wacp_print_login_modal' );
 }
 
-function wacp_get_portal_page_url() {
-	$args = array(
-		'meta_key'    => '_wp_page_template',
-		'meta_value'  => '../templates/template-client-portal.php',
-		'post_type'   => 'page',
-		'post_status' => 'publish',
-		'numberposts' => 1,
-	);
-	$portal_page = get_posts( $args );
-	if ( ! empty( $portal_page ) && isset( $portal_page[0]->ID ) ) {
-		return get_permalink( $portal_page[0]->ID );
-	}
-	return site_url( '/client-portal/' ); // fallback
-}
-
 function wacp_print_login_modal() {
 	$portal_url = esc_url( wacp_get_portal_page_url() );
 	?>

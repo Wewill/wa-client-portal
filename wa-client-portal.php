@@ -67,6 +67,9 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wa-client-portal.php';
 // Include template class for custom page templates.
 require plugin_dir_path( __FILE__ ) . '/includes/class-wa-client-portal-template.php';
 
+// Include global utility functions.
+require plugin_dir_path( __FILE__ ) . 'includes/wa-client-portal-functions.php';
+
 /**
  * Begins execution of the plugin.
  *
@@ -108,16 +111,6 @@ add_action('init', function() {
 
 // Traitement du lien magique
 function wacp_handle_magic_login() {
-    // Find the page using the 'template-client-portal.php' template
-    $args = [
-        'meta_key'    => '_wp_page_template',
-        'meta_value'  => '../templates/template-client-portal.php',
-        'post_type'   => 'page',
-        'post_status' => 'publish',
-        'numberposts' => 1,
-    ];
-    $portal_page = get_posts($args);
-
 	// If the user is already logged in, do nothing
 	// We do not want logged-in users to be redirected to the portal
 	if (is_user_logged_in()) return;
@@ -151,7 +144,7 @@ function wacp_handle_magic_login() {
 		$expires = get_user_meta($user_id, 'magic_login_token_expires', true);
 
 		if (!$saved_token || !$expires || time() > $expires) {
-            $redirect_url = !empty($portal_page) ? get_permalink($portal_page[0]->ID) : esc_url(site_url());
+            $redirect_url = wacp_get_portal_page_url( esc_url( site_url() ) );
             wp_die(sprintf(__("This link has expired. <a href='%s'>Resend a new link?</a>", 'wacp'), $redirect_url));
 		}
 
@@ -181,22 +174,8 @@ function wacp_handle_magic_login() {
 		// delete_user_meta($user_id, 'magic_login_token');
 		// delete_user_meta($user_id, 'magic_login_token_expires');
 
-		// Redirect to the client portal page 
-        // Find the page using the 'template-client-portal.php' template
-        $args = [
-            'meta_key'    => '_wp_page_template',
-            'meta_value'  => '../templates/template-client-portal.php',
-            'post_type'   => 'page',
-            'post_status' => 'publish',
-            'numberposts' => 1,
-        ];
-
-        $portal_page = get_posts($args);
-        if (!empty($portal_page)) {
-            wp_redirect(get_permalink($portal_page[0]->ID));
-        } else {
-            wp_redirect(home_url());
-        }
+		// Redirect to the client portal page
+        wp_redirect( wacp_get_portal_page_url( home_url() ) );
 		exit;
 	}
 }
@@ -218,21 +197,7 @@ add_filter('login_redirect', function($redirect_to, $request, $user) {
         return $redirect_to;
     }
 
-    // Find the page using the 'template-client-portal.php' template
-    $args = [
-        'meta_key'    => '_wp_page_template',
-		'meta_value' => '../templates/template-client-portal.php',
-        'post_type'   => 'page',
-        'post_status' => 'publish',
-        'numberposts' => 1,
-    ];
-
-    $portal_page = get_posts($args);
-    if (!empty($portal_page)) {
-        return get_permalink($portal_page[0]->ID);
-    }
-
-    return $redirect_to;
+    return wacp_get_portal_page_url( $redirect_to );
 }, 10, 3);
 
 // Block frontend access to register action 
