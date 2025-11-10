@@ -115,6 +115,10 @@ class Wa_Client_Portal_Public {
 
 		// Include the page title class
 		require_once plugin_dir_path( dirname( __FILE__ ) )  . 'public/class-wa-client-portal-pagetitle.php';
+
+		// Include custom shortcodes
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wa-client-portal-shortcodes.php';
+
 	}
 
 	/**
