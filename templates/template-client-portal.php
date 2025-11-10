@@ -390,8 +390,8 @@ while ( have_posts() ) :
 
 					// Display a logout link.
 					// echo '<p><a class="button button-primary" href="' . wp_logout_url( get_permalink() ) . '">' . esc_html__( 'Logout', 'wacp' ) . '</a></p>';
-					// Redirect to home url instaed of logout url
-					echo '<p class="mt-4"><a class="btn button button-primary" href="' . esc_url( home_url() ) . '"><i class="bi bi-box-arrow-right me-2"></i>' . esc_html__( 'Logout', 'wacp' ) . '</a></p>';
+					// Redirect to home url instead of logout url
+					echo '<p class="mt-4"><a class="btn button button-primary" href="' . wp_logout_url( home_url() ) . '"><i class="bi bi-box-arrow-right me-2"></i>' . esc_html__( 'Logout', 'wacp' ) . '</a></p>';
 
 			echo '</aside>'; // End of aside
 
