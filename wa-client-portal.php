@@ -144,7 +144,7 @@ function wacp_handle_magic_login() {
 		$expires = get_user_meta($user_id, 'magic_login_token_expires', true);
 
 		if (!$saved_token || !$expires || time() > $expires) {
-            $redirect_url = wacp_get_portal_page_url( esc_url( site_url() ) );
+            $redirect_url = wacp_get_portal_page_url();
             wp_die(sprintf(__("This link has expired. <a href='%s'>Resend a new link?</a>", 'wacp'), $redirect_url));
 		}
 

@@ -33,7 +33,17 @@ class Wa_Client_Portal_Menu {
 
         if ( is_user_logged_in() ) {
 
-            // Add a link to page where the _wp_page_template (page template slug ) is : template-client-portal.php
+            // Build the parent menu item using the same structure as other menu items.
+            $menu_classes = isset( $args->menu_class ) ? esc_attr( $args->menu_class ) : '';
+            $add_li_classes = isset( $args->add_li_class ) ? esc_attr( $args->add_li_class ) : '';
+            $portal_url = wacp_get_portal_page_url();
+            $parent_item  = '<li id="menu-item-client-portal" class="menu-item --menu-item-type-custom --menu-item-object-custom menu-item-has-children '.$add_li_classes.' --link-featured">';
+            $parent_item .= '<a href="' . esc_url( $portal_url ) . '"><i class="bi bi-person-heart fs-4 lh-0"></i></a>';
+
+            // Start sub-menu.
+            $parent_item .= '<ul class="sub-menu"><i class="icon icon-down-right"></i>';
+
+            // Add link to portal page with its title
             $args_template = [
                 'meta_key'   => '_wp_page_template',
                 'meta_value' => '../templates/template-client-portal.php',
@@ -41,16 +51,6 @@ class Wa_Client_Portal_Menu {
                 'post_status'=> 'publish',
                 'numberposts'=> 1,
             ];
-
-            // Build the parent menu item using the same structure as other menu items.
-            $menu_classes = isset( $args->menu_class ) ? esc_attr( $args->menu_class ) : '';
-            $add_li_classes = isset( $args->add_li_class ) ? esc_attr( $args->add_li_class ) : '';
-            $parent_item  = '<li id="menu-item-client-portal" class="menu-item --menu-item-type-custom --menu-item-object-custom menu-item-has-children '.$add_li_classes.' --link-featured">';
-            $parent_item .= '<a href="' . ( !empty( $template_pages ) ? esc_url( get_permalink( $template_page->ID ) ) : '#' ) . '"><i class="bi bi-person-heart fs-4 lh-0"></i></a>';
-
-            // Start sub-menu.
-            $parent_item .= '<ul class="sub-menu"><i class="icon icon-down-right"></i>';
-
             $template_pages = get_posts( $args_template );
             if ( !empty( $template_pages ) ) {
                 $template_page = reset($template_pages);
@@ -89,31 +89,18 @@ class Wa_Client_Portal_Menu {
             $items .= $parent_item;
         } else {
 
-            // Add a link to page where the _wp_page_template (page template slug ) is : template-client-portal.php
-            $args_template = [
-                'meta_key'   => '_wp_page_template',
-                'meta_value' => '../templates/template-client-portal.php',
-                'post_type'  => 'page',
-                'post_status'=> 'publish',
-                'numberposts'=> 1,
-            ];
-            $template_pages = get_posts( $args_template );
-            if ( !empty( $template_pages ) ) {
-                $template_page = reset($template_pages);
+            // Build the parent menu item using the same structure as other menu items.
+            $menu_classes = isset( $args->menu_class ) ? esc_attr( $args->menu_class ) : '';
+            $add_li_classes = isset( $args->add_li_class ) ? esc_attr( $args->add_li_class ) : '';
+            $portal_url = wacp_get_portal_page_url();
+            $parent_item  = '<li id="menu-item-client-portal" class="menu-item --menu-item-type-custom --menu-item-object-custom menu-item-has-children '.$add_li_classes.' --link-featured">';
+            $parent_item .= '<a href="' . esc_url( $portal_url ) . '"><i class="bi bi-person fs-4 lh-0"></i></a>';
 
-                // Build the parent menu item using the same structure as other menu items.
-                $menu_classes = isset( $args->menu_class ) ? esc_attr( $args->menu_class ) : '';
-                $add_li_classes = isset( $args->add_li_class ) ? esc_attr( $args->add_li_class ) : '';
-                $parent_item  = '<li id="menu-item-client-portal" class="menu-item --menu-item-type-custom --menu-item-object-custom menu-item-has-children '.$add_li_classes.' --link-featured">';
-                $parent_item .= '<a href="' . esc_url( get_permalink( $template_page->ID ) ) . '"><i class="bi bi-person fs-4 lh-0"></i></a>';
-                // esc_html( $template_page->post_title )
-                
-                // End sub-menu and parent item.
-                $parent_item .= '</li>';
+            // End sub-menu and parent item.
+            $parent_item .= '</li>';
 
-                // Return 
-                $items .= $parent_item;
-            }
+            // Return
+            $items .= $parent_item;
         }
 
         return $items;

@@ -23,7 +23,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Falls back to a default URL if no portal page is found.
  *
  * @since  1.3.0
- * @param  string $fallback_url Optional. The fallback URL if no portal page is found. Default is site_url('/client-portal/').
+ * @param  string $fallback_url Optional. The fallback URL if no portal page is found. Default is home_url('/client-portal/').
  * @return string The URL of the client portal page.
  */
 function wacp_get_portal_page_url( $fallback_url = '' ) {
@@ -39,9 +39,9 @@ function wacp_get_portal_page_url( $fallback_url = '' ) {
 		return get_permalink( $portal_page[0]->ID );
 	}
 
-	// Use provided fallback or default to site_url('/client-portal/')
+	// Use provided fallback or default to home_url('/client-portal/')
 	if ( empty( $fallback_url ) ) {
-		$fallback_url = site_url( '/client-portal/' );
+		$fallback_url = home_url(); //home_url( '/client-portal/' );
 	}
 
 	return $fallback_url;

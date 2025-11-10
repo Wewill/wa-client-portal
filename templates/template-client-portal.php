@@ -171,18 +171,6 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 			if ( $user && in_array('client-portal', (array)$user->roles) ) {
 				$user_id = $user->ID;
 
-
-				// Find the page using the 'template-client-portal.php' template
-				$args = [
-					'meta_key'    => '_wp_page_template',
-					'meta_value'  => '../templates/template-client-portal.php',
-					'post_type'   => 'page',
-					'post_status' => 'publish',
-					'numberposts' => 1,
-				];
-				$portal_page = get_posts($args);
-
-
 				// Generate token
 				$token = bin2hex(random_bytes(32));
 				update_user_meta($user_id, 'magic_login_token', $token);
@@ -193,7 +181,7 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 					'magic_login' => 1,
 					'token' => $token,
 					'user_id' => $user_id,
-				], site_url());
+				], home_url());
 
 				// Préparer le contenu HTML du mail personnalisé
 				$subject = esc_html__('Client Portal : your magic login link', 'wacp');
@@ -219,7 +207,7 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 				$message .= '<p style="color:#888;font-size:10px;margin:0px;">' . esc_html__('If you did not request this email, you can ignore it.', 'wacp') . '</p>';
 				
 				// Ajout du texte en petit avec lien vers la page client-portal
-				$client_portal_url = !empty($portal_page) ? get_permalink($portal_page[0]->ID) : esc_url(site_url());
+				$client_portal_url = wacp_get_portal_page_url();
 
 				$message .= '<p style="color:#888;font-size:10px;margin:0px;">' . sprintf(
 					esc_html__('This login link may have expired. %s', 'wacp'),
