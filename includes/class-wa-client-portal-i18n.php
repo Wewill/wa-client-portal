@@ -34,6 +34,16 @@ class Wa_Client_Portal_i18n {
 	 */
 	public function load_plugin_textdomain() {
 
+		// Get the locale and build the path explicitly
+		$locale = determine_locale();
+		$mofile = plugin_dir_path( dirname( __FILE__ ) ) . 'languages/wacp-' . $locale . '.mo';
+
+		// Load the .mo file directly if it exists
+		if ( file_exists( $mofile ) ) {
+			load_textdomain( 'wacp', $mofile );
+		}
+
+		// Also use the standard method as fallback
 		load_plugin_textdomain(
 			'wacp',
 			false,
