@@ -369,8 +369,9 @@ while ( have_posts() ) :
 					) );
 
 					$current_user = wp_get_current_user();
-					echo '<div class="mt-5"></div>';
+					// echo '<div class="mt-5"></div>';
 					// echo '<p class="headflat">' . esc_html__( 'Welcome to the client portal!', 'wacp' ) . '</p>';
+					echo '<i class="bi bi-person-heart fs-4 lh-0"></i>';
 					if ( !empty( $current_user->display_name ) ) {
 						echo '<p class="headflat">' . esc_html__( 'Hello', 'wacp' ) . ' ' . esc_html( $current_user->display_name ) . '!</p>';
 					}
