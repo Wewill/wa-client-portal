@@ -2,9 +2,45 @@
 // List all users with the "client" role
 $clients = get_users(['role' => 'client-portal']);
 $prefix = 'wacp-';
+
+// Calculate statistics
+$total_clients = count($clients);
+$clients_with_favorite_films = 0;
+$clients_with_magic_login = 0;
+
+foreach ($clients as $client) {
+	$favorite_films = get_user_meta($client->ID, $prefix . 'favorite_films', true);
+	if (!empty($favorite_films) && is_array($favorite_films)) {
+		$clients_with_favorite_films++;
+	}
+
+	$token = get_user_meta($client->ID, 'magic_login_token', true);
+	if (!empty($token)) {
+		$clients_with_magic_login++;
+	}
+}
 ?>
 <div class="wrap">
 	<h1><?php esc_html_e('Members', 'wacp'); ?></h1>
+
+	<!-- Statistics Section -->
+	<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; margin-bottom: 20px;">
+		<div style="background: #fff; padding: 20px; border-left: 4px solid #2271b1; box-shadow: 0 1px 1px rgba(0,0,0,0.04);">
+			<h3 style="margin: 0 0 10px 0; font-size: 14px; color: #646970;"><?php esc_html_e('Total Members', 'wacp'); ?></h3>
+			<p style="margin: 0; font-size: 28px; font-weight: 600; color: #1d2327;"><?php echo esc_html($total_clients); ?></p>
+		</div>
+
+		<div style="background: #fff; padding: 20px; border-left: 4px solid #72aee6; box-shadow: 0 1px 1px rgba(0,0,0,0.04);">
+			<h3 style="margin: 0 0 10px 0; font-size: 14px; color: #646970;"><?php esc_html_e('With Favorite Films', 'wacp'); ?></h3>
+			<p style="margin: 0; font-size: 28px; font-weight: 600; color: #1d2327;"><?php echo esc_html($clients_with_favorite_films); ?></p>
+		</div>
+
+		<div style="background: #fff; padding: 20px; border-left: 4px solid #00a32a; box-shadow: 0 1px 1px rgba(0,0,0,0.04);">
+			<h3 style="margin: 0 0 10px 0; font-size: 14px; color: #646970;"><?php esc_html_e('With Magic Login', 'wacp'); ?></h3>
+			<p style="margin: 0; font-size: 28px; font-weight: 600; color: #1d2327;"><?php echo esc_html($clients_with_magic_login); ?></p>
+		</div>
+	</div>
+
 	<table class="widefat fixed striped" style="margin-top: 20px;">
 		<thead>
 			<tr>
