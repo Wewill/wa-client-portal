@@ -202,6 +202,12 @@ function wacp_enqueue_front_assets() {
 		$user_favorites_json = wp_json_encode( $user_favorites );
 	}
 
+	// Localize script with translated strings
+	wp_localize_script( 'wacp-fav-script', 'wacpFavStrings', array(
+		'addToFavorites'    => __( 'Add to favorites', 'wacp' ),
+		'removeFromFavorites' => __( 'Remove from favorites', 'wacp' ),
+	) );
+
 	$inline_js = <<<JS
 	(function($){
 		var ajaxUrl = '{ajax_url}';
@@ -229,12 +235,12 @@ function wacp_enqueue_front_assets() {
 					el.addClass('favorited').attr('aria-pressed','true');
 					el.find('.wacp-star-icon.empty').hide();
 					el.find('.wacp-star-icon.filled').show();
-					el.attr('title','Remove from favorites');
+					el.attr('title', wacpFavStrings.removeFromFavorites);
 				} else {
 					el.removeClass('favorited').attr('aria-pressed','false');
 					el.find('.wacp-star-icon.empty').show();
 					el.find('.wacp-star-icon.filled').hide();
-					el.attr('title','Add to favorites');
+					el.attr('title', wacpFavStrings.addToFavorites);
 				}
 			});
 		}
@@ -249,7 +255,7 @@ function wacp_enqueue_front_assets() {
 					el.addClass('favorited').attr('aria-pressed','true');
 					el.find('.wacp-star-icon.empty').hide();
 					el.find('.wacp-star-icon.filled').show();
-					el.attr('title','Remove from favorites');
+					el.attr('title', wacpFavStrings.removeFromFavorites);
 					// Update local favorites array
 					if (userFavorites.indexOf(filmId) === -1) {
 						userFavorites.push(filmId);
@@ -258,7 +264,7 @@ function wacp_enqueue_front_assets() {
 					el.removeClass('favorited').attr('aria-pressed','false');
 					el.find('.wacp-star-icon.empty').show();
 					el.find('.wacp-star-icon.filled').hide();
-					el.attr('title','Add to favorites');
+					el.attr('title', wacpFavStrings.addToFavorites);
 					// Update local favorites array
 					var idx = userFavorites.indexOf(filmId);
 					if (idx !== -1) {
