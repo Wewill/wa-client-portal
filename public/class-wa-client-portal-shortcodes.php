@@ -384,7 +384,7 @@ function wacp_print_login_modal() {
 			<div class="wacp-modal-box" role="dialog" aria-modal="true">
 				<span class="wacp-modal-close" title="<?php echo esc_attr__( 'Close', 'wacp' ); ?>"><i class="bi bi-x-circle-fill"></i></span>
 				<i class="bi bi-star-half fs-1"></i>
-				<h4 class=""><?php echo esc_html__( 'Please log in to add favorites', 'wacp' ); ?></h4>
+				<h4 class="mt-2"><?php echo esc_html__( 'Please log in to add favorites', 'wacp' ); ?></h4>
 				<p><?php echo esc_html__( 'You must be logged in to save favorites film into your Fifam account. Click below to open the account portal and log in or register.', 'wacp' ); ?></p>
 				<a class="wacp-portal-btn btn btn-action-1" href="<?php echo $portal_url; ?>"><?php echo esc_html__( 'Create my fifam account', 'wacp' ); ?></a> – <?php echo esc_html__( 'or', 'wacp' ); ?> –
 				<a class="wacp-portal-btn btn btn-dark" href="<?php echo $portal_url; ?>"><?php echo esc_html__( 'Log in to my fifam account', 'wacp' ); ?></a>
