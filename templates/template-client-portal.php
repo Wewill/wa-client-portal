@@ -354,12 +354,12 @@ while ( have_posts() ) :
 			echo '<header class="account-header page-header entry-header m-auto px "><h1 data-aos="fade-down" class="">' . get_the_title() . '</h1></header>'; 
 
 			echo '<div class="row client-portal-content">';
-			echo '<div class="col order-2">';
+			echo '<div class="col order-2 order-sm-1">';
 
 			the_content();
 
 			echo '</div>'; // End of col
-			echo '<aside class="col-12 col-sm-3 order-1">';
+			echo '<aside class="col-12 col-sm-3 order-1 order-sm-2">';
 
 					// List all pages that are private and accessible to the user.
 					$private_pages = get_posts( array(
