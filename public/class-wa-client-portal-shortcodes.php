@@ -286,6 +286,12 @@ function wacp_enqueue_front_assets() {
 				$('#wacp-login-modal').fadeIn(150).attr('aria-hidden','false');
 				return;
 			}
+
+			// Show loading spinner
+			el.addClass('loading');
+			el.find('.wacp-star-icon').hide();
+			el.append('<span class="spinner-border spinner-border-sm wacp-loading-spinner" role="status"><span class="visually-hidden">Loading...</span></span>');
+
 			var nonce = el.data('nonce') || globalNonce;
 			// ajax toggle
 			$.post(ajaxUrl, {
@@ -293,12 +299,24 @@ function wacp_enqueue_front_assets() {
 				film_id: filmId,
 				nonce: nonce
 			}, function(resp){
+				// Remove spinner
+				el.removeClass('loading');
+				el.find('.wacp-loading-spinner').remove();
+
 				if (resp && resp.success) {
 					updateFavoriteStar(filmId, resp.data.action);
 				} else {
+					// Restore previous state on error
+					el.find('.wacp-star-icon').show();
 					console && console.warn(resp);
 					alert('Error toggling favorite.');
 				}
+			}).fail(function(){
+				// Remove spinner and restore state on network error
+				el.removeClass('loading');
+				el.find('.wacp-loading-spinner').remove();
+				el.find('.wacp-star-icon').show();
+				alert('Network error. Please try again.');
 			});
 		});
 
