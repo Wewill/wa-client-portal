@@ -28,7 +28,7 @@ Client portal css
 SC loading spinning icon 
 */
 
-.spinner-border-xs {
+.spinner-border-sm {
     --bs-spinner-width: .8rem;
     --bs-spinner-height: .8rem;
     --bs-spinner-border-width: 0.1em;
