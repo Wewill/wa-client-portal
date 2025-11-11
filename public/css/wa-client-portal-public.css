@@ -28,10 +28,10 @@ Client portal css
 SC loading spinning icon 
 */
 
-.spinner-border-sm {
-    --bs-spinner-width: .8rem;
-    --bs-spinner-height: .8rem;
-    --bs-spinner-border-width: 0.1em;
+.wacp-loading-spinner.spinner-border-sm {
+    --bs-spinner-width: .8rem !important;
+    --bs-spinner-height: .8rem !important;
+    --bs-spinner-border-width: 0.1em !important;
 }
 
 .wacp-favorite-film.loading {
