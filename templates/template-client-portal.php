@@ -279,13 +279,13 @@ while ( have_posts() ) :
 				// Display the login form in a styled container.
 				echo '<div class="client-portal-forms" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1rem auto;">';
 				echo '<style type="text/css">
-				/* Handle small screens */
-				@media (max-width: 768px) {
-					.client-portal-forms {
-						grid-template-columns: 1fr; /* stack columns on mobile */
-						gap: 1rem;
+					/* Handle small screens */
+					@media (max-width: 768px) {
+						.client-portal-forms {
+							grid-template-columns: 1fr !important; /* stack columns on mobile */
+							gap: 1rem !important;
+						}
 					}
-				}
 				</style>';
 
 				// Display a register form container 
