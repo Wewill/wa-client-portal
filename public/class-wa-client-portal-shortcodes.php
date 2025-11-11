@@ -651,7 +651,7 @@ function wacp_login_links_shortcode( $atts ) {
 		$html .= '<span class="wacp-separator">' . $separator . '</span>';
 		$html .= '<span>' . esc_html__( 'or', 'wacp' ) . '</span>';
 		$html .= '<span class="wacp-separator">' . $separator . '</span>';
-		$html .= '<a class="wacp-login-link btn-outline-light" href="' . $portal_url . '">';
+		$html .= '<a class="wacp-login-link btn btn-outline-light" href="' . $portal_url . '">';
 		$html .= esc_html__( 'Log in', 'wacp' );
 		$html .= '</a>';
 	}
