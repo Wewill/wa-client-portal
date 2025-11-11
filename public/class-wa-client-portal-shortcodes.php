@@ -194,11 +194,79 @@ function wacp_enqueue_front_assets() {
 	$logged_in = is_user_logged_in() ? 1 : 0;
 	$portal_url = wacp_get_portal_page_url();
 
+	// Prepare user favorites list for JS synchronization
+	$user_favorites_json = '[]';
+	if ( $logged_in ) {
+		$user_id = get_current_user_id();
+		$user_favorites = wacp_user_get_favorites( $user_id );
+		$user_favorites_json = wp_json_encode( $user_favorites );
+	}
+
 	$inline_js = <<<JS
 	(function($){
 		var ajaxUrl = '{ajax_url}';
 		var loggedIn = {logged_in};
 		var globalNonce = '{nonce}';
+		var userFavorites = {user_favorites};
+
+		/**
+		 * Synchronize favorites UI state for cached HTML content
+		 * This function updates the favorite stars when HTML is loaded from cache
+		 * (e.g., programmation modal) where PHP couldn't determine user's favorites
+		 */
+		function syncFavoritesUI() {
+			if (!loggedIn || !userFavorites || userFavorites.length === 0) return;
+
+			$('.wacp-favorite-film').each(function(){
+				var el = $(this);
+				var filmId = parseInt(el.data('film-id'), 10);
+				if (!filmId) return;
+
+				var isFavorited = userFavorites.indexOf(filmId) !== -1;
+
+				// Update UI to match user's actual favorites
+				if (isFavorited) {
+					el.addClass('favorited').attr('aria-pressed','true');
+					el.find('.wacp-star-icon.empty').hide();
+					el.find('.wacp-star-icon.filled').show();
+					el.attr('title','Remove from favorites');
+				} else {
+					el.removeClass('favorited').attr('aria-pressed','false');
+					el.find('.wacp-star-icon.empty').show();
+					el.find('.wacp-star-icon.filled').hide();
+					el.attr('title','Add to favorites');
+				}
+			});
+		}
+
+		/**
+		 * Update a single favorite star after AJAX toggle
+		 */
+		function updateFavoriteStar(filmId, action) {
+			$('.wacp-favorite-film[data-film-id="'+filmId+'"]').each(function(){
+				var el = $(this);
+				if (action === 'added') {
+					el.addClass('favorited').attr('aria-pressed','true');
+					el.find('.wacp-star-icon.empty').hide();
+					el.find('.wacp-star-icon.filled').show();
+					el.attr('title','Remove from favorites');
+					// Update local favorites array
+					if (userFavorites.indexOf(filmId) === -1) {
+						userFavorites.push(filmId);
+					}
+				} else {
+					el.removeClass('favorited').attr('aria-pressed','false');
+					el.find('.wacp-star-icon.empty').show();
+					el.find('.wacp-star-icon.filled').hide();
+					el.attr('title','Add to favorites');
+					// Update local favorites array
+					var idx = userFavorites.indexOf(filmId);
+					if (idx !== -1) {
+						userFavorites.splice(idx, 1);
+					}
+				}
+			});
+		}
 
 		// Click handler
 		$(document).on('click', '.wacp-favorite-film', function(e){
@@ -220,17 +288,7 @@ function wacp_enqueue_front_assets() {
 				nonce: nonce
 			}, function(resp){
 				if (resp && resp.success) {
-					if (resp.data.action === 'added') {
-						el.addClass('favorited').attr('aria-pressed','true');
-						el.find('.wacp-star-icon.empty').hide();
-						el.find('.wacp-star-icon.filled').show();
-						el.attr('title','Remove from favorites');
-					} else {
-						el.removeClass('favorited').attr('aria-pressed','false');
-						el.find('.wacp-star-icon.empty').show();
-						el.find('.wacp-star-icon.filled').hide();
-						el.attr('title','Add to favorites');
-					}
+					updateFavoriteStar(filmId, resp.data.action);
 				} else {
 					console && console.warn(resp);
 					alert('Error toggling favorite.');
@@ -261,19 +319,24 @@ function wacp_enqueue_front_assets() {
 					}, function(resp){
 						// On success, reflect UI for any star present on page
 						if (resp && resp.success && resp.data.action === 'added') {
-							$('.wacp-favorite-film[data-film-id=\"'+pending+'"]').each(function(){
-								var el = $(this);
-								el.addClass('favorited').attr('aria-pressed','true');
-								el.find('.wacp-star-icon.empty').hide();
-								el.find('.wacp-star-icon.filled').show();
-								el.attr('title','Remove from favorites');
-							});
+							updateFavoriteStar(parseInt(pending, 10), 'added');
 						}
 						try { localStorage.removeItem('wacp_pending_fav'); } catch(e){}
 					});
 				}
 			}
 		});
+
+		// Listen for custom event dispatched when programmation cache HTML is loaded
+		$(document).on('wacp:programmation-html-loaded', function(){
+			syncFavoritesUI();
+		});
+
+		// Initial sync on page load (for any cached content already in DOM)
+		$(document).ready(function(){
+			syncFavoritesUI();
+		});
+
 	})(jQuery);
 	JS;
 
@@ -281,6 +344,7 @@ function wacp_enqueue_front_assets() {
 	$inline_js = str_replace('{ajax_url}', esc_js( admin_url( 'admin-ajax.php' ) ), $inline_js );
 	$inline_js = str_replace('{logged_in}', $logged_in ? '1' : '0', $inline_js );
 	$inline_js = str_replace('{nonce}', wp_create_nonce( 'wacp_fav_nonce' ), $inline_js );
+	$inline_js = str_replace('{user_favorites}', $user_favorites_json, $inline_js );
 
 	wp_add_inline_script( 'wacp-fav-script', $inline_js );
 
