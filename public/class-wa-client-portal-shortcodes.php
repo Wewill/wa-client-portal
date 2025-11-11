@@ -8,6 +8,40 @@
  * - if user is not logged in, the star is empty and a tooltip invites to log in. Then, a popup appears on click to log in (links to content of template-client-portal.php). When logged in, film is added to favorites and star is filled
  * - ajax is used to add/remove film from favorites without reloading the page
  * - the shortcode takes one attribute : film_id
+ * 
+ * ┌────────────────────────────────────────────────┐
+ * │ CHARGEMENT PAGE (Request #1)                   │
+ * ├────────────────────────────────────────────────┤
+ * │ 1. Cache vide                                  │
+ * │ 2. Shortcode #1 → SQL Query → Cache rempli     │
+ * │ 3. Shortcode #2-100 → Lit depuis cache         │
+ * │ 4. HTML envoyé au navigateur                   │
+ * │ 5. Fin requête → Cache détruit                 │
+ * └────────────────────────────────────────────────┘
+ *          ↓
+ * ┌────────────────────────────────────────────────┐
+ * │ CLIC AJAX (Request #2)                         │
+ * ├────────────────────────────────────────────────┤
+ * │ 1. Nouveau cache vide (nouvelle requête PHP)   │
+ * │ 2. wacp_toggle_favorite_ajax() s'exécute       │
+ * │ 3. update_user_meta() → DB modifiée            │
+ * │ 4. JSON envoyé au navigateur                   │
+ * │ 5. JavaScript met à jour le DOM                │
+ * │ 6. Fin requête → Cache détruit                 │
+ * └────────────────────────────────────────────────┘
+ *          ↓
+ * ┌────────────────────────────────────────────────┐
+ * │ RECHARGEMENT PAGE (Request #3)                 │
+ * ├────────────────────────────────────────────────┤
+ * │ 1. Nouveau cache vide                          │
+ * │ 2. SQL Query → Récupère les nouvelles données  │
+ * │ 3. Shortcodes affichent l'état mis à jour      │
+ * └────────────────────────────────────────────────┘
+ * Optimise le rendu initial (100 shortcodes = 1 SQL au lieu de 100)
+ * ✅ N'interfère pas avec l'AJAX (contextes séparés)
+ * ✅ Toujours synchronisé avec la DB (nouveau cache à chaque requête)
+ * ✅ Pas de problème de stale data (données obsolètes)
+ * ✅ Zéro configuration, zéro maintenance
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -33,18 +67,20 @@ function wacp_favorite_star_shortcode( $atts ) {
 	$user_id = get_current_user_id();
 	$favorited = false;
 	if ( $user_id ) {
-		$favorited = wacp_user_has_favorite( $user_id, $film_id );
+		// Use cached favorites instead of individual database calls
+		$favorited = wacp_user_has_favorite_cached( $user_id, $film_id );
 	}
 
-	$nonce = wp_create_nonce( 'wacp_fav_nonce' );
+	// No need to generate a nonce per shortcode - the global nonce in JS will be used
+	// This saves memory and improves performance with many shortcodes
 
 	// Minimal accessible markup: a span acting as button with data attributes
 	$classes = 'wacp-favorite-film' . ( $favorited ? ' favorited' : '' );
 	$title = $favorited ? esc_attr__( 'Remove from favorites', 'wacp' ) : esc_attr__( 'Add to favorites', 'wacp' );
 	$aria_pressed = $favorited ? 'true' : 'false';
 
-	// Icon for empty and filled star
-	$html = '<span class="' . esc_attr( $classes ) . '" role="button" tabindex="0" data-bs-toggle="tooltip" data-toggle="tooltip" title="' . esc_attr( $title ) . '" aria-pressed="' . $aria_pressed . '" data-film-id="' . esc_attr( $film_id ) . '" data-nonce="' . esc_attr( $nonce ) . '">';
+	// Icon for empty and filled star (removed data-nonce as it's redundant with global nonce)
+	$html = '<span class="' . esc_attr( $classes ) . '" role="button" tabindex="0" data-bs-toggle="tooltip" data-toggle="tooltip" title="' . esc_attr( $title ) . '" aria-pressed="' . $aria_pressed . '" data-film-id="' . esc_attr( $film_id ) . '">';
 	$html .= '<i class="wacp-star-icon bi bi-star empty" style="display:' . ( $favorited ? 'none' : 'inline' ) . ';"></i>';
 	$html .= '<i class="wacp-star-icon bi bi-star-fill filled" style="display:' . ( $favorited ? 'inline' : 'none' ) . ';"></i>';
 	$html .= '</span>';
@@ -69,6 +105,22 @@ function wacp_user_get_favorites( $user_id ) {
 function wacp_user_has_favorite( $user_id, $film_id ) {
 	$favs = wacp_user_get_favorites( $user_id );
 	return in_array( intval( $film_id ), $favs, true );
+}
+
+/**
+ * Cached version of wacp_user_has_favorite to avoid multiple DB queries per page load
+ * This is critical when multiple shortcodes are used on the same page
+ */
+function wacp_user_has_favorite_cached( $user_id, $film_id ) {
+	static $favorites_cache = array();
+
+	// Check if we already loaded favorites for this user in this request
+	if ( ! isset( $favorites_cache[ $user_id ] ) ) {
+		// Load once and cache for the entire request
+		$favorites_cache[ $user_id ] = wacp_user_get_favorites( $user_id );
+	}
+
+	return in_array( intval( $film_id ), $favorites_cache[ $user_id ], true );
 }
 
 function wacp_user_add_favorite( $user_id, $film_id ) {
@@ -126,8 +178,15 @@ function wacp_toggle_favorite_ajax() {
    ------------------------- */
 
 function wacp_enqueue_front_assets() {
+	// Prevent multiple enqueues - only run once per page load
+	static $enqueued = false;
+	if ( $enqueued ) {
+		return;
+	}
+	$enqueued = true;
+
 	// Styles see wacp-theme > specific-fifam
-	
+
 	// Register an empty script handle to attach inline script
 	wp_register_script( 'wacp-fav-script', '' , array( 'jquery' ), null, true );
 	wp_enqueue_script( 'wacp-fav-script' );
