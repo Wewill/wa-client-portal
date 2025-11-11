@@ -607,3 +607,59 @@ function wacp_account_shortcode() {
 
 	return $html;
 }
+
+/**
+ * Shortcode to display login/register or logout links
+ * Usage: [wacp_login_links]
+ * Attributes:
+ *   - class: Additional CSS classes (optional)
+ *   - show_icon: Show icon (true/false, default: true)
+ *   - separator: Text separator between links (default: ' – ')
+ */
+add_shortcode( 'wacp_login_links', 'wacp_login_links_shortcode' );
+
+function wacp_login_links_shortcode( $atts ) {
+	$atts = shortcode_atts( array(
+		'class'     => '',
+		'show_icon' => 'true',
+		'separator' => ' – ',
+	), $atts, 'wacp_login_links' );
+
+	$show_icon = filter_var( $atts['show_icon'], FILTER_VALIDATE_BOOLEAN );
+	$separator = esc_html( $atts['separator'] );
+	$extra_class = ! empty( $atts['class'] ) ? ' ' . esc_attr( $atts['class'] ) : '';
+
+	$portal_url = esc_url( wacp_get_portal_page_url() );
+	$icon_html = $show_icon ? '<i class="bi bi-star-half"></i> ' : '';
+
+	$html = '<div class="wacp-login-links' . $extra_class . '">';
+
+	if ( is_user_logged_in() ) {
+		// User is logged in: show link to account and logout
+		$user = wp_get_current_user();
+		$logout_url = wp_logout_url( get_permalink() );
+
+		$html .= '<a class="wacp-portal-link" href="' . $portal_url . '">';
+		$html .= $icon_html . sprintf( esc_html__( 'My account (%s)', 'wacp' ), esc_html( $user->display_name ) );
+		$html .= '</a>';
+		$html .= '<span class="wacp-separator">' . $separator . '</span>';
+		$html .= '<a class="wacp-logout-link" href="' . esc_url( $logout_url ) . '">';
+		$html .= esc_html__( 'Log out', 'wacp' );
+		$html .= '</a>';
+	} else {
+		// User is not logged in: show register and login links
+		$html .= '<a class="wacp-register-link btn btn-action-1" href="' . $portal_url . '">';
+		$html .= $icon_html . esc_html__( 'Create my fifam account', 'wacp' );
+		$html .= '</a>';
+		$html .= '<span class="wacp-separator">' . $separator . '</span>';
+		$html .= '<span>' . esc_html__( 'or', 'wacp' ) . '</span>';
+		$html .= '<span class="wacp-separator">' . $separator . '</span>';
+		$html .= '<a class="wacp-login-link btn btn-dark" href="' . $portal_url . '">';
+		$html .= esc_html__( 'Log in to my fifam account', 'wacp' );
+		$html .= '</a>';
+	}
+
+	$html .= '</div>';
+
+	return $html;
+}
