@@ -72,6 +72,9 @@ foreach ($clients as $client) {
 						<?php
 							$favorite_films = get_user_meta($client->ID, $prefix . 'favorite_films', true);
 							if ( ! empty( $favorite_films ) && is_array( $favorite_films ) ) {
+								$film_count = count( $favorite_films );
+								/* translators: %d: number of films */
+								echo '<strong>' . esc_html( sprintf( _n( '%d film', '%d films', $film_count, 'wacp' ), $film_count ) ) . '</strong> • ';
 								$film_titles = [];
 								foreach ( $favorite_films as $film_id ) {
 									$film = get_post( $film_id );
