@@ -28,6 +28,12 @@ Client portal css
 SC loading spinning icon 
 */
 
+.spinner-border-xs {
+    --bs-spinner-width: .8rem;
+    --bs-spinner-height: .8rem;
+    --bs-spinner-border-width: 0.1em;
+}
+
 .wacp-favorite-film.loading {
     pointer-events: none; /* Désactive les clics pendant le chargement */
     opacity: 0.7;

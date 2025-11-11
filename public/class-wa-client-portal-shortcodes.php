@@ -290,7 +290,7 @@ function wacp_enqueue_front_assets() {
 			// Show loading spinner
 			el.addClass('loading');
 			el.find('.wacp-star-icon').hide();
-			el.append('<span class="spinner-border spinner-border-sm wacp-loading-spinner" role="status"><span class="visually-hidden">Loading...</span></span>');
+			el.append('<span class="spinner-border spinner-border-xs wacp-loading-spinner" role="status"><span class="visually-hidden">Loading...</span></span>');
 
 			var nonce = el.data('nonce') || globalNonce;
 			// ajax toggle
