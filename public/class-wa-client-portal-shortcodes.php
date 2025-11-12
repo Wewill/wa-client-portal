@@ -621,6 +621,7 @@ function wacp_favorite_sections_shortcode( $atts ) {
 
 	// Parse shortcode attributes
 	$atts = shortcode_atts( array(
+		'align' => 'wide', // Alignment: wide, full, left, right, center
 	), $atts, 'wacp_favorite_sections' );
 
 	// Get user favorites films
@@ -685,16 +686,16 @@ function wacp_favorite_sections_shortcode( $atts ) {
 	}
 
 	// Build attributes array to pass to the block callback
-	print_r($sections_with_favorites);
 	$block_attributes = array(
 		'id' => 'wacp-favorite-sections-' . wp_generate_uuid4(),
 		'name' => 'meta-box/wa-sections',
 		'className' => 'wacp-favorite-sections-block',
+		'align' => $atts['align'],
 		'data' => array(
 			'waff_sl_title' => __( 'My favorite sections', 'wacp' ),
 			'waff_sl_content' => __( 'My favorite films are in these sections...', 'wacp' ),
 			'waff_sl_edition' => $current_edition_id,
-			'waff_sl_show_introduction' => 1,
+			'waff_sl_show_introduction' => 0,
 			'waff_sl_show_parent_section' => 0,
 			'waff_sl_show_tiny_list' => 1,
 			'waff_sl_sections_in' => $sections_with_favorites,
