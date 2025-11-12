@@ -60,7 +60,7 @@ $most_favorited_film_title = $most_favorited_film_id ? get_the_title($most_favor
 			<p style="margin: 0; font-size: 28px; font-weight: 600; color: #1d2327;"><?php echo esc_html($clients_who_clicked_login); ?></p>
 		</div>
 
-		<div style="background: #fff; padding: 20px; border-left: 4px solid #40ff00ff; box-shadow: 0 1px 1px rgba(0,0,0,0.04);">
+		<div style="background: #fff; padding: 20px; border-left: 4px solid #d616b7; box-shadow: 0 1px 1px rgba(0,0,0,0.04);">
 			<h3 style="margin: 0 0 10px 0; font-size: 14px; color: #646970;"><?php esc_html_e('Most Favorited Film', 'wacp'); ?></h3>
 			<p style="margin: 0; font-size: 16px; font-weight: 600; color: #1d2327; line-height: 1.4;">
 				<?php if ($most_favorited_film_id): ?>
