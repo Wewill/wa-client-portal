@@ -697,9 +697,9 @@ function wacp_favorite_sections_shortcode( $atts ) {
 			'waff_sl_title' => __( 'My favorite sections', 'wacp' ),
 			'waff_sl_content' => __( 'My favorite films are in these sections...', 'wacp' ),
 			'waff_sl_edition' => $current_edition_id,
-			'waff_sl_show_introduction' => false,
-			'waff_sl_show_parent_section' => false,
-			'waff_sl_show_tiny_list' => true,
+			'waff_sl_show_introduction' => 0,
+			'waff_sl_show_parent_section' => 0,
+			'waff_sl_show_tiny_list' => 1,
 			'waff_sl_sections_in' => $sections_with_favorites,
 		),
 	);
