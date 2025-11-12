@@ -609,6 +609,121 @@ function wacp_account_shortcode() {
 }
 
 /**
+ * Shortcode to display favorite sections from current edition
+ * This shortcode renders the meta-box/wa-sections block from the theme
+ * with sections displayed at 15% opacity if they don't contain any favorite films
+ * Usage: [wacp_favorite_sections]
+ */
+add_shortcode( 'wacp_favorite_sections', 'wacp_favorite_sections_shortcode' );
+
+function wacp_favorite_sections_shortcode( $atts ) {
+	global $current_edition_id;
+
+	// Parse shortcode attributes
+	$atts = shortcode_atts( array(
+	), $atts, 'wacp_favorite_sections' );
+
+	// Get user favorites films
+	$user_id = get_current_user_id();
+	$user_favorites = array();
+	if ( $user_id ) {
+		$user_favorites = wacp_user_get_favorites( $user_id );
+	}
+
+	// Get sections which have thoses favorites to $sections__in
+	// Get all sections for the edition to determine which ones have favorite films
+	$parent_section_args = array(
+		'taxonomy' => 'section',
+		'posts_per_page' => -1,
+		'hide_empty' => false,
+		'parent' => 0,
+		'number' => 1,
+		'meta_query' => array(
+			array(
+				'key' => 'wpcf-select-edition',
+				'compare' => '=',
+				'value' => $current_edition_id,
+			),
+		),
+	);
+	$parent_sections = get_terms( $parent_section_args );
+
+	$parent_section_id = 0;
+	if ( ! empty( $parent_sections ) && ! is_wp_error( $parent_sections ) ) {
+		$parent_section_id = $parent_sections[0]->term_id;
+	}
+
+	// Get all child sections
+	$all_section_args = array(
+		'taxonomy' => 'section',
+		'posts_per_page' => -1,
+		'hide_empty' => false,
+		'parent' => $parent_section_id,
+		'meta_query' => array(
+			array(
+				'key' => 'wpcf-select-edition',
+				'compare' => '=',
+				'value' => $current_edition_id,
+			),
+		),
+	);
+	$sections = get_terms( $all_section_args );
+
+	// Build array of section IDs that contain favorite films
+	$sections_with_favorites = array();
+	if ( ! empty( $sections ) && ! is_wp_error( $sections ) ) {
+		foreach ( $sections as $section ) {
+			// Check if any favorite film belongs to this section
+			foreach ( $user_favorites as $film_id ) {
+				$film_sections = wp_get_post_terms( $film_id, 'section', array( 'fields' => 'ids' ) );
+				if ( ! is_wp_error( $film_sections ) && in_array( $section->term_id, $film_sections, true ) ) {
+					$sections_with_favorites[] = $section->term_id;
+					break; // No need to check other films for this section
+				}
+			}
+		}
+	}
+
+	// Build attributes array to pass to the block callback
+	print_r($sections_with_favorites);
+	$block_attributes = array(
+		'id' => 'wacp-favorite-sections-' . wp_generate_uuid4(),
+		'name' => 'meta-box/wa-sections',
+		'className' => 'wacp-favorite-sections-block',
+		'data' => array(
+			'waff_sl_title' => __( 'My favorite sections', 'wacp' ),
+			'waff_sl_content' => __( 'My favorite films are in these sections...', 'wacp' ),
+			'waff_sl_edition' => $current_edition_id,
+			'waff_sl_show_introduction' => 1,
+			'waff_sl_show_parent_section' => 0,
+			'waff_sl_show_tiny_list' => 1,
+			'waff_sl_sections_in' => $sections_with_favorites,
+		),
+	);
+
+	// Check if the theme function exists
+	if ( ! function_exists( 'wa_sections_callback' ) ) {
+		return '<p>' . esc_html__( 'The wa-sections block is not available in your theme.', 'wacp' ) . '</p>';
+	}
+
+	// Start output buffering to capture the block output
+	ob_start();
+
+	// Call the theme's block callback function
+	wa_sections_callback( $block_attributes );
+
+	// Get the output
+	$output = ob_get_clean();
+
+	// If no favorites, return the output as-is (all sections visible normally)
+	if ( empty( $user_favorites ) ) {
+		return $output;
+	}
+
+	return $output;
+}
+
+/**
  * Shortcode to display login/register or logout links
  * Usage: [wacp_login_links]
  * Attributes:
