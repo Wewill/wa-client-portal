@@ -1,6 +1,10 @@
 <?php
 // List all users with the "client" role
-$clients = get_users(['role' => 'client-portal']);
+$clients = get_users([
+	'role' => 'client-portal',
+	'orderby' => 'registered',
+	'order' => 'DESC'
+]);
 $prefix = 'wacp-';
 
 // Calculate statistics
@@ -17,9 +21,10 @@ foreach ($clients as $client) {
 		// Count each film
 		foreach ($favorite_films as $film_id) {
 			if (!isset($film_favorites_count[$film_id])) {
-				$film_favorites_count[$film_id] = 0;
+				$film_favorites_count[$film_id] = 1;
+			} else {
+				$film_favorites_count[$film_id]++;
 			}
-			$film_favorites_count[$film_id]++;
 		}
 	}
 
