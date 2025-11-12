@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WA Private Client Portal\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-18 21:27+0000\n"
-"PO-Revision-Date: 2025-11-12 14:41+0000\n"
+"PO-Revision-Date: 2025-11-12 14:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -30,8 +30,8 @@ msgstr[1] ""
 #: admin/wa-client-portal-clients-page.php:72
 msgid "%d time"
 msgid_plural "%d times"
-msgstr[0] "fois"
-msgstr[1] "fois"
+msgstr[0] ""
+msgstr[1] ""
 
 #: public/class-wa-client-portal-shortcodes.php:472
 #, php-format
