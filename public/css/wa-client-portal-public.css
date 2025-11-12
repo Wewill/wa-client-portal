@@ -19,7 +19,7 @@ Client portal css
 #pagetitle .wacp-favorite-film { position: relative; top: -4px; margin-left: 12px; }
 #pagetitle .wacp-favorite-film i { font-size:60% }
 
-.film-card .wacp-favorite-film { position: relative; top: -1px; margin-left: 1px; }
+.film-card .wacp-favorite-film { position: relative; top: -3px; margin-left: 1px; }
 .film-card .wacp-favorite-film i { font-size:80% }
 
 #programmationModal .wacp-favorite-film, .programmation-list .wacp-favorite-film{ position: relative; top: -1px; margin-left: 1px; }
