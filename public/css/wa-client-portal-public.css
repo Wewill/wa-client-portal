@@ -7,9 +7,9 @@
 Client portal css 
 */
 
-.wacp-favorite-film { cursor: pointer; display:inline-flex; align-items:center; color: black; transition: color .2s; }
+.wacp-favorite-film { cursor: pointer; display:inline-flex; align-items:center; color: var(--waff-color-heading);; transition: color .2s; }
 .wacp-favorite-film:hover { color: var(--waff-action-1); }
-.wacp-favorite-film.favorited { color: var(--waff-action-1); }
+.wacp-favorite-film.favorited { color: var(--waff-color-heading); }
 /* simple modal styles */
 #wacp-login-modal { display:none; position:fixed; z-index:99999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; }
 .wacp-modal-container { display:flex; align-items: center; justify-content: center; width:100%; height:100%; }
@@ -19,7 +19,7 @@ Client portal css
 #pagetitle .wacp-favorite-film { position: relative; top: -4px; margin-left: 12px; }
 #pagetitle .wacp-favorite-film i { font-size:60% }
 
-.film-card .wacp-favorite-film { position: relative; top: -3px; margin-left: 1px; }
+.film-card .wacp-favorite-film { position: relative; top: -2px; margin-left: 1px; }
 .film-card .wacp-favorite-film i { font-size:80% }
 
 #programmationModal .wacp-favorite-film, .programmation-list .wacp-favorite-film{ position: relative; top: -1px; margin-left: 1px; }
