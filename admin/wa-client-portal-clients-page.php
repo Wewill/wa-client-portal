@@ -38,7 +38,7 @@ foreach ($clients as $client) {
 $most_favorited_film_id = null;
 $most_favorited_film_count = 0;
 foreach ($film_favorites_count as $film_id => $count) {
-	if ($count > $most_favorited_film_count) {
+	if ($count >= $most_favorited_film_count && $count > 0) {
 		$most_favorited_film_id = $film_id;
 		$most_favorited_film_count = $count;
 	}
