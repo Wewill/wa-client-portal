@@ -435,6 +435,8 @@ function wacp_favorite_films_list_shortcode() {
 add_shortcode( 'wacp_favorite_films_cards', 'wacp_favorite_films_cards_shortcode' );
 
 function wacp_favorite_films_cards_shortcode() {
+	global $current_edition_slug;
+
 	if ( ! is_user_logged_in() ) {
 		return esc_html__( 'You must be logged in to view your favorite films.', 'wacp' );
 	}
