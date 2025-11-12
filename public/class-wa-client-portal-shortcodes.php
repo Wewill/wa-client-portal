@@ -702,7 +702,7 @@ function wacp_favorite_sections_shortcode( $atts ) {
 	);
 
 	// Check if the theme function exists
-	if ( ! function_exists( 'wa_sections_callback' ) ) {
+	if ( ! function_exists( 'WaffTwo\Blocks\wa_sections_callback' ) ) {
 		return '<p>' . esc_html__( 'The wa-sections block is not available in your theme.', 'wacp' ) . '</p>';
 	}
 
@@ -710,7 +710,7 @@ function wacp_favorite_sections_shortcode( $atts ) {
 	ob_start();
 
 	// Call the theme's block callback function
-	wa_sections_callback( $block_attributes );
+	\WaffTwo\Blocks\wa_sections_callback( $block_attributes );
 
 	// Get the output
 	$output = ob_get_clean();
