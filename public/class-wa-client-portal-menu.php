@@ -41,7 +41,7 @@ class Wa_Client_Portal_Menu {
             $parent_item .= '<a href="' . esc_url( $portal_url ) . '"><i class="bi bi-person-heart fs-4 lh-0"></i></a>';
 
             // Start sub-menu.
-            $parent_item .= '<ul class="sub-menu"><i class="icon icon-down-right"></i>';
+            $parent_item .= '<ul class="sub-menu rounded-2"><i class="icon icon-down-right"></i>';
 
             // Add link to portal page with its title
             $args_template = [
