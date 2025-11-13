@@ -276,8 +276,8 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 			// === ENHANCED ANTI-SPAM HEADERS ===
 			$headers = [
 				'Content-Type: text/html; charset=UTF-8',
-				'From: ' . $site_name . ' <contact@fifam.fr>',
-				'Reply-To: ' . $site_name . ' <contact@fifam.fr>',
+				'From: ' . $site_name . ' <no-reply@fifam.fr>',
+				'Reply-To: ' . $site_name . ' <no-reply@fifam.fr>',
 				'X-Priority: 3',
 				'X-MSMail-Priority: Normal',
 				'List-Unsubscribe: <' . esc_url($client_portal_url) . '>',
