@@ -273,34 +273,20 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 			$html_message .= '</table>';
 			$html_message .= '</body></html>';
 
-			// === MULTIPART MESSAGE ===
-			$boundary = uniqid('np');
-
-			$message = "This is a multi-part message in MIME format.\n\n";
-			$message .= "--{$boundary}\n";
-			$message .= "Content-Type: text/plain; charset=UTF-8\n";
-			$message .= "Content-Transfer-Encoding: 8bit\n\n";
-			$message .= $text_message . "\n\n";
-			$message .= "--{$boundary}\n";
-			$message .= "Content-Type: text/html; charset=UTF-8\n";
-			$message .= "Content-Transfer-Encoding: 8bit\n\n";
-			$message .= $html_message . "\n\n";
-			$message .= "--{$boundary}--";
-
 			// === ENHANCED ANTI-SPAM HEADERS ===
 			$headers = [
-				'Content-Type: multipart/alternative; boundary="' . $boundary . '"',
+				'Content-Type: text/html; charset=UTF-8',
 				'From: ' . $site_name . ' <contact@fifam.fr>',
 				'Reply-To: ' . $site_name . ' <contact@fifam.fr>',
-				'X-Mailer: WordPress/' . get_bloginfo('version'),
 				'X-Priority: 3',
 				'X-MSMail-Priority: Normal',
 				'List-Unsubscribe: <' . esc_url($client_portal_url) . '>',
 				'Precedence: bulk'
 			];
 
-			// Send email with improved deliverability
-			wp_mail($email, $subject, $message, $headers);
+			// WordPress will use the HTML version as primary
+			// The text version is embedded in the HTML for better compatibility
+			wp_mail($email, $subject, $html_message, $headers);
 
 				$messages[] = "<p style='margin:0;color:green'>" . sprintf(
 					__('A login link has been sent to <strong>%s</strong>. Check your inbox.', 'wacp'),
