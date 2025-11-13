@@ -291,7 +291,7 @@ if (!empty($_POST['magic_email']) && ($captcha_success && $honeypot_success) ) {
 				$messages[] = "<p style='margin:0;color:green'>" . sprintf(
 					__('A login link has been sent to <strong>%s</strong>. Check your inbox.', 'wacp'),
 					esc_html($email)
-				) . "</p>";
+				) . ' <em>' . __( 'Remind to check your spams.', 'wacp'). "</em></p>";
 
 				// Increment counter
 				set_transient($limit_key, $attempts + 1, DAY_IN_SECONDS);

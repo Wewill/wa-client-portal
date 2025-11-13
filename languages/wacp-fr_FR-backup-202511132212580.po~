@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WA Private Client Portal\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-18 21:27+0000\n"
-"PO-Revision-Date: 2025-11-10 11:23+0000\n"
+"PO-Revision-Date: 2025-11-13 22:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -15,18 +15,32 @@ msgstr ""
 "X-Loco-Version: 2.8.0; wp-6.8.1; php-8.2.14\n"
 "X-Domain: wacp"
 
-#: admin/wa-client-portal-clients-page.php:11
+#: admin/wa-client-portal-clients-page.php:90
 msgid "#"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:323
+#. %d: number of films
+#: admin/wa-client-portal-clients-page.php:120
+msgid "%d film"
+msgid_plural "%d films"
+msgstr[0] ""
+msgstr[1] ""
+
+#. %d: number of times
+#: admin/wa-client-portal-clients-page.php:77
+msgid "%d time"
+msgid_plural "%d times"
+msgstr[0] "%d fois"
+msgstr[1] "%d fois"
+
+#: public/class-wa-client-portal-shortcodes.php:472
 #, php-format
 msgid "%s"
 msgid_plural "%s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/template-client-portal.php:234
+#: templates/template-client-portal.php:292
 #, php-format
 msgid "A login link has been sent to <strong>%s</strong>. Check your inbox."
 msgstr ""
@@ -41,7 +55,8 @@ msgstr "Accès refusé."
 msgid "Access my client portal"
 msgstr "Accéder à mon compte FIFAM"
 
-#: public/class-wa-client-portal-shortcodes.php:43
+#: public/class-wa-client-portal-shortcodes.php:79
+#: public/class-wa-client-portal-shortcodes.php:207
 msgid "Add to favorites"
 msgstr "Ajouter aux favoris"
 
@@ -53,7 +68,7 @@ msgstr ""
 "Notice administrateur : Google reCAPTCHA n'est pas configuré. Veuillez "
 "vérifier les paramètres du plugin compte FIFAM."
 
-#: templates/template-client-portal.php:336
+#: templates/template-client-portal.php:394
 msgid "Already been there ?"
 msgstr "Déjà venu ici ?"
 
@@ -74,11 +89,16 @@ msgstr "Échec de la réponse du captcha. Veuillez réessayer."
 msgid "Captcha verification failed. Please try again."
 msgstr "La vérification du captcha a échoué. Veuillez réessayer."
 
-#: templates/template-client-portal.php:194
+#: templates/template-client-portal.php:197
+#: templates/template-client-portal.php:236
 msgid "Click the link below to log in securely to your client portal:"
 msgstr ""
 "Cliquez sur le lien ci-dessous pour vous connecter en toute sécurité à votre "
 "compte FIFAM :"
+
+#: admin/wa-client-portal-clients-page.php:64
+msgid "Clicked Login Link"
+msgstr "Lien de connexion cliqué"
 
 #: includes/class-wa-client-portal-activator.php:51
 #: admin/class-wa-client-portal-roles.php:22
@@ -89,15 +109,19 @@ msgstr "Compte FIFAM"
 msgid "Client Portal : your magic login link"
 msgstr "Compte FIFAM : votre lien de connexion automatique"
 
-#: public/class-wa-client-portal-shortcodes.php:238
+#: public/class-wa-client-portal-shortcodes.php:385
 msgid "Close"
 msgstr "Fermer"
 
-#: admin/wa-client-portal-clients-page.php:67
+#: admin/wa-client-portal-clients-page.php:149
 msgid "Cookie Expires:"
 msgstr "Le cookie expire le :"
 
-#: public/class-wa-client-portal-shortcodes.php:242
+#: public/class-wa-client-portal-shortcodes.php:767
+msgid "Create my account"
+msgstr "Créer mon compte"
+
+#: public/class-wa-client-portal-shortcodes.php:389
 msgid "Create my fifam account"
 msgstr "Créer mon compte fifam"
 
@@ -105,14 +129,14 @@ msgstr "Créer mon compte fifam"
 msgid "Date"
 msgstr "Date"
 
-#: admin/wa-client-portal-clients-page.php:15
+#: admin/wa-client-portal-clients-page.php:94
 #: admin/class-wa-client-portal-export.php:82
-#: templates/template-client-portal.php:299
-#: templates/template-client-portal.php:339
+#: templates/template-client-portal.php:357
+#: templates/template-client-portal.php:397
 msgid "E-mail"
 msgstr "E-mail"
 
-#: public/class-wa-client-portal-shortcodes.php:457
+#: public/class-wa-client-portal-shortcodes.php:606
 msgid "Email"
 msgstr "E-mail"
 
@@ -137,24 +161,24 @@ msgstr "exporter"
 msgid "Export members"
 msgstr "Export membres FIFAM"
 
-#: public/class-wa-client-portal-shortcodes.php:324
+#: public/class-wa-client-portal-shortcodes.php:473
 msgid "favorite film in your selection"
 msgid_plural "favorites films in your selection"
 msgstr[0] "film favoris dans ta sélection"
 msgstr[1] "films favoris dans ta sélection"
 
-#: admin/wa-client-portal-clients-page.php:14
+#: admin/wa-client-portal-clients-page.php:93
 #: admin/class-wa-client-portal-export.php:84
 msgid "Favorite films"
 msgstr "Film favoris"
 
-#: public/class-wa-client-portal-shortcodes.php:455
+#: public/class-wa-client-portal-shortcodes.php:604
 msgid "First Name"
 msgstr "Prénom"
 
-#: admin/wa-client-portal-clients-page.php:13
+#: admin/wa-client-portal-clients-page.php:92
 #: admin/class-wa-client-portal-export.php:80
-#: templates/template-client-portal.php:304
+#: templates/template-client-portal.php:362
 msgid "Firstname"
 msgstr "Prénom"
 
@@ -163,11 +187,12 @@ msgstr "Prénom"
 msgid "Google reCAPTCHA V2 settings"
 msgstr "Paramètres Google reCAPTCHA V2"
 
-#: templates/template-client-portal.php:376
+#: templates/template-client-portal.php:434
 msgid "Hello"
 msgstr "Bonjour"
 
-#: templates/template-client-portal.php:202
+#: templates/template-client-portal.php:203
+#: templates/template-client-portal.php:250
 msgid ""
 "However, if you change your device (computer, browser, or phone), you can "
 "reconnect at any time using this same email | "
@@ -188,11 +213,13 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#: templates/template-client-portal.php:207
+#: templates/template-client-portal.php:205
+#: templates/template-client-portal.php:257
 msgid "If you did not request this email, you can ignore it."
 msgstr "Si vous n'avez pas demandé cet e-mail, vous pouvez l'ignorer."
 
-#: templates/template-client-portal.php:203
+#: templates/template-client-portal.php:204
+#: templates/template-client-portal.php:251
 msgid ""
 "If you lose this email, simply return to the FIFAM website and enter your "
 "email address again to receive a new login link."
@@ -201,11 +228,12 @@ msgstr ""
 "FIFAM et de saisir à nouveau votre adresse e-mail pour recevoir un nouveau "
 "lien de connexion."
 
-#: templates/template-client-portal.php:199
+#: templates/template-client-portal.php:200
+#: templates/template-client-portal.php:247
 msgid "Important | Please keep this email carefully:"
 msgstr "Important | Veuillez lire soigneusement cet e-mail :"
 
-#: public/class-wa-client-portal-shortcodes.php:111
+#: public/class-wa-client-portal-shortcodes.php:163
 msgid "Invalid film id."
 msgstr "Identifiant film invalide"
 
@@ -213,7 +241,8 @@ msgstr "Identifiant film invalide"
 msgid "Invalid login link."
 msgstr "Lien de connexion invalide."
 
-#: templates/template-client-portal.php:200
+#: templates/template-client-portal.php:201
+#: templates/template-client-portal.php:248
 msgid ""
 "It contains a secret key that allows you to connect securely to your "
 "personal FIFAM account space | "
@@ -221,50 +250,75 @@ msgstr ""
 "Il contient une clé secrète qui vous permet de vous connecter en toute "
 "sécurité à votre espace personnel FIFAM | "
 
-#: public/class-wa-client-portal-shortcodes.php:456
+#: public/class-wa-client-portal-shortcodes.php:605
 msgid "Last Name"
 msgstr "Nom"
 
-#: admin/wa-client-portal-clients-page.php:12
+#: admin/wa-client-portal-clients-page.php:91
 #: admin/class-wa-client-portal-export.php:81
-#: templates/template-client-portal.php:307
+#: templates/template-client-portal.php:365
 msgid "Lastname"
 msgstr "Nom"
 
-#: templates/template-client-portal.php:195
+#: public/class-wa-client-portal-shortcodes.php:773
+msgid "Log in"
+msgstr "Se connecter"
+
+#: templates/template-client-portal.php:240
 msgid "Log in now"
 msgstr "Connectez-vous maintenant"
 
-#: public/class-wa-client-portal-shortcodes.php:243
+#: public/class-wa-client-portal-shortcodes.php:390
 msgid "Log in to my fifam account"
 msgstr "Se connecter à mon compte FIFAM"
 
+#: public/class-wa-client-portal-shortcodes.php:762
+msgid "Log out"
+msgstr "Déconnexion"
+
 #: public/class-wa-client-portal-menu.php:83
-#: templates/template-client-portal.php:394
+#: templates/template-client-portal.php:452
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: admin/wa-client-portal-clients-page.php:16
+#: admin/wa-client-portal-clients-page.php:95
 msgid "Magic Login"
 msgstr "Connexion magique"
 
 #: admin/class-wa-client-portal-menu.php:7
 #: admin/class-wa-client-portal-menu.php:8
-#: admin/wa-client-portal-clients-page.php:7
+#: admin/wa-client-portal-clients-page.php:49
 #: admin/class-wa-client-portal-export.php:33
 msgid "Members"
 msgstr "Compte FIFAM"
 
+#: admin/wa-client-portal-clients-page.php:69
+msgid "Most Favorited Film"
+msgstr "Film le plus populaire"
+
 #: public/class-wa-client-portal-pagetitle.php:23
-#: templates/template-client-portal.php:352
+#: templates/template-client-portal.php:410
 msgid "My account"
 msgstr "Mon compte"
+
+#: public/class-wa-client-portal-shortcodes.php:758
+#, php-format
+msgid "My account (%s)"
+msgstr "Mon compte (%s)"
+
+#: public/class-wa-client-portal-shortcodes.php:698
+msgid "My favorite films are in these sections..."
+msgstr ""
+
+#: public/class-wa-client-portal-shortcodes.php:697
+msgid "My favorite sections"
+msgstr ""
 
 #: admin/class-wa-client-portal-user.php:18
 msgid "My favorites films"
 msgstr "Mes films favoris"
 
-#: templates/template-client-portal.php:294
+#: templates/template-client-portal.php:352
 msgid "New, register"
 msgstr "Nouveau, inscrivez-vous"
 
@@ -272,7 +326,7 @@ msgstr "Nouveau, inscrivez-vous"
 msgid "No client portal page found."
 msgstr "Aucune page de portail compte FIFAM trouvée."
 
-#: templates/template-client-portal.php:388
+#: templates/template-client-portal.php:446
 msgid "No private pages available."
 msgstr "Pas de pages privées disponibles."
 
@@ -281,19 +335,21 @@ msgstr "Pas de pages privées disponibles."
 msgid "No user found with the email <strong>%s</strong>."
 msgstr "Aucun utilisateur trouvé avec l'e-mail <strong>%s</strong>."
 
-#: templates/template-client-portal.php:201
+#: templates/template-client-portal.php:202
+#: templates/template-client-portal.php:249
 msgid "Once you are logged in, your access will remain valid for one month | "
 msgstr "Une fois connecté, votre accès restera valable pendant un mois | "
 
-#: public/class-wa-client-portal-shortcodes.php:242
+#: public/class-wa-client-portal-shortcodes.php:389
+#: public/class-wa-client-portal-shortcodes.php:770
 msgid "or"
 msgstr "ou"
 
-#: templates/template-client-portal.php:245
+#: templates/template-client-portal.php:303
 msgid "Please enter a valid <b>e-mail</b> address."
 msgstr "Veuillez saisir une adresse <b>e-mail</b> valide."
 
-#: public/class-wa-client-portal-shortcodes.php:240
+#: public/class-wa-client-portal-shortcodes.php:387
 msgid "Please log in to add favorites"
 msgstr "Veuillez vous connecter pour ajouter des favoris."
 
@@ -309,23 +365,28 @@ msgstr "Clé secrète reCAPTCHA"
 msgid "reCAPTCHA Site Key"
 msgstr "Clé du site reCAPTCHA"
 
-#: templates/template-client-portal.php:341
+#: templates/template-client-portal.php:399
 msgid "Receive login link"
 msgstr "Recevoir le lien de connexion"
 
-#: templates/template-client-portal.php:325
+#: templates/template-client-portal.php:383
 msgid "Register"
 msgstr "Inscription"
 
-#: templates/template-client-portal.php:328
+#: templates/template-client-portal.php:386
 msgid "Registration is currently disabled."
 msgstr "L'inscription est actuellement désactivée."
 
-#: public/class-wa-client-portal-shortcodes.php:43
+#: templates/template-client-portal.php:294
+msgid "Remind to check your spams."
+msgstr "N'oubliez pas de vérifier vos courriers indésirables."
+
+#: public/class-wa-client-portal-shortcodes.php:79
+#: public/class-wa-client-portal-shortcodes.php:208
 msgid "Remove from favorites"
 msgstr "Retirer des favoris"
 
-#: templates/template-client-portal.php:214
+#: templates/template-client-portal.php:263
 msgid "Resend a new link by email ?"
 msgstr "Renvoyer un nouveau lien par email ?"
 
@@ -333,15 +394,24 @@ msgstr "Renvoyer un nouveau lien par email ?"
 msgid "Spam detected. Please try again."
 msgstr "Spam détecté. Veuillez réessayer."
 
+#: public/class-wa-client-portal-shortcodes.php:709
+msgid "The wa-sections block is not available in your theme."
+msgstr ""
+
 #: wa-client-portal.php:148
 #, php-format
 msgid "This link has expired. <a href='%s'>Resend a new link?</a>"
 msgstr "Ce lien a expiré. <a href='%s'>Renvoyer un nouveau lien ?</a>"
 
-#: templates/template-client-portal.php:213
+#: templates/template-client-portal.php:262
 #, php-format
 msgid "This login link may have expired. %s"
 msgstr "Ce lien de connexion a peut-être expiré. %s"
+
+#: templates/template-client-portal.php:206
+msgid "This login link may have expired. Resend a new link by email:"
+msgstr ""
+"Ce lien de connexion a peut-être expiré. Renvoyer un nouveau lien par email ?"
 
 #: admin/class-wa-client-portal-settings.php:50
 #, php-format
@@ -357,13 +427,17 @@ msgstr ""
 "auprès de <a href=\"%s\" target=\"_blank\">l'administrateur Google "
 "reCAPTCHA</a> pour obtenir vos clés."
 
-#: admin/wa-client-portal-clients-page.php:65
+#: admin/wa-client-portal-clients-page.php:147
 msgid "Token Expires:"
 msgstr "Le jeton expire :"
 
 #: templates/template-client-portal.php:85
 msgid "Too many requests today. Please try again tomorrow."
 msgstr "Trop de demandes aujourd'hui. Veuillez réessayer demain."
+
+#: admin/wa-client-portal-clients-page.php:54
+msgid "Total Members"
+msgstr "Nombre total de membres"
 
 #: admin/class-wa-client-portal-export.php:79
 msgid "Username"
@@ -394,8 +468,11 @@ msgstr ""
 msgid "Wilhem Arnoldy"
 msgstr ""
 
+#: admin/wa-client-portal-clients-page.php:59
+msgid "With Favorite Films"
+msgstr "Avec des films favoris"
+
 #. Description of the plugin
-#, fuzzy
 #| msgid ""
 #| "WordPress Client Portal Plugin that creates private pages for all users "
 #| "that only an administrator can edit."
@@ -403,16 +480,16 @@ msgid ""
 "WordPress Client Portal Plugin — fifam version — that creates private pages "
 "for all users that only an administrator can edit."
 msgstr ""
-"Plugin de portail client WordPress qui crée des pages privées pour tous les "
-"utilisateurs que seul un administrateur peut modifier."
+"Plugin de portail client WordPress — fifam version — qui crée des pages "
+"privées pour tous les utilisateurs que seul un administrateur peut modifier."
 
-#: public/class-wa-client-portal-shortcodes.php:266
-#: public/class-wa-client-portal-shortcodes.php:299
+#: public/class-wa-client-portal-shortcodes.php:413
+#: public/class-wa-client-portal-shortcodes.php:448
 msgid "You have no favorite films yet."
 msgstr ""
 "Vous n’avez encore aucun film préféré. C'est le moment de s'y mettre ! "
 
-#: public/class-wa-client-portal-shortcodes.php:241
+#: public/class-wa-client-portal-shortcodes.php:388
 msgid ""
 "You must be logged in to save favorites film into your Fifam account. Click "
 "below to open the account portal and log in or register."
@@ -421,24 +498,25 @@ msgstr ""
 "compte FIFAM. Cliquez ci-dessous pour ouvrir le portail de votre compte afin "
 "de vous connecter ou pour vous inscrire."
 
-#: public/class-wa-client-portal-shortcodes.php:450
+#: public/class-wa-client-portal-shortcodes.php:599
 msgid "You must be logged in to view your account information."
 msgstr ""
 "Vous devez être connecté pour consulter les informations de votre compte."
 
-#: public/class-wa-client-portal-shortcodes.php:259
-#: public/class-wa-client-portal-shortcodes.php:292
+#: public/class-wa-client-portal-shortcodes.php:406
+#: public/class-wa-client-portal-shortcodes.php:441
 msgid "You must be logged in to view your favorite films."
 msgstr "Vous devez être connecté pour voir vos films favoris."
 
-#: public/class-wa-client-portal-shortcodes.php:105
+#: public/class-wa-client-portal-shortcodes.php:157
 msgid "You must be logged in."
 msgstr "Vous devez être connecté."
 
-#: templates/template-client-portal.php:193
+#: templates/template-client-portal.php:196
+#: templates/template-client-portal.php:233
 msgid "Your Magic Login Link"
 msgstr "Votre lien de connexion"
 
-#: templates/template-client-portal.php:319
+#: templates/template-client-portal.php:377
 msgid "Your message"
 msgstr "Votre message"
