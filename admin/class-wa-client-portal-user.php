@@ -47,6 +47,14 @@ add_filter( 'rwmb_meta_boxes', function( $meta_boxes ) {
                 // ],
                 'hide_from_rest'  => false,
             ],
+            // User notes
+            [
+                'name'           => __( 'My notes', 'wacp' ),
+                'id'             => $prefix . 'user_notes',
+                'type'           => 'textarea',
+                'hide_from_rest' => false,
+                'limit_type'     => 'character',
+            ],
 		],
 	];
 	return $meta_boxes;

@@ -49,6 +49,7 @@ global $current_edition, $previous_editions, $current_edition_id, $current_editi
 
 add_action( 'wp_enqueue_scripts', 'wacp_enqueue_front_assets' );
 add_action( 'wp_ajax_wacp_toggle_favorite', 'wacp_toggle_favorite_ajax' );
+add_action( 'wp_ajax_wacp_save_user_notes', 'wacp_save_user_notes_ajax' );
 // Note: we do not allow non-logged users to add favorites via ajax; they must log in first.
 
 // Register shortcode [wacp_favorite_star film_id="123"] ( no action, because always registered in a init action : add_action( 'init', 'wacp_register_shortcodes' );)
@@ -170,6 +171,30 @@ function wacp_toggle_favorite_ajax() {
 	} else {
 		wacp_user_add_favorite( $user_id, $film_id );
 		wp_send_json_success( array( 'action' => 'added', 'film_id' => $film_id ) );
+	}
+}
+
+/**
+ * AJAX handler to save user notes
+ */
+function wacp_save_user_notes_ajax() {
+	// Check nonce
+	check_ajax_referer( 'wacp_fav_nonce', 'nonce' );
+
+	if ( ! is_user_logged_in() ) {
+		wp_send_json_error( array( 'message' => __( 'You must be logged in.', 'wacp' ) ), 403 );
+	}
+
+	$user_id = get_current_user_id();
+	$notes = isset( $_POST['notes'] ) ? sanitize_textarea_field( $_POST['notes'] ) : '';
+
+	// Save notes to user meta
+	$updated = update_user_meta( $user_id, 'wacp-user_notes', $notes );
+
+	if ( $updated !== false ) {
+		wp_send_json_success( array( 'message' => __( 'Notes saved successfully!', 'wacp' ) ) );
+	} else {
+		wp_send_json_error( array( 'message' => __( 'Failed to save notes.', 'wacp' ) ), 500 );
 	}
 }
 
@@ -361,6 +386,38 @@ function wacp_enqueue_front_assets() {
 			syncFavoritesUI();
 		});
 
+		// Save user notes handler
+		$(document).on('click', '#wacp-save-notes', function(e){
+			e.preventDefault();
+			var btn = $(this);
+			var textarea = $('#wacp-user-notes');
+			var statusSpan = $('.wacp-notes-status');
+			var notes = textarea.val();
+
+			// Disable button and show loading
+			btn.prop('disabled', true).text('{saving_text}');
+			statusSpan.html('');
+
+			$.post(ajaxUrl, {
+				action: 'wacp_save_user_notes',
+				notes: notes,
+				nonce: globalNonce
+			}, function(resp){
+				btn.prop('disabled', false).text('{save_text}');
+
+				if (resp && resp.success) {
+					statusSpan.html('<span class="text-success">' + resp.data.message + '</span>');
+					setTimeout(function(){ statusSpan.html(''); }, 3000);
+				} else {
+					var errorMsg = resp.data && resp.data.message ? resp.data.message : '{error_text}';
+					statusSpan.html('<span class="text-danger">' + errorMsg + '</span>');
+				}
+			}).fail(function(){
+				btn.prop('disabled', false).text('{save_text}');
+				statusSpan.html('<span class="text-danger">{network_error_text}</span>');
+			});
+		});
+
 	})(jQuery);
 	JS;
 
@@ -369,6 +426,10 @@ function wacp_enqueue_front_assets() {
 	$inline_js = str_replace('{logged_in}', $logged_in ? '1' : '0', $inline_js );
 	$inline_js = str_replace('{nonce}', wp_create_nonce( 'wacp_fav_nonce' ), $inline_js );
 	$inline_js = str_replace('{user_favorites}', $user_favorites_json, $inline_js );
+	$inline_js = str_replace('{save_text}', esc_js( __( 'Save Notes', 'wacp' ) ), $inline_js );
+	$inline_js = str_replace('{saving_text}', esc_js( __( 'Saving...', 'wacp' ) ), $inline_js );
+	$inline_js = str_replace('{error_text}', esc_js( __( 'Error saving notes.', 'wacp' ) ), $inline_js );
+	$inline_js = str_replace('{network_error_text}', esc_js( __( 'Network error. Please try again.', 'wacp' ) ), $inline_js );
 
 	wp_add_inline_script( 'wacp-fav-script', $inline_js );
 
@@ -600,11 +661,21 @@ function wacp_account_shortcode() {
 	}
 
 	$user = wp_get_current_user();
+	$user_notes = get_user_meta( $user->ID, 'wacp-user_notes', true );
+
 	$html = '<div class="wacp-account-info">';
 	$html .= '<p><strong>' . esc_html__( 'First Name', 'wacp' ) . '</strong> ' . esc_html( $user->first_name ) . '</p>';
 	$html .= '<p><strong>' . esc_html__( 'Last Name', 'wacp' ) . '</strong> ' . esc_html( $user->last_name ) . '</p>';
 	$html .= '<p><strong>' . esc_html__( 'Email', 'wacp' ) . '</strong> ' . esc_html( $user->user_email ) . '</p>';
-	// Add more fields as needed
+
+	// User notes textarea
+	$html .= '<div class="wacp-user-notes-wrapper mt-4">';
+	$html .= '<label for="wacp-user-notes"><strong>' . esc_html__( 'My Notes', 'wacp' ) . '</strong></label>';
+	$html .= '<textarea id="wacp-user-notes" name="wacp-user-notes" class="form-control mt-2" rows="5" placeholder="' . esc_attr__( 'Add your personal notes here...', 'wacp' ) . '">' . esc_textarea( $user_notes ) . '</textarea>';
+	$html .= '<button type="button" id="wacp-save-notes" class="btn btn-primary mt-2">' . esc_html__( 'Save Notes', 'wacp' ) . '</button>';
+	$html .= '<span class="wacp-notes-status ms-2"></span>';
+	$html .= '</div>';
+
 	$html .= '</div>';
 
 	return $html;
@@ -778,3 +849,4 @@ function wacp_login_links_shortcode( $atts ) {
 
 	return $html;
 }
+
