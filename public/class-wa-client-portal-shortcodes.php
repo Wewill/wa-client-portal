@@ -664,12 +664,12 @@ function wacp_account_shortcode() {
 	$user_notes = get_user_meta( $user->ID, 'wacp-user_notes', true );
 
 	$html = '<div class="wacp-account-info">';
-	$html .= '<p><strong>' . esc_html__( 'First Name', 'wacp' ) . '</strong> ' . esc_html( $user->first_name ) . '</p>';
-	$html .= '<p><strong>' . esc_html__( 'Last Name', 'wacp' ) . '</strong> ' . esc_html( $user->last_name ) . '</p>';
-	$html .= '<p><strong>' . esc_html__( 'Email', 'wacp' ) . '</strong> ' . esc_html( $user->user_email ) . '</p>';
+	$html .= '<p class="mb-1"><strong>' . esc_html__( 'First Name', 'wacp' ) . '</strong> ' . esc_html( $user->first_name ) . '</p>';
+	$html .= '<p class="mb-1"><strong>' . esc_html__( 'Last Name', 'wacp' ) . '</strong> ' . esc_html( $user->last_name ) . '</p>';
+	$html .= '<p class="mb-1"><strong>' . esc_html__( 'Email', 'wacp' ) . '</strong> ' . esc_html( $user->user_email ) . '</p>';
 
 	// User notes textarea
-	$html .= '<div class="wacp-user-notes-wrapper mt-4">';
+	$html .= '<div class="wacp-user-notes-wrapper mt-5">';
 	$html .= '<label for="wacp-user-notes"><strong>' . esc_html__( 'My Notes', 'wacp' ) . '</strong></label>';
 	$html .= '<textarea id="wacp-user-notes" name="wacp-user-notes" class="form-control mt-2" rows="5" placeholder="' . esc_attr__( 'Add your personal notes here...', 'wacp' ) . '">' . esc_textarea( $user_notes ) . '</textarea>';
 	$html .= '<button type="button" id="wacp-save-notes" class="btn btn-primary mt-2">' . esc_html__( 'Save Notes', 'wacp' ) . '</button>';
