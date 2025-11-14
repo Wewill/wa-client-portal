@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WA Private Client Portal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 07:44+0000\n"
+"POT-Creation-Date: 2025-11-13 22:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -34,7 +34,7 @@ msgid_plural "%d times"
 msgstr[0] ""
 msgstr[1] ""
 
-#: public/class-wa-client-portal-shortcodes.php:533
+#: public/class-wa-client-portal-shortcodes.php:472
 #, php-format
 msgid "%s"
 msgid_plural "%s"
@@ -54,13 +54,9 @@ msgstr ""
 msgid "Access my client portal"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:80
-#: public/class-wa-client-portal-shortcodes.php:232
+#: public/class-wa-client-portal-shortcodes.php:79
+#: public/class-wa-client-portal-shortcodes.php:207
 msgid "Add to favorites"
-msgstr ""
-
-#: public/class-wa-client-portal-shortcodes.php:674
-msgid "Add your personal notes here..."
 msgstr ""
 
 #: templates/template-client-portal.php:26
@@ -108,7 +104,7 @@ msgstr ""
 msgid "Client Portal : your magic login link"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:446
+#: public/class-wa-client-portal-shortcodes.php:385
 msgid "Close"
 msgstr ""
 
@@ -116,11 +112,11 @@ msgstr ""
 msgid "Cookie Expires:"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:838
+#: public/class-wa-client-portal-shortcodes.php:767
 msgid "Create my account"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:450
+#: public/class-wa-client-portal-shortcodes.php:389
 msgid "Create my fifam account"
 msgstr ""
 
@@ -135,7 +131,7 @@ msgstr ""
 msgid "E-mail"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:669
+#: public/class-wa-client-portal-shortcodes.php:606
 msgid "Email"
 msgstr ""
 
@@ -145,10 +141,6 @@ msgstr ""
 
 #: admin/class-wa-client-portal-settings.php:59
 msgid "Enter your reCAPTCHA Site Key"
-msgstr ""
-
-#: public/class-wa-client-portal-shortcodes.php:431
-msgid "Error saving notes."
 msgstr ""
 
 #: admin/class-wa-client-portal-export.php:45
@@ -164,11 +156,7 @@ msgstr ""
 msgid "Export members"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:197
-msgid "Failed to save notes."
-msgstr ""
-
-#: public/class-wa-client-portal-shortcodes.php:534
+#: public/class-wa-client-portal-shortcodes.php:473
 msgid "favorite film in your selection"
 msgid_plural "favorites films in your selection"
 msgstr[0] ""
@@ -179,7 +167,7 @@ msgstr[1] ""
 msgid "Favorite films"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:667
+#: public/class-wa-client-portal-shortcodes.php:604
 msgid "First Name"
 msgstr ""
 
@@ -234,7 +222,7 @@ msgstr ""
 msgid "Important | Please keep this email carefully:"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:164
+#: public/class-wa-client-portal-shortcodes.php:163
 msgid "Invalid film id."
 msgstr ""
 
@@ -249,7 +237,7 @@ msgid ""
 "personal FIFAM account space | "
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:668
+#: public/class-wa-client-portal-shortcodes.php:605
 msgid "Last Name"
 msgstr ""
 
@@ -259,7 +247,7 @@ msgstr ""
 msgid "Lastname"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:844
+#: public/class-wa-client-portal-shortcodes.php:773
 msgid "Log in"
 msgstr ""
 
@@ -267,11 +255,11 @@ msgstr ""
 msgid "Log in now"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:451
+#: public/class-wa-client-portal-shortcodes.php:390
 msgid "Log in to my fifam account"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:833
+#: public/class-wa-client-portal-shortcodes.php:762
 msgid "Log out"
 msgstr ""
 
@@ -300,33 +288,21 @@ msgstr ""
 msgid "My account"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:829
+#: public/class-wa-client-portal-shortcodes.php:758
 #, php-format
 msgid "My account (%s)"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:769
+#: public/class-wa-client-portal-shortcodes.php:698
 msgid "My favorite films are in these sections..."
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:768
+#: public/class-wa-client-portal-shortcodes.php:697
 msgid "My favorite sections"
 msgstr ""
 
 #: admin/class-wa-client-portal-user.php:18
 msgid "My favorites films"
-msgstr ""
-
-#: public/class-wa-client-portal-shortcodes.php:673
-msgid "My Notes"
-msgstr ""
-
-#: admin/class-wa-client-portal-user.php:52
-msgid "My notes"
-msgstr ""
-
-#: public/class-wa-client-portal-shortcodes.php:432
-msgid "Network error. Please try again."
 msgstr ""
 
 #: templates/template-client-portal.php:352
@@ -346,17 +322,13 @@ msgstr ""
 msgid "No user found with the email <strong>%s</strong>."
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:195
-msgid "Notes saved successfully!"
-msgstr ""
-
 #: templates/template-client-portal.php:202
 #: templates/template-client-portal.php:249
 msgid "Once you are logged in, your access will remain valid for one month | "
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:450
-#: public/class-wa-client-portal-shortcodes.php:841
+#: public/class-wa-client-portal-shortcodes.php:389
+#: public/class-wa-client-portal-shortcodes.php:770
 msgid "or"
 msgstr ""
 
@@ -364,7 +336,7 @@ msgstr ""
 msgid "Please enter a valid <b>e-mail</b> address."
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:448
+#: public/class-wa-client-portal-shortcodes.php:387
 msgid "Please log in to add favorites"
 msgstr ""
 
@@ -396,8 +368,8 @@ msgstr ""
 msgid "Remind to check your spams."
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:80
-#: public/class-wa-client-portal-shortcodes.php:233
+#: public/class-wa-client-portal-shortcodes.php:79
+#: public/class-wa-client-portal-shortcodes.php:208
 msgid "Remove from favorites"
 msgstr ""
 
@@ -405,20 +377,11 @@ msgstr ""
 msgid "Resend a new link by email ?"
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:429
-#: public/class-wa-client-portal-shortcodes.php:675
-msgid "Save Notes"
-msgstr ""
-
-#: public/class-wa-client-portal-shortcodes.php:430
-msgid "Saving..."
-msgstr ""
-
 #: templates/template-client-portal.php:69
 msgid "Spam detected. Please try again."
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:780
+#: public/class-wa-client-portal-shortcodes.php:709
 msgid "The wa-sections block is not available in your theme."
 msgstr ""
 
@@ -493,28 +456,27 @@ msgid ""
 "for all users that only an administrator can edit."
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:474
-#: public/class-wa-client-portal-shortcodes.php:509
+#: public/class-wa-client-portal-shortcodes.php:413
+#: public/class-wa-client-portal-shortcodes.php:448
 msgid "You have no favorite films yet."
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:449
+#: public/class-wa-client-portal-shortcodes.php:388
 msgid ""
 "You must be logged in to save favorites film into your Fifam account. Click "
 "below to open the account portal and log in or register."
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:660
+#: public/class-wa-client-portal-shortcodes.php:599
 msgid "You must be logged in to view your account information."
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:467
-#: public/class-wa-client-portal-shortcodes.php:502
+#: public/class-wa-client-portal-shortcodes.php:406
+#: public/class-wa-client-portal-shortcodes.php:441
 msgid "You must be logged in to view your favorite films."
 msgstr ""
 
-#: public/class-wa-client-portal-shortcodes.php:158
-#: public/class-wa-client-portal-shortcodes.php:185
+#: public/class-wa-client-portal-shortcodes.php:157
 msgid "You must be logged in."
 msgstr ""
 

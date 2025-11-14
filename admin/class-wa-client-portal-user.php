@@ -49,7 +49,7 @@ add_filter( 'rwmb_meta_boxes', function( $meta_boxes ) {
             ],
             // User notes
             [
-                'name'           => __( 'My notes', 'wacp' ),
+                'name'           => __( 'My Notes', 'wacp' ),
                 'id'             => $prefix . 'user_notes',
                 'type'           => 'textarea',
                 'hide_from_rest' => false,
