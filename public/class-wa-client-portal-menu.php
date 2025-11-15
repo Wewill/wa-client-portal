@@ -72,6 +72,8 @@ class Wa_Client_Portal_Menu {
                     'post_type'   => 'page',
                     'post_status' => 'private',
                     'numberposts' => -1,
+                    'orderby'     => 'menu_order date',
+                    'order'       => 'ASC DESC',
                 ) );
 
                 foreach ( $private_pages as $page ) {
