@@ -72,6 +72,7 @@ SC loading spinning icon
     margin: 0;
     padding: 0;
     list-style: none;
+    text-align: right;
 }
 
 .account-nav ul li {
