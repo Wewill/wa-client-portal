@@ -44,3 +44,61 @@ SC loading spinning icon
     height: 1rem;
     border-width: 0.15em;
 }
+
+/* #45 New account menu for client portal */
+#accountNavContent {
+    position: fixed;
+    top: var(--waff-preheader-height);
+    right: 0;
+    left: auto;
+    background-color: white;
+}
+
+.admin-bar #accountNavContent {
+    top: calc( var(--waff-preheader-height) + var(--waff-wp-adminbar) );
+}
+
+.account-nav {
+    display: flex;
+    padding: .75rem;
+    justify-content: right;
+    /* position: relative; */
+}
+
+.account-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.account-nav ul li {
+    display: block;
+}
+
+.account-nav ul li a {
+    color: var(--waff-color-dark);
+    text-decoration: none;
+}
+
+.account-nav ul li a i {
+    position: relative;
+    color: black;
+    top: 1px;
+}
+
+.account-nav ul li ul.sub-menu {
+    /* position: absolute;
+    top: 32px;
+    right: 10px; */
+    /* opacity: 0;
+    transition: all 0.3s ease-in-out; */
+}
+
+.account-nav ul li:hover ul.sub-menu {
+    /* opacity: 1; */
+}
+
+.account-nav ul li ul.sub-menu li {
+    margin-left: 0.5rem;
+}
+
