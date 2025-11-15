@@ -24,4 +24,42 @@
    * Although scripts in the WordPress core, Plugins and Themes may be
    * practicing this, we should strive to set a better example in our own work.
    */
+
+  // Account menu hover functionality
+  document.addEventListener("DOMContentLoaded", function() {
+    const menuItem = document.getElementById("menu-item-client-portal");
+    const collapseElement = document.getElementById("accountNavContent");
+    let hoverTimeout;
+
+    if (menuItem && collapseElement) {
+      const bsCollapse = new bootstrap.Collapse(collapseElement, { toggle: false });
+
+      // Show on hover
+      menuItem.addEventListener("mouseenter", function() {
+        clearTimeout(hoverTimeout);
+        bsCollapse.show();
+      });
+
+      // Hide on mouse leave with delay
+      menuItem.addEventListener("mouseleave", function() {
+        hoverTimeout = setTimeout(function() {
+          if (!collapseElement.matches(":hover")) {
+            bsCollapse.hide();
+          }
+        }, 300);
+      });
+
+      // Keep open when hovering over collapse content
+      collapseElement.addEventListener("mouseenter", function() {
+        clearTimeout(hoverTimeout);
+      });
+
+      // Hide when leaving collapse content
+      collapseElement.addEventListener("mouseleave", function() {
+        hoverTimeout = setTimeout(function() {
+          bsCollapse.hide();
+        }, 300);
+      });
+    }
+  });
 })();

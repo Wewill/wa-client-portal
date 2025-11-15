@@ -24,6 +24,9 @@ Client portal css
 
 #programmationModal .wacp-favorite-film, .programmation-list .wacp-favorite-film{ position: relative; top: -1px; margin-left: 1px; }
 
+.search-results .wacp-favorite-film { position: relative; top: -4px; margin-left: 12px; }
+.search-results .wacp-favorite-film i { font-size:60% }
+
 /**
 SC loading spinning icon 
 */
